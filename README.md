@@ -1,5 +1,20 @@
 # SoPra RESTful Service Template FS21
 
+
+## SonarQube - Details
+
+<p align="center">
+  <a href="https://heroku-badge.herokuapp.com/?app=sopra-fs21-group-13-server"><img src="https://heroku-badge.herokuapp.com/?app=sopra-fs21-group-13-server"></a>
+  <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-13_Server">
+      <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-13_Server&metric=coverage">
+  </a>
+  <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-13_Server">
+        <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-13_Server&metric=alert_status">
+    </a>
+</p>
+
+
+
 ## Getting started with Spring Boot
 
 -   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
