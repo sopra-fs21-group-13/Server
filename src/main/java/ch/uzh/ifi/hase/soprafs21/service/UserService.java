@@ -37,9 +37,7 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User getUser(long id) {
-        return this.userRepository.findById(id).get();
-    }
+    public User getUser(long id) { return this.userRepository.findById(id).get();   }
 
 
     public User createUser(User newUser) {
