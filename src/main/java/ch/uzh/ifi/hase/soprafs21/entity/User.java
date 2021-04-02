@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Internal User Representation
@@ -14,12 +15,10 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class User  {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -33,6 +32,19 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private UserStatus status;
+
+    @Column
+    private String birthday;
+
+    @Column
+    private Boolean inGame;
+
+    @Column
+    private Integer NumberOfWins;
+
+    @Column
+    @OneToMany(mappedBy = "user")
+    private Set<FlashCardSet> sets;
 
     public Long getId() {
         return id;
@@ -73,4 +85,30 @@ public class User implements Serializable {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public Boolean getInGame() {
+        return inGame;
+    }
+
+    public void setInGame(Boolean inGame) {
+        this.inGame = inGame;
+    }
+
+    public Integer getNumberOfWins() {
+        return NumberOfWins;
+    }
+
+    public void setNumberOfWins(Integer numberOfWins) {
+        NumberOfWins = numberOfWins;
+    }
+
+
 }

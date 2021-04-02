@@ -37,6 +37,11 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    public User getUser(long id) {
+        return this.userRepository.findById(id).get();
+    }
+
+
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.OFFLINE);
@@ -74,4 +79,19 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
         }
     }
+/*
+    public createSet(Set newSet) {
+        newSet.setOwner(User user);
+
+        newSet = setRepository.save(newSet);
+        setRepository.flush();
+
+        log.debug("Created Information for User: {}", newUser);
+        return newSet;
+    }
+
+    public List<Set> getSets(User user) {
+        return this.setRepository.findAll();
+    }
+*/
 }

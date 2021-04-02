@@ -22,6 +22,7 @@ public class UserController {
     private final UserService userService;
 
     UserController(UserService userService) {
+
         this.userService = userService;
     }
 
@@ -40,7 +41,7 @@ public class UserController {
         return userGetDTOs;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
