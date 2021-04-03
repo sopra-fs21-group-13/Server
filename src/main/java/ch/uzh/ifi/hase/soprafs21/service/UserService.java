@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +44,7 @@ public class UserService {
 
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
-        newUser.setStatus(UserStatus.OFFLINE);
+        newUser.setStatus(UserStatus.ONLINE);
 
         checkIfUserExists(newUser);
 
@@ -62,6 +64,7 @@ public class UserService {
      * @throws org.springframework.web.server.ResponseStatusException
      * @see User
      */
+
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
         User userByName = userRepository.findByName(userToBeCreated.getName());
@@ -77,19 +80,44 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
         }
     }
-/*
-    public createSet(Set newSet) {
-        newSet.setOwner(User user);
 
-        newSet = setRepository.save(newSet);
-        setRepository.flush();
-
-        log.debug("Created Information for User: {}", newUser);
-        return newSet;
+    public User checkForLogin(User userToLogin) {
+        User userByUsername = userRepository.findByUsername(userToLogin.getUsername());
+        String baseErrorMessage = "The user doesn't exist. Please check the credentials and password!";
+        if (userByUsername != null) {
+            if (userByUsername.getName().equals(userToLogin.getName()) && userByUsername.getPassword().equals(userToLogin.getPassword())) {
+                userToLogin.setToken(userToLogin.getUsername());
+                userToLogin.setStatus(UserStatus.ONLINE);
+                userToLogin.setId(userByUsername.getId());
+                return userToLogin;
+            }
+            else {
+                baseErrorMessage = "Incorrect Password Or UserName";
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+            }
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
     }
 
-    public List<Set> getSets(User user) {
-        return this.setRepository.findAll();
+    public User updateUser(UserPostDTO userPostDTO) {
+        User user = getUser(userPostDTO.getId());
+
+        if (user == null){
+            String message = "The user with id: %s can't be found in the database.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getId()));
+        }
+        else{
+            user.setUsername(userPostDTO.getUsername());
+            user.setName(userPostDTO.getName());
+            user.setPassword(userPostDTO.getPassword());
+        }
+
+        user = userRepository.save(user);
+        userRepository.flush();
+
+        return user;
     }
-*/
+
 }

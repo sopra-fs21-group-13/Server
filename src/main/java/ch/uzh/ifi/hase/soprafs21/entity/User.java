@@ -35,6 +35,9 @@ public class User  {
     @Column(nullable = false)
     private UserStatus status;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column
     private String birthday;
 
@@ -89,6 +92,10 @@ public class User  {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getBirthday() {
         return birthday;
