@@ -43,21 +43,24 @@ public class SetService {
         return this.setRepository.findAll();
     }
 
-    // Get set by setId
-    public Set getbySetId(Long id){
-        Set set = setRepository.findById(id).get();
-        return set;
+    // Get sets by User
+    public List<Set> getSetByUser(User user){
+        return setRepository.findByUser(user);
     }
 
-    // Create a Flashcard Set
-    public Set createSet(Set newSet, Long userId) {
+    // Get set by setId
+    public Set getSetBySetId(Long setId){
+        return setRepository.findBySetId(setId).get();
+    }
+
+    // Create a flashcard set
+    public Set createSet(Set newSet) {
         // Assign non-nullable properties
         newSet.setSetOrder(SetOrder.NORMAL);
-        newSet.setUserId(userId);
+        // Not sure yet how to pass userId yet
+        // newSet.setUserId(userId);
 
         // Method to Create Flashcards and add them to List in Set
-
-
 
 
 

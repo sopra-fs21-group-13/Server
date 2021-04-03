@@ -1,6 +1,9 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SetGetDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import org.mapstruct.*;
@@ -28,4 +31,15 @@ public interface DTOMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
     UserGetDTO convertEntityToUserGetDTO(User user);
+
+
+    // Not configured yet !!!
+    @Mapping(source = "setId", target = "setId")
+    Set converSetPostDTOtoEntity(SetPostDTO setPostDTO);
+
+    // Not configured yet !!!
+    @Mapping(source = "setId", target = "setId")
+    SetGetDTO convertEntityToSetGetDTO(Set set);
+
+
 }

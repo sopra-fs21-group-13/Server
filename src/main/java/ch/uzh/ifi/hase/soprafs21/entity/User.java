@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Set;
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unqiue across the database -> composes the primary key
  */
+
 @Entity
 @Table(name = "USER")
 public class User  {
@@ -42,9 +44,11 @@ public class User  {
     @Column
     private Integer NumberOfWins;
 
+    // This column contains all sets a users has access to learn from
+    // aka not equal to the created sets!
     @Column
     @OneToMany(mappedBy = "user")
-    private Set<FlashCardSet> sets;
+    private List<Set> learningSets;
 
     public Long getId() {
         return id;

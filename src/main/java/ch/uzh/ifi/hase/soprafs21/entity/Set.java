@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
 import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
+import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 
 
 import javax.persistence.*;
@@ -28,8 +29,9 @@ public class Set implements Serializable {
     @Column(nullable = false)
     private String setName;
 
-    @Column(nullable = false, unique = true)
-    private Long userId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column()
     private ArrayList<Card> cards;
@@ -39,6 +41,9 @@ public class Set implements Serializable {
 
     @Column()
     private SetCategory setCategory;
+
+    @Column(nullable = false)
+    private SetStatus setStatus;
 
     public Long getSetId() {
         return setId;
@@ -56,12 +61,12 @@ public class Set implements Serializable {
         this.setName = setName;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ArrayList<Card> getCards() {
@@ -86,5 +91,13 @@ public class Set implements Serializable {
 
     public void setSetCategory(SetCategory setCategory) {
         this.setCategory = setCategory;
+    }
+
+    public SetStatus getSetStatus() {
+        return setStatus;
+    }
+
+    public void setSetStatus(SetStatus setStatus) {
+        this.setStatus = setStatus;
     }
 }
