@@ -39,7 +39,14 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User getUser(long id) { return this.userRepository.findById(id).get();   }
+    public List<User> getOnlineUsers() {
+        return this.userRepository.findByStatus(UserStatus.ONLINE);
+    }
+
+
+    public User getUser(long id) {
+        return this.userRepository.findById(id).get();
+    }
 
 
     public User createUser(User newUser) {
