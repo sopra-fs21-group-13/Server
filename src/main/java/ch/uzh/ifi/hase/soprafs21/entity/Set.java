@@ -34,8 +34,8 @@ public class Set implements Serializable {
     private User user;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL)
-    @ElementCollection(targetClass = Card.class)
+    @OneToMany(cascade = CascadeType.ALL) // Many cards to one set
+    @ElementCollection(targetClass = Card.class) //Since there is no connection back to Set
     private List<Card> cards;
 
     @Column(nullable = false)
@@ -63,8 +63,8 @@ public class Set implements Serializable {
         this.setName = setName;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUser() {
+        return user.getId();
     }
 
     public void setUser(User user) {

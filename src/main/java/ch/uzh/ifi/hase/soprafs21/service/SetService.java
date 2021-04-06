@@ -2,9 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import org.slf4j.Logger;
@@ -43,14 +41,17 @@ public class SetService {
         return this.setRepository.findBySetStatus(SetStatus.PUBLIC);
     }
 
+
     /*
     // Not needed now
-    // Get created sets of user
+    // Get set that were created by user x
     public List<Set> getSetByUser(User user){
         return setRepository.findByUser(user);
     }
     */
 
+
+    /* Probably osolete -> since you can get all learn sets from calling a single user
 
     // SaveFile needs to be implemented first
     // Get learn sets of a user
@@ -64,10 +65,14 @@ public class SetService {
         return learnSets;
     }
 
+     */
+
+
     // Get set by setId
     public Set getSetBySetId(Long setId){
         return setRepository.findBySetId(setId).get();
     }
+
 
     // Create a flashcard set
     public Set createSet(Set newSet) {
@@ -82,31 +87,16 @@ public class SetService {
         return newSet;
     }
 
+
     // Edit a Flashcard Set
     public void updateSet(Set newSet){
 
     }
 
+
     // Delete a Flashcard Set -> irrevocable
     public void deleteSet(Long setId){
         setRepository.deleteById(setId);
     }
-
-
-
-
-
-    /**
-     * This is a helper method that will create the flashcards and add them to the list within the set
-     *
-     * @param card
-     * @throws org.springframework.web.server.ResponseStatusException
-     * @see Card
-     */
-
-    private void createCards(Card card) {
-
-    }
-
 
 }

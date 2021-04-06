@@ -30,6 +30,8 @@ public interface DTOMapper {
 
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
+// User Mappings
+
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
@@ -40,9 +42,10 @@ public interface DTOMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "learnSets", target = "learnSets")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
-
+// Set Mappings
 
     @Mapping(source = "setName", target = "setName")
     @Mapping(source = "user", target = "user", qualifiedByName = "User") // Custom Mapper with an Annotation for the card array
@@ -82,16 +85,12 @@ public interface DTOMapper {
 
 */
 
-    // Not configured yet !!!
     @Mapping(source = "setId", target = "setId")
     @Mapping(source = "setName", target = "setName")
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.username",target = "username" )
+    @Mapping(source = "user", target = "userId")
     @Mapping(source = "cards", target = "cards")
     @Mapping(source = "setOrder",target = "setOrder")
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
     SetGetDTO convertEntityToSetGetDTO(Set set);
-
-
 }

@@ -1,6 +1,9 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs21.entity.Set;
+
+import java.util.List;
 
 public class UserGetDTO {
 
@@ -8,7 +11,7 @@ public class UserGetDTO {
     private String name;
     private String username;
     private UserStatus status;
-    private String password;
+    private List<Set> learnSets;
 
     public Long getId() {
         return id;
@@ -42,11 +45,11 @@ public class UserGetDTO {
         this.status = status;
     }
 
-    public String getPassword() {
-        return password;
+    public List<Set> getLearnSets() {
+        return learnSets;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLearnSets(List<Set> learnSets) {
+        this.learnSets = learnSets;
     }
 }

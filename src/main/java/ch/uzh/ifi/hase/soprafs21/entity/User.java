@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -51,7 +50,7 @@ public class User  {
     // aka not equal to the created sets!
     @Column
     @OneToMany(mappedBy = "user")
-    private List<Set> learningSets;
+    private List<Set> learnSets;
 
     public Long getId() {
         return id;
@@ -121,11 +120,11 @@ public class User  {
         NumberOfWins = numberOfWins;
     }
 
-    public List<Set> getLearningSets() {
-        return learningSets;
+    public List<Set> getLearnSets() {
+        return learnSets;
     }
 
-    public void setLearningSets(List<Set> learningSets) {
-        this.learningSets = learningSets;
+    public void setLearnSets(List<Set> learnSets) {
+        this.learnSets = learnSets;
     }
 }

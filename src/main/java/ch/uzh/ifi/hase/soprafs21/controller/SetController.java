@@ -1,10 +1,8 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.SetService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
@@ -34,6 +32,7 @@ public class SetController {
 
     // Get all public sets
     @GetMapping("/sets")
+    @ResponseStatus(HttpStatus.OK)
     public List<SetGetDTO> getPublicSets(){
         // fetch all sets in the internal representation
         List<Set> publicSets = setService.getPublicSets();
@@ -50,6 +49,7 @@ public class SetController {
 
     // Get flashcardset with setId
     @GetMapping("/sets/{setId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public SetGetDTO getSetBySetId(@PathVariable("setId") Long setId) {
         // Get specific set by setId
         Set set = setService.getSetBySetId(setId);
@@ -57,14 +57,19 @@ public class SetController {
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
     }
 
+
+    /*  Obsolete since you can get all learning sets from calling user
+
     // Get Sets of a user
     @GetMapping("/users/{userId}/learnsets")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void getLearnSetsByUser(@PathVariable("userId") Long userId) {
         // Get specific user by userId
         User user = userService.getUser(userId);
         //
 
     }
+     */
 
 /*   We dont need this
 
@@ -110,7 +115,6 @@ public class SetController {
     // Delete a specific set of cards
     @DeleteMapping("/sets/{setId}")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public void deleteSet(@PathVariable("setId") Long setId){
         setService.deleteSet(setId);
     }
