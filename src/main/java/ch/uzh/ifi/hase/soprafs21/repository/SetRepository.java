@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.repository;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
+import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +16,7 @@ public interface SetRepository extends JpaRepository<Set, Long> {
     //Implemented:
     Optional<Set> findBySetId(Long id);
 
-
+    List<Set> findBySetStatus(SetStatus setStatus);
 
     // Future implementation -> searchbar / Display created Sets
     /*

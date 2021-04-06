@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
+import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
@@ -38,8 +39,8 @@ public class SetService {
     }
 
     // Get all sets available -> not useful though
-    public List<Set> getSets() {
-        return this.setRepository.findAll();
+    public List<Set> getPublicSets() {
+        return this.setRepository.findBySetStatus(SetStatus.PUBLIC);
     }
 
     /*

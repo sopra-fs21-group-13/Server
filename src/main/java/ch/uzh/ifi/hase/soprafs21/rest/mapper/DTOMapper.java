@@ -24,6 +24,7 @@ import java.util.List;
  * Additional mappers can be defined for new entities.
  * Always created one mapper for getting information (GET) and one mapper for creating information (POST).
  */
+
 @Mapper
 public interface DTOMapper {
 
@@ -50,7 +51,7 @@ public interface DTOMapper {
     @Mapping(source = "setStatus",target = "setStatus")
     Set convertSetPostDTOtoEntity(SetPostDTO setPostDTO);
 
-
+    // Qualifier for handling nested json and convert it into entity user
     @Named("User")
     default User jsonToUser(String userString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -59,6 +60,7 @@ public interface DTOMapper {
         return user;
     }
 
+    //Qualifier for handling json array -> conversion into list of objects
     @Named("Card")
     default List<Card> jsonToCardsI(String cardsString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
