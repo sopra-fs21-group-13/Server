@@ -17,14 +17,13 @@ public interface SetRepository extends JpaRepository<Set, Long> {
 
 
 
-
-
-
     // Future implementation -> searchbar / Display created Sets
-
+    /*
     List<Set> findByUser(User user);
 
     Set findBySetName(String setName);
 
     Set findByCategory(SetCategory setCategory);
+    */
 }
+

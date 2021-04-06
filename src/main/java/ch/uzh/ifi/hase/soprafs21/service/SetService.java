@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
@@ -11,13 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Set Service
@@ -33,9 +29,12 @@ public class SetService {
 
     private final SetRepository setRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public SetService(@Qualifier("setRepository") SetRepository setRepository) {
+    public SetService(@Qualifier("setRepository") SetRepository setRepository, UserRepository userRepository) {
         this.setRepository = setRepository;
+        this.userRepository = userRepository;
     }
 
     // Get all sets available -> not useful though
@@ -43,9 +42,25 @@ public class SetService {
         return this.setRepository.findAll();
     }
 
-    // Get sets by User
+    /*
+    // Not needed now
+    // Get created sets of user
     public List<Set> getSetByUser(User user){
         return setRepository.findByUser(user);
+    }
+    */
+
+
+    // SaveFile needs to be implemented first
+    // Get learn sets of a user
+    public List<Set> getLearnSetByUser(Long userId){
+        User user = userRepository.findById(userId).get();
+        // Get SaveFile and the List of setIds
+
+        // Get List of actual Sets
+        List<Set> learnSets = null;
+
+        return learnSets;
     }
 
     // Get set by setId
@@ -57,12 +72,6 @@ public class SetService {
     public Set createSet(Set newSet) {
         // Assign non-nullable properties
         newSet.setSetOrder(SetOrder.NORMAL);
-        // Not sure yet how to pass userId yet
-        // newSet.setUserId(userId);
-
-        // Method to Create Flashcards and add them to List in Set
-
-
 
         // saves the given entity but data is only persisted in the database once flush() is called
         newSet = setRepository.save(newSet);

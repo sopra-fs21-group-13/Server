@@ -1,11 +1,9 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Internal User Representation
@@ -121,5 +119,11 @@ public class User  {
         NumberOfWins = numberOfWins;
     }
 
+    public List<Set> getLearningSets() {
+        return learningSets;
+    }
 
+    public void setLearningSets(List<Set> learningSets) {
+        this.learningSets = learningSets;
+    }
 }

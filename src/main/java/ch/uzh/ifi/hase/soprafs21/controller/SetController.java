@@ -50,7 +50,6 @@ public class SetController {
     @GetMapping("/sets/{setId}")
     public Set getSetBySetId(@PathVariable("setId") Long setId) {
         System.out.println(setId);
-
         // Get specific set of user
         return setService.getSetBySetId(setId);
     }
@@ -60,8 +59,8 @@ public class SetController {
 
 /*   We dont need this
 
-    // Get sets of a specific user
-    @GetMapping("/sets/users/{userId}")
+    // Get created sets of a specific user
+    @GetMapping("/sets/users/{userId}/set")
     public List<Set> getSetByUser(@PathVariable("userId") Long userId) {
         System.out.println(userId);
         // Get User by ID
@@ -82,10 +81,10 @@ public class SetController {
     @PostMapping("/sets")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public SetGetDTO createSet(@RequestParam SetPostDTO setPostDTO) {
+    public SetGetDTO createSet(@RequestBody SetPostDTO setPostDTO) {
 
         // convert API set to internal representation
-        Set setInput = DTOMapper.INSTANCE.converSetPostDTOtoEntity(setPostDTO);
+        Set setInput = DTOMapper.INSTANCE.convertSetPostDTOtoEntity(setPostDTO);
 
         // create set
         Set createdSet = setService.createSet(setInput);

@@ -7,7 +7,7 @@ import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Internal User Representation
@@ -29,12 +29,14 @@ public class Set implements Serializable {
     @Column(nullable = false)
     private String setName;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column()
-    private ArrayList<Card> cards;
+    @Column
+    @OneToMany(cascade = CascadeType.ALL)
+    @ElementCollection(targetClass = Card.class)
+    private List<Card> cards;
 
     @Column(nullable = false)
     private SetOrder setOrder;
@@ -69,11 +71,11 @@ public class Set implements Serializable {
         this.user = user;
     }
 
-    public ArrayList<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 
