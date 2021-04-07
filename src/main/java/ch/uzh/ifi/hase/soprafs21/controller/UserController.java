@@ -108,4 +108,22 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
+    @PutMapping ("/users/logout/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserGetDTO logoutUser(@RequestBody UserPostDTO userPostDTO) {
+
+        //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        User updatedUser = userService.logoutUser(userPostDTO);
+
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
+    }
+
+    // Delete a specific User
+    @DeleteMapping("/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSet(@PathVariable Long userId){
+
+        userService.deleteUser(userId);
+    }
+
 }

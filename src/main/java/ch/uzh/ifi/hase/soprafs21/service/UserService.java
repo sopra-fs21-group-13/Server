@@ -111,20 +111,40 @@ public class UserService {
     public User updateUser(UserPostDTO userPostDTO) {
         User user = getUser(userPostDTO.getId());
 
-        if (user == null){
+        if (user == null) {
             String message = "The user with id: %s can't be found in the database.";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getId()));
         }
-        else{
-            user.setUsername(userPostDTO.getUsername());
-            user.setName(userPostDTO.getName());
-            user.setPassword(userPostDTO.getPassword());
+        else {
+            if (userPostDTO.getUsername() != null) {
+                user.setUsername(userPostDTO.getUsername());
+            }
+            if (userPostDTO.getName() != null) {
+                user.setName(userPostDTO.getName());
+            }
+            if (userPostDTO.getPassword() != null) {
+                user.setPassword(userPostDTO.getPassword());
+            }
         }
 
-        user = userRepository.save(user);
-        userRepository.flush();
+        user = userRepository.saveAndFlush(user);
+        return user;
+    }
+
+    public User logoutUser(UserPostDTO userPostDTO){
+        User user = getUser(userPostDTO.getId());
+
+        if (user != null){
+            user.setStatus(UserStatus.OFFLINE);
+            user = userRepository.saveAndFlush(user);
+        }
 
         return user;
+    }
+
+    // Delete a User
+    public void deleteUser(Long userId){
+        userRepository.deleteById(userId);
     }
 
 }
