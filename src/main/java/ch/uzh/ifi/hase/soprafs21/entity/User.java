@@ -46,6 +46,9 @@ public class User  {
     @Column
     private Integer NumberOfWins;
 
+    @Column(nullable = true)
+    private String email;
+
     // This column contains all sets a users has access to learn from
     // aka not equal to the created sets!
     @Column
@@ -128,4 +131,13 @@ public class User  {
     public void setLearnSets(List<Set> learnSets) {
         this.learnSets = learnSets;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

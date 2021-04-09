@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User Service
@@ -29,6 +30,8 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
+
+    private static final AtomicInteger count = new AtomicInteger(0);
 
     @Autowired
     public UserService(@Qualifier("userRepository") UserRepository userRepository) {
@@ -109,9 +112,13 @@ public class UserService {
     }
 
     public User upserd (User user){
-        if(userRepository.findByUsername(user.getUsername())==null)
+        if(userRepository.findByEmail(user.getEmail())==null)
         {
+            int uniqueUsername = count.incrementAndGet();
+            user.setUsername("NoName" + uniqueUsername);
+
             user.setStatus(UserStatus.ONLINE);
+
             return userRepository.save(user);
         }
         else{
