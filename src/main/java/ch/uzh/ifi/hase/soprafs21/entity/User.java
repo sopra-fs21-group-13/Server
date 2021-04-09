@@ -28,13 +28,13 @@ public class User  {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 512)
     private String token;
 
     @Column(nullable = false)
     private UserStatus status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column

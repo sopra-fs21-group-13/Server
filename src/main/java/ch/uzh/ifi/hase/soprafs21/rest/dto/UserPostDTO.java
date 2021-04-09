@@ -9,6 +9,7 @@ public class UserPostDTO {
     private UserStatus status;
     private String password;
     private long id;
+    private String token;
 
     public String getName() {
         return name;
@@ -45,4 +46,8 @@ public class UserPostDTO {
     public long getId() { return id; }
 
     public void setId(long id) { this.id = id; }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) { this.token = token; }
 }

@@ -93,7 +93,7 @@ public class UserService {
         String baseErrorMessage = "The user doesn't exist. Please check the credentials and password!";
         if (userByUsername != null) {
             if (userByUsername.getName().equals(userToLogin.getName()) && userByUsername.getPassword().equals(userToLogin.getPassword())) {
-                userToLogin.setToken(userToLogin.getUsername());
+                userToLogin.setToken(userByUsername.getToken());
                 userToLogin.setStatus(UserStatus.ONLINE);
                 userToLogin.setId(userByUsername.getId());
                 return userToLogin;
@@ -105,6 +105,17 @@ public class UserService {
         }
         else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage));
+        }
+    }
+
+    public User upserd (User user){
+        if(userRepository.findByUsername(user.getUsername())==null)
+        {
+            user.setStatus(UserStatus.ONLINE);
+            return userRepository.save(user);
+        }
+        else{
+            return user;
         }
     }
 
@@ -131,8 +142,8 @@ public class UserService {
         return user;
     }
 
-    public User logoutUser(UserPostDTO userPostDTO){
-        User user = getUser(userPostDTO.getId());
+    public User logoutUser(Long userId){
+        User user = getUser(userId);
 
         if (user != null){
             user.setStatus(UserStatus.OFFLINE);

@@ -9,10 +9,11 @@ import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public interface DTOMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
+    @Mapping(source = "token", target = "token")
     //@Mapping(source = "id", target = "id")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
@@ -43,6 +45,7 @@ public interface DTOMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
     @Mapping(source = "learnSets", target = "learnSets")
+    @Mapping(source = "token", target = "token")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
 // Set Mappings

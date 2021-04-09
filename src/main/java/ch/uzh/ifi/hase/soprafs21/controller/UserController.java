@@ -16,6 +16,7 @@ import java.util.List;
  * This class is responsible for handling all REST request that are related to the user.
  * The controller will receive the request and delegate the execution to the UserService and finally return the result.
  */
+
 @RestController
 public class UserController {
 
@@ -88,6 +89,22 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
 
+    @PostMapping("/users/socialLogin")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO socialLoginUser(@RequestBody UserPostDTO userPostDTO) {
+
+        // convert API user to internal representation
+        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        //System.out.println("Login user-------"+userInput);
+
+        // check if user exists
+        User loginUser = userService.upserd(userInput);
+
+        // convert internal representation of user back to API
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
+    }
+
     @GetMapping ("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO getUserByID(@PathVariable Long userId) {
@@ -110,10 +127,10 @@ public class UserController {
 
     @PutMapping ("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserGetDTO logoutUser(@RequestBody UserPostDTO userPostDTO) {
+    public UserGetDTO logoutUser(@PathVariable Long userId) {
 
         //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        User updatedUser = userService.logoutUser(userPostDTO);
+        User updatedUser = userService.logoutUser(userId);
 
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
