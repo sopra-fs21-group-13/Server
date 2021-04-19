@@ -45,7 +45,7 @@ public class SetController {
 
         // return list of all public sets
         return setGetDTOs;
-    };
+    }
 
     // Get flashcardset with setId
     @GetMapping("/sets/{setId}")
@@ -53,7 +53,7 @@ public class SetController {
     public SetGetDTO getSetBySetId(@PathVariable("setId") Long setId) {
         // Get specific set by setId
         Set set = setService.getSetBySetId(setId);
-        // Convert from internal representation to API
+
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
     }
 
@@ -89,8 +89,6 @@ public class SetController {
     // Update a specific set of cards
 
 
-
-
 // All Post Mappings:
 
     // Add a new Set to the db
@@ -118,5 +116,7 @@ public class SetController {
     public void deleteSet(@PathVariable("setId") Long setId){
         setService.deleteSet(setId);
     }
+
+
 
 }

@@ -2,11 +2,9 @@ package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
+import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.SetGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mapstruct.Mapper;
@@ -98,4 +96,22 @@ public interface DTOMapper {
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
     SetGetDTO convertEntityToSetGetDTO(Set set);
+
+
+    // Settings Mappings
+
+    @Mapping(source = "userID", target = "userID")
+    @Mapping(source = "setID", target = "setID")
+    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
+    @Mapping(source = "studyStarred", target = "studyStarred")
+    @Mapping(source = "lastCardID", target = "lastCardID")
+    Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
+
+    @Mapping(source = "userID", target = "userID")
+    @Mapping(source = "setID", target = "setID")
+    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
+    @Mapping(source = "studyStarred", target = "studyStarred")
+    @Mapping(source = "lastCardID", target = "lastCardID")
+    SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
+
 }
