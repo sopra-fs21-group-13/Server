@@ -26,7 +26,7 @@ public class SettingsController {
     // Get Settings with setId and UserID
     @GetMapping("/settings/{userId}/{setId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public SettingsGetDTO getSettingsBySetIdandUserID (@PathVariable Long userId, @PathVariable Long setId) {
+    public SettingsGetDTO getSettingsBySetIdandUserID (@PathVariable("userId") Long userId, @PathVariable("setId") Long setId) {
 
         // Get specific set by setId and userId
         Settings settings = settingsService.getSettings(userId, setId);

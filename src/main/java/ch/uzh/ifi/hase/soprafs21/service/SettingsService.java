@@ -28,9 +28,29 @@ public class SettingsService {
         this.settingsRepository = settingsRepository;
     }
 
+    // Create Settingsfile
+    public void createSettings(Long userId, Long setId){
+        //Creating instance and default settings
+        Settings newSetting = new Settings();
+        newSetting.setUserID(userId);
+        newSetting.setSetID(setId);
+        newSetting.setCardsShuffled(false);
+        newSetting.setStudyStarred(false);
+        newSetting.setLastCardID(0L);
+
+        // save & flush to repo
+        newSetting = settingsRepository.save(newSetting);
+        settingsRepository.flush();
+
+        log.debug("Created Information fo Setting File: {}", newSetting);
+        //in case of return setting file
+        //return newSetting;
+    }
+
+
+    // Get Settingsfile
     public Settings getSettings(Long  userId, Long setID) {
         return this.settingsRepository.findByUserIDAndSetID(userId, setID);
     }
-
 
 }

@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public interface DTOMapper {
     @Mapping(source = "password", target = "password")
     @Mapping(source = "token", target = "token")
     @Mapping(source = "email", target = "email")
-    //@Mapping(source = "id", target = "id")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
+    //Get Mapping for user with learn sets
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
@@ -47,6 +48,8 @@ public interface DTOMapper {
     @Mapping(source = "token", target = "token")
     @Mapping(source = "email", target = "email")
     UserGetDTO convertEntityToUserGetDTO(User user);
+
+
 
 // Set Mappings
 
@@ -75,18 +78,6 @@ public interface DTOMapper {
         return cardEntities;
     }
 
-    // Same as Named just hardcoded
- /*
-    @CardCreatorMapper
-    default List<Card> jsonToCards(String cardsString) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-            // Convert Json array to List of Card entities
-            List<Card> cardEntities = Arrays.asList(mapper.readValue(cardsString, Card[].class));
-
-            return cardEntities;
-    }
-
-*/
 
     @Mapping(source = "setId", target = "setId")
     @Mapping(source = "setName", target = "setName")
@@ -107,6 +98,7 @@ public interface DTOMapper {
     @Mapping(source = "lastCardID", target = "lastCardID")
     Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
 
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "userID", target = "userID")
     @Mapping(source = "setID", target = "setID")
     @Mapping(source = "cardsShuffled", target = "cardsShuffled")

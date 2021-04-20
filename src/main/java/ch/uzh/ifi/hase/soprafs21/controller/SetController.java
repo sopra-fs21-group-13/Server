@@ -1,10 +1,12 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
+import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.SetService;
+import ch.uzh.ifi.hase.soprafs21.service.SettingsService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class SetController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SettingsService settingsService;
 
 // All Get Mappings:
 
@@ -102,6 +107,9 @@ public class SetController {
 
         // create set
         Set createdSet = setService.createSet(setInput);
+
+        // create default setting file to be saved in repository
+        settingsService.createSettings(createdSet.getUser(), createdSet.getSetId());
 
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(createdSet);
