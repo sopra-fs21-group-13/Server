@@ -104,6 +104,7 @@ public interface DTOMapper {
     @Mapping(source = "cardsShuffled", target = "cardsShuffled")
     @Mapping(source = "studyStarred", target = "studyStarred")
     @Mapping(source = "lastCardID", target = "lastCardID")
+    @Mapping(source = "cardOrder", target = "cardOrder")
     SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
 
 }

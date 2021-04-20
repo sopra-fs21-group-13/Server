@@ -42,32 +42,6 @@ public class SetService {
     }
 
 
-    /*
-    // Not needed now
-    // Get set that were created by user x
-    public List<Set> getSetByUser(User user){
-        return setRepository.findByUser(user);
-    }
-    */
-
-
-    /* Probably osolete -> since you can get all learn sets from calling a single user
-
-    // SaveFile needs to be implemented first
-    // Get learn sets of a user
-    public List<Set> getLearnSetByUser(Long userId){
-        User user = userRepository.findById(userId).get();
-        // Get SaveFile and the List of setIds
-
-        // Get List of actual Sets
-        List<Set> learnSets = null;
-
-        return learnSets;
-    }
-
-     */
-
-
     // Get set by setId
     public Set getSetBySetId(Long setId){
         return setRepository.findBySetId(setId).get();
@@ -98,5 +72,31 @@ public class SetService {
     public void deleteSet(Long setId){
         setRepository.deleteById(setId);
     }
+
+    /*
+    // Not needed now
+    // Get set that were created by user x
+    public List<Set> getSetByUser(User user){
+        return setRepository.findByUser(user);
+    }
+    */
+
+
+    /* Probably obsolete -> since you can get all learn sets from calling a single user
+
+    // SaveFile needs to be implemented first
+    // Get learn sets of a user
+    public List<Set> getLearnSetByUser(Long userId){
+        User user = userRepository.findById(userId).get();
+        // Get SaveFile and the List of setIds
+
+        // Get List of actual Sets
+        List<Set> learnSets = null;
+
+        return learnSets;
+    }
+
+     */
+
 
 }

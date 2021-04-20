@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "SETTINGS")
 
@@ -25,6 +27,10 @@ public class Settings {
 
     @Column
     private Long lastCardID;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
+    private List<Integer> cardOrder;
 
     public Long getId() {
         return id;
@@ -72,5 +78,13 @@ public class Settings {
 
     public void setLastCardID(Long lastCardID) {
         this.lastCardID = lastCardID;
+    }
+
+    public List<Integer> getCardOrder() {
+        return cardOrder;
+    }
+
+    public void setCardOrder(List<Integer> cardOrder) {
+        this.cardOrder = cardOrder;
     }
 }

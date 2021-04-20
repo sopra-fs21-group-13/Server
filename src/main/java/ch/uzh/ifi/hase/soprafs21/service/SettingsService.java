@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * Settings Service
  * This class is the "worker" and responsible for all functionality related to the user
@@ -28,8 +33,12 @@ public class SettingsService {
         this.settingsRepository = settingsRepository;
     }
 
-    // Create Settingsfile
-    public void createSettings(Long userId, Long setId){
+    // Create Setting file
+    public void createSettings(Long userId, Long setId, Integer cardSetSize){
+        // Create default cardOrder arraylist
+        int[] cardOrderInt = IntStream.range(0, cardSetSize).toArray();
+        List<Integer> cardOrder = IntStream.of(cardOrderInt).boxed().collect(Collectors.toList());
+
         //Creating instance and default settings
         Settings newSetting = new Settings();
         newSetting.setUserID(userId);
@@ -37,6 +46,7 @@ public class SettingsService {
         newSetting.setCardsShuffled(false);
         newSetting.setStudyStarred(false);
         newSetting.setLastCardID(0L);
+        newSetting.setCardOrder(cardOrder);
 
         // save & flush to repo
         newSetting = settingsRepository.save(newSetting);

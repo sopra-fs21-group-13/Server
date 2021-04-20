@@ -109,7 +109,7 @@ public class SetController {
         Set createdSet = setService.createSet(setInput);
 
         // create default setting file to be saved in repository
-        settingsService.createSettings(createdSet.getUser(), createdSet.getSetId());
+        settingsService.createSettings(createdSet.getUser(), createdSet.getSetId(), createdSet.getCards().size());
 
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(createdSet);
