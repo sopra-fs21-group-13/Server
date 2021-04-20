@@ -38,6 +38,7 @@ public class SettingsService {
         // Create default cardOrder arraylist
         int[] cardOrderInt = IntStream.range(0, cardSetSize).toArray();
         List<Integer> cardOrder = IntStream.of(cardOrderInt).boxed().collect(Collectors.toList());
+        ArrayList<Long> starredCards = new ArrayList<>();
 
         //Creating instance and default settings
         Settings newSetting = new Settings();
@@ -47,6 +48,7 @@ public class SettingsService {
         newSetting.setStudyStarred(false);
         newSetting.setLastCardID(0L);
         newSetting.setCardOrder(cardOrder);
+        newSetting.setStarredCards(starredCards);
 
         // save & flush to repo
         newSetting = settingsRepository.save(newSetting);

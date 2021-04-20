@@ -30,6 +30,10 @@ public class Settings {
 
     @Column
     @ElementCollection(targetClass=Integer.class)
+    private List<Long> starredCards;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
     private List<Integer> cardOrder;
 
     public Long getId() {
@@ -86,5 +90,13 @@ public class Settings {
 
     public void setCardOrder(List<Integer> cardOrder) {
         this.cardOrder = cardOrder;
+    }
+
+    public List<Long> getStarredCards() {
+        return starredCards;
+    }
+
+    public void setStarredCards(List<Long> starredCards) {
+        this.starredCards = starredCards;
     }
 }
