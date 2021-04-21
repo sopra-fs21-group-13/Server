@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
+import java.util.ArrayList;
+
 public class SettingsPostDTO {
 
     private Long settingsId;
@@ -13,6 +15,10 @@ public class SettingsPostDTO {
     private Boolean studyStarred;
 
     private Long lastCardID;
+
+    private ArrayList<Long> starredCards;
+
+    private ArrayList<Integer> cardOrder;
 
     public Long getSettingsId() {
         return settingsId;
@@ -60,5 +66,21 @@ public class SettingsPostDTO {
 
     public void setLastCardID(Long lastCardID) {
         this.lastCardID = lastCardID;
+    }
+
+    public ArrayList<Long> getStarredCards() {
+        return starredCards;
+    }
+
+    public void setStarredCards(ArrayList<Long> starredCards) {
+        this.starredCards = starredCards;
+    }
+
+    public ArrayList<Integer> getCardOrder() {
+        return cardOrder;
+    }
+
+    public void setCardOrder(ArrayList<Integer> cardOrder) {
+        this.cardOrder = cardOrder;
     }
 }

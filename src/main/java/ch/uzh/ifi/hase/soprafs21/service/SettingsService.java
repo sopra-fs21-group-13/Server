@@ -1,13 +1,19 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.Settings;
+import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SettingsPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +34,43 @@ public class SettingsService {
 
     private final SettingsRepository settingsRepository;
 
+    private final SetRepository setRepository;
+
+    private final UserRepository userRepository;
+
     @Autowired
-    public SettingsService(@Qualifier("settingsRepository") SettingsRepository settingsRepository) {
+    public SettingsService(@Qualifier("settingsRepository") SettingsRepository settingsRepository, @Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository) {
         this.settingsRepository = settingsRepository;
+        this.setRepository = setRepository;
+        this.userRepository = userRepository;
+    }
+
+    // Get Settingsfile
+    public Settings getSettings(Long  userId, Long setId) {
+        return this.settingsRepository.findByUserIDAndSetID(userId, setId);
+    }
+
+    public Settings checkIfUserAndSetExist(SettingsPostDTO settingsPostDTO){
+
+        Settings settings;
+
+        if (!userRepository.existsById(settingsPostDTO.getUserID())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User doesn't exist");
+        } else if(!settingsRepository.existsByUserIDAndSetID(settingsPostDTO.getUserID(), settingsPostDTO.getSetID())) {
+            Set createdSet = setRepository.findById(settingsPostDTO.getSetID()).get();
+            createSettings(settingsPostDTO.getUserID(), settingsPostDTO.getSetID(), createdSet.getCards().size());
+            settings = getSettings(settingsPostDTO.getUserID(),settingsPostDTO.getSetID());
+        }
+        else {
+            //update Settingsfile
+            settings = getSettings(settingsPostDTO.getUserID(),settingsPostDTO.getSetID());
+            settings.setCardsShuffled(settingsPostDTO.getCardsShuffled());
+            settings.setStudyStarred(settingsPostDTO.getStudyStarred());
+            settings.setLastCardID(settingsPostDTO.getLastCardID());
+            settings.setStarredCards(settingsPostDTO.getStarredCards());
+            settings.setCardOrder(settingsPostDTO.getCardOrder());
+        }
+        return settings;
     }
 
     // Create Setting file
@@ -57,12 +97,6 @@ public class SettingsService {
         log.debug("Created Information fo Setting File: {}", newSetting);
         //in case of return setting file
         //return newSetting;
-    }
-
-
-    // Get Settingsfile
-    public Settings getSettings(Long  userId, Long setID) {
-        return this.settingsRepository.findByUserIDAndSetID(userId, setID);
     }
 
 }

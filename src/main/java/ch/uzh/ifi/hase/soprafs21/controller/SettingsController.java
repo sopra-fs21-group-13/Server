@@ -2,14 +2,12 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SettingsGetDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SettingsPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.SettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Card Controller
@@ -32,6 +30,17 @@ public class SettingsController {
         Settings settings = settingsService.getSettings(userId, setId);
 
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(settings);
+    }
+
+    @PostMapping("/settings")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public SettingsGetDTO createSettings(@RequestBody SettingsPostDTO settingsPostDTO) {
+
+        Settings UpdatedSettings = settingsService.checkIfUserAndSetExist(settingsPostDTO);
+
+        // convert internal representation of set back to API
+        return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(UpdatedSettings);
     }
 }
 
