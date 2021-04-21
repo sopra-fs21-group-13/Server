@@ -10,8 +10,8 @@ import java.util.List;
 public class Settings {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long settingsId;
 
     @Column
     private Long userID;
@@ -36,12 +36,12 @@ public class Settings {
     @ElementCollection(targetClass=Integer.class)
     private List<Integer> cardOrder;
 
-    public Long getId() {
-        return id;
+    public Long getSettingsId() {
+        return settingsId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSettingsId(Long settingsId) {
+        this.settingsId = settingsId;
     }
 
     public Long getUserID() {

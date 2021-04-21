@@ -23,7 +23,7 @@ public class Set implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long setId;
 
     @Column(nullable = false)
@@ -64,7 +64,7 @@ public class Set implements Serializable {
     }
 
     public Long getUser() {
-        return user.getId();
+        return user.getUserId();
     }
 
     public void setUser(User user) {

@@ -98,7 +98,7 @@ public class UserService {
             if (userByUsername.getName().equals(userToLogin.getName()) && userByUsername.getPassword().equals(userToLogin.getPassword())) {
                 userToLogin.setToken(userByUsername.getToken());
                 userToLogin.setStatus(UserStatus.ONLINE);
-                userToLogin.setId(userByUsername.getId());
+                userToLogin.setUserId(userByUsername.getUserId());
                 return userToLogin;
             }
             else {
@@ -127,11 +127,11 @@ public class UserService {
     }
 
     public User updateUser(UserPostDTO userPostDTO) {
-        User user = getUser(userPostDTO.getId());
+        User user = getUser(userPostDTO.getUserId());
 
         if (user == null) {
             String message = "The user with id: %s can't be found in the database.";
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getId()));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getUserId()));
         }
         else {
             if (userPostDTO.getUsername() != null) {

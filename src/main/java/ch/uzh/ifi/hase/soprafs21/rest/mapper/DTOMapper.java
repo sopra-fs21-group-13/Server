@@ -12,7 +12,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public interface DTOMapper {
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     //Get Mapping for user with learn sets
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "userId", target = "userId")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
@@ -98,7 +97,7 @@ public interface DTOMapper {
     @Mapping(source = "lastCardID", target = "lastCardID")
     Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
 
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "settingsId", target = "settingsId")
     @Mapping(source = "userID", target = "userID")
     @Mapping(source = "setID", target = "setID")
     @Mapping(source = "cardsShuffled", target = "cardsShuffled")

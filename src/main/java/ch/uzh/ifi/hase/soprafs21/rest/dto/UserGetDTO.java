@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserGetDTO {
 
-    private Long id;
+    private Long userId;
     private String name;
     private String username;
     private UserStatus status;
@@ -16,12 +16,14 @@ public class UserGetDTO {
     private String email;
 
     //test
-    public Long getId() {
-        return id;
+
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

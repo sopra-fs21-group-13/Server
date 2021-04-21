@@ -2,11 +2,10 @@ package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SettingsGetDTO {
 
-    private Long id;
+    private Long settingsId;
 
     private Long userID;
 
@@ -22,12 +21,12 @@ public class SettingsGetDTO {
 
     private ArrayList<Integer> cardOrder;
 
-    public Long getId() {
-        return id;
+    public Long getSettingsId() {
+        return settingsId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSettingsId(Long settingsId) {
+        this.settingsId = settingsId;
     }
 
     public Long getUserID() {

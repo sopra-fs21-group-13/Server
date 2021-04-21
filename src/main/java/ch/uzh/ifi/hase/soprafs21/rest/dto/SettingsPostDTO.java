@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 public class SettingsPostDTO {
 
-    private Long Id;
+    private Long settingsId;
 
     private Long userID;
 
@@ -14,12 +14,12 @@ public class SettingsPostDTO {
 
     private Long lastCardID;
 
-    public Long getId() {
-        return Id;
+    public Long getSettingsId() {
+        return settingsId;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setSettingsId(Long settingsId) {
+        this.settingsId = settingsId;
     }
 
     public Long getUserID() {
