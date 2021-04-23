@@ -51,12 +51,13 @@ public class SetController {
         return setGetDTOs;
     }
 
-    @PutMapping ("/sets/{setId}")
+    @PutMapping ("/sets")
     @ResponseStatus(HttpStatus.OK)
     public SetGetDTO getSetByID(@RequestBody SetPostDTO setPostDTO) {
 
-        //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        Set updatedSet = setService.updateSet(setPostDTO);
+        Set setInput = DTOMapper.INSTANCE.convertSetPostDTOtoEntity(setPostDTO);
+
+        Set updatedSet = setService.updateSet(setInput);
 
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
     }
