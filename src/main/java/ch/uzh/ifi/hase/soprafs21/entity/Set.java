@@ -3,6 +3,8 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
 import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.util.List;
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unique across the database -> composes the primary key
  */
+
 @Entity
 @Table(name = "SET")
 public class Set implements Serializable {
@@ -31,6 +34,7 @@ public class Set implements Serializable {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column

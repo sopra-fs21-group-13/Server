@@ -5,20 +5,15 @@ import java.util.ArrayList;
 public class SettingsPostDTO {
 
     private Long settingsId;
-
     private Long userID;
-
     private Long setID;
-
     private Boolean cardsShuffled;
-
     private Boolean studyStarred;
-
     private Long lastCardID;
-
     private ArrayList<Long> starredCards;
+    private ArrayList<Long> cardOrder;
 
-    private ArrayList<Integer> cardOrder;
+
 
     public Long getSettingsId() {
         return settingsId;
@@ -76,11 +71,11 @@ public class SettingsPostDTO {
         this.starredCards = starredCards;
     }
 
-    public ArrayList<Integer> getCardOrder() {
+    public ArrayList<Long> getCardOrder() {
         return cardOrder;
     }
 
-    public void setCardOrder(ArrayList<Integer> cardOrder) {
+    public void setCardOrder(ArrayList<Long> cardOrder) {
         this.cardOrder = cardOrder;
     }
 }

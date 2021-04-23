@@ -28,9 +28,6 @@ public class Card implements Serializable {
     @Column(nullable = false, unique = false)
     private String answer;
 
-    @Column(nullable = false)
-    private CardStatus star;
-
     public Long getCardId() {
         return cardId;
     }
@@ -53,13 +50,5 @@ public class Card implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public CardStatus getStar() {
-        return star;
-    }
-
-    public void setStar(CardStatus star) {
-        this.star = star;
     }
 }

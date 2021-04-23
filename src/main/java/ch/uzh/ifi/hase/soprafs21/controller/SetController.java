@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
@@ -109,7 +108,7 @@ public class SetController {
         Set createdSet = setService.createSet(setInput);
 
         // create default setting file to be saved in repository
-        settingsService.createSettings(createdSet.getUser(), createdSet.getSetId(), createdSet.getCards().size());
+        settingsService.createSettings(createdSet.getUser(), createdSet.getSetId());
 
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(createdSet);
@@ -124,7 +123,6 @@ public class SetController {
     public void deleteSet(@PathVariable("setId") Long setId){
         setService.deleteSet(setId);
     }
-
 
 
 }

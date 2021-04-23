@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,6 +40,7 @@ public class SettingsService {
 
     private final UserRepository userRepository;
 
+
     @Autowired
     public SettingsService(@Qualifier("settingsRepository") SettingsRepository settingsRepository, @Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository) {
         this.settingsRepository = settingsRepository;
@@ -57,8 +60,7 @@ public class SettingsService {
         if (!userRepository.existsById(settingsPostDTO.getUserID())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User doesn't exist");
         } else if(!settingsRepository.existsByUserIDAndSetID(settingsPostDTO.getUserID(), settingsPostDTO.getSetID())) {
-            Set createdSet = setRepository.findById(settingsPostDTO.getSetID()).get();
-            createSettings(settingsPostDTO.getUserID(), settingsPostDTO.getSetID(), createdSet.getCards().size());
+            createSettings(settingsPostDTO.getUserID(), settingsPostDTO.getSetID());
             settings = getSettings(settingsPostDTO.getUserID(),settingsPostDTO.getSetID());
         }
         else {
@@ -74,10 +76,19 @@ public class SettingsService {
     }
 
     // Create Setting file
-    public void createSettings(Long userId, Long setId, Integer cardSetSize){
-        // Create default cardOrder arraylist
-        int[] cardOrderInt = IntStream.range(0, cardSetSize).toArray();
-        List<Integer> cardOrder = IntStream.of(cardOrderInt).boxed().collect(Collectors.toList());
+    public void createSettings(Long userId, Long setId){
+        // Create default cardOrder arraylist by getting all cardIds
+        List<Long> cardOrder =  new ArrayList<>();
+        Set set = setRepository.findById(setId).get();
+        List<Card> cards = set.getCards();
+        for (Card card: cards) {
+            cardOrder.add(card.getCardId());
+        }
+
+        //int[] cardOrderInt = IntStream.range(0, cardSetSize).toArray();
+        //List<Integer> cardOrder = IntStream.of(cardOrderInt).boxed().collect(Collectors.toList());
+
+        // Create empty list for starredCards, sincene default set have no starred cards
         ArrayList<Long> starredCards = new ArrayList<>();
 
         //Creating instance and default settings

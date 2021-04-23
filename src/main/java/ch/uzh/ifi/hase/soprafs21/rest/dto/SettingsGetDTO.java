@@ -19,7 +19,7 @@ public class SettingsGetDTO {
 
     private ArrayList<Long> starredCards;
 
-    private ArrayList<Integer> cardOrder;
+    private ArrayList<Long> cardOrder;
 
     public Long getSettingsId() {
         return settingsId;
@@ -69,11 +69,11 @@ public class SettingsGetDTO {
         this.lastCardID = lastCardID;
     }
 
-    public ArrayList<Integer> getCardOrder() {
+    public ArrayList<Long> getCardOrder() {
         return cardOrder;
     }
 
-    public void setCardOrder(ArrayList<Integer> cardOrder) {
+    public void setCardOrder(ArrayList<Long> cardOrder) {
         this.cardOrder = cardOrder;
     }
 

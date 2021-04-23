@@ -52,7 +52,7 @@ public class User  {
     // This column contains all sets a users has access to learn from
     // aka not equal to the created sets!
     @Column
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Set> learnSets;
 
     public Long getUserId() {

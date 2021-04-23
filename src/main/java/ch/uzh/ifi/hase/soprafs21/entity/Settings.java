@@ -29,12 +29,12 @@ public class Settings {
     private Long lastCardID;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass=Long.class)
     private List<Long> starredCards;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
-    private List<Integer> cardOrder;
+    @ElementCollection(targetClass=Long.class)
+    private List<Long> cardOrder;
 
     public Long getSettingsId() {
         return settingsId;
@@ -84,11 +84,11 @@ public class Settings {
         this.lastCardID = lastCardID;
     }
 
-    public List<Integer> getCardOrder() {
+    public List<Long> getCardOrder() {
         return cardOrder;
     }
 
-    public void setCardOrder(List<Integer> cardOrder) {
+    public void setCardOrder(List<Long> cardOrder) {
         this.cardOrder = cardOrder;
     }
 
