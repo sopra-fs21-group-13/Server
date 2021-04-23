@@ -20,6 +20,7 @@ public class Card implements Serializable {
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_generator")
     //@SequenceGenerator(name="card_generator", sequenceName = "card_seq", allocationSize=50)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
 
     @Column(nullable = false)

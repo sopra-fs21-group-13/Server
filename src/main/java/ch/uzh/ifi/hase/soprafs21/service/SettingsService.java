@@ -6,7 +6,6 @@ import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.SettingsPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,26 +53,26 @@ public class SettingsService {
         return this.settingsRepository.findAll();
     }
 
-    public Settings checkIfUserAndSetExist(SettingsPostDTO settingsPostDTO){
+    public Settings updateSettings(Settings settings){
 
-        Settings settings;
+        Settings updatedSetting;
 
-        if (!userRepository.existsById(settingsPostDTO.getUserID())){
+        if (!userRepository.existsById(settings.getUserID())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User doesn't exist");
-        } else if(!settingsRepository.existsByUserIDAndSetID(settingsPostDTO.getUserID(), settingsPostDTO.getSetID())) {
-            createSettings(settingsPostDTO.getUserID(), settingsPostDTO.getSetID());
-            settings = getSettings(settingsPostDTO.getUserID(),settingsPostDTO.getSetID());
+        } else if(!settingsRepository.existsByUserIDAndSetID(settings.getUserID(), settings.getSetID())) {
+            createSettings(settings.getUserID(), settings.getSetID());
+            updatedSetting = getSettings(settings.getUserID(),settings.getSetID());
         }
         else {
             //update Settingsfile
-            settings = getSettings(settingsPostDTO.getUserID(),settingsPostDTO.getSetID());
-            settings.setCardsShuffled(settingsPostDTO.getCardsShuffled());
-            settings.setStudyStarred(settingsPostDTO.getStudyStarred());
-            settings.setLastCardID(settingsPostDTO.getLastCardID());
-            settings.setStarredCards(settingsPostDTO.getStarredCards());
-            settings.setCardOrder(settingsPostDTO.getCardOrder());
+            updatedSetting = getSettings(settings.getUserID(),settings.getSetID());
+            updatedSetting.setCardsShuffled(settings.getCardsShuffled());
+            updatedSetting.setStudyStarred(settings.getStudyStarred());
+            updatedSetting.setLastCardID(settings.getLastCardID());
+            updatedSetting.setStarredCards(settings.getStarredCards());
+            updatedSetting.setCardOrder(settings.getCardOrder());
         }
-        return settings;
+        return updatedSetting;
     }
 
     // Create Setting file

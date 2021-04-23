@@ -5,7 +5,6 @@ import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,58 +70,33 @@ public class SetService {
 
 
     // Edit a Flashcard Set
-    public Set updateSet(SetPostDTO setPostDTO){
-        Set set = getSetBySetId(setPostDTO.getSetId());
+    public Set updateSet(Set set){
 
-        if (set == null) {
+        Set updatedSet = getSetBySetId(set.getSetId());
+
+        if (updatedSet == null) {
             String message = "The set with id: %s can't be found in the database.";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, set.getSetId()));
         }
         else {
-            if (setPostDTO.getSetName() != null) {
-                set.setSetName(setPostDTO.getSetName());
+            if (set.getSetName() != null) {
+                updatedSet.setSetName(set.getSetName());
             }
-            if (setPostDTO.getCards() != null) {
-                set.setCards(setPostDTO.getCards());
+            if (set.getCards() != null) {
+                updatedSet.setCards(set.getCards());
             }
-            if (setPostDTO.getSetCategory() != null) {
-                set.setSetCategory(setPostDTO.getSetCategory());
+            if (set.getSetCategory() != null) {
+                updatedSet.setSetCategory(set.getSetCategory());
             }
-            if (setPostDTO.getSetStatus() != null) {
-                set.setSetStatus(setPostDTO.getSetStatus());
+            if (set.getSetStatus() != null) {
+                updatedSet.setSetStatus(set.getSetStatus());
             }
         }
 
-        set = setRepository.saveAndFlush(set);
-        //update settingsfile
-        return set;
+        updatedSet = setRepository.saveAndFlush(updatedSet);
 
+        return updatedSet;
     }
-
-    /**
-    public User updateUser(UserPostDTO userPostDTO) {
-        User user = getUser(userPostDTO.getUserId());
-
-        if (user == null) {
-            String message = "The user with id: %s can't be found in the database.";
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getUserId()));
-        }
-        else {
-            if (userPostDTO.getUsername() != null) {
-                user.setUsername(userPostDTO.getUsername());
-            }
-            if (userPostDTO.getName() != null) {
-                user.setName(userPostDTO.getName());
-            }
-            if (userPostDTO.getPassword() != null) {
-                user.setPassword(userPostDTO.getPassword());
-            }
-        }
-
-        user = userRepository.saveAndFlush(user);
-        return user;
-    }
-    */
 
     // Delete a Flashcard Set -> irrevocable
     public void deleteSet(Long setId){

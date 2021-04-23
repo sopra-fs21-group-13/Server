@@ -16,6 +16,8 @@ public interface SetRepository extends JpaRepository<Set, Long> {
 
     List<Set> findBySetStatus(SetStatus setStatus);
 
+    // boolean existsByUser_id(Long userID);
+
     // Future implementation -> searchbar / Display created Sets
     /*
     List<Set> findByUser(User user);

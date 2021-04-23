@@ -40,7 +40,9 @@ public class SettingsController {
     @ResponseBody
     public SettingsGetDTO createSettings(@RequestBody SettingsPostDTO settingsPostDTO) {
 
-        Settings UpdatedSettings = settingsService.checkIfUserAndSetExist(settingsPostDTO);
+        Settings settingInput = DTOMapper.INSTANCE.convertSettingsPostDTOtoEntity(settingsPostDTO);
+
+        Settings UpdatedSettings = settingsService.updateSettings(settingInput);
 
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(UpdatedSettings);

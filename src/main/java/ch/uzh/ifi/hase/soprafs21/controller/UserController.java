@@ -115,7 +115,7 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
 
-    @PutMapping ("/users/{userId}")
+    @PutMapping ("/users")
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO getUserByID(@RequestBody UserPostDTO userPostDTO) {
 
