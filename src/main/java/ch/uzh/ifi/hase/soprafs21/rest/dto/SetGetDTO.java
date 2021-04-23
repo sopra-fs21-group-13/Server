@@ -1,12 +1,12 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
-import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 
 import java.util.List;
+
+//import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 
 public class SetGetDTO {
 
@@ -14,7 +14,7 @@ public class SetGetDTO {
     private String setName;
     private Long userId;
     private List<Card> cards;
-    private SetOrder setOrder;
+    //private SetOrder setOrder;
     private SetCategory setCategory;
     private SetStatus setStatus;
 
@@ -50,6 +50,7 @@ public class SetGetDTO {
         this.cards = cards;
     }
 
+    /**
     public SetOrder getSetOrder() {
         return setOrder;
     }
@@ -57,6 +58,7 @@ public class SetGetDTO {
     public void setSetOrder(SetOrder setOrder) {
         this.setOrder = setOrder;
     }
+     */
 
     public SetCategory getSetCategory() {
         return setCategory;

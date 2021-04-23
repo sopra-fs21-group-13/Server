@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Card Controller
  * This class is responsible for handling all REST request that are related to the user.
@@ -41,6 +44,22 @@ public class SettingsController {
 
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(UpdatedSettings);
+    }
+
+    @GetMapping("/settings")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SettingsGetDTO> getAllSettingss(){
+        // fetch all sets in the internal representation
+        List<Settings> AllSettings = settingsService.getAllSettings();
+        List<SettingsGetDTO> settingsGetDTOS = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (Settings setting : AllSettings){
+            settingsGetDTOS.add(DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(setting));
+        }
+
+        // return list of all public sets
+        return settingsGetDTOS;
     }
 }
 

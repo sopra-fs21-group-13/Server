@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-import ch.uzh.ifi.hase.soprafs21.constant.CardStatus;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,8 +16,10 @@ public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_generator")
+    //@SequenceGenerator(name="card_generator", sequenceName = "card_seq", allocationSize=50)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
 
     @Column(nullable = false)

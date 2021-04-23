@@ -1,16 +1,19 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
-import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,10 +33,13 @@ public class SetService {
 
     private final UserRepository userRepository;
 
+    private final SettingsRepository settingsRepository;
+
     @Autowired
-    public SetService(@Qualifier("setRepository") SetRepository setRepository, UserRepository userRepository) {
+    public SetService(@Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository, SettingsRepository settingsRepository) {
         this.setRepository = setRepository;
         this.userRepository = userRepository;
+        this.settingsRepository = settingsRepository;
     }
 
     // Get all sets available -> not useful though
@@ -51,7 +57,9 @@ public class SetService {
     // Create a flashcard set
     public Set createSet(Set newSet) {
         // Assign non-nullable properties
+        /**
         newSet.setSetOrder(SetOrder.NORMAL);
+         */
 
         // saves the given entity but data is only persisted in the database once flush() is called
         newSet = setRepository.save(newSet);
@@ -63,14 +71,63 @@ public class SetService {
 
 
     // Edit a Flashcard Set
-    public void updateSet(Set newSet){
+    public Set updateSet(SetPostDTO setPostDTO){
+        Set set = getSetBySetId(setPostDTO.getSetId());
+
+        if (set == null) {
+            String message = "The set with id: %s can't be found in the database.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, set.getSetId()));
+        }
+        else {
+            if (setPostDTO.getSetName() != null) {
+                set.setSetName(setPostDTO.getSetName());
+            }
+            if (setPostDTO.getCards() != null) {
+                set.setCards(setPostDTO.getCards());
+            }
+            if (setPostDTO.getSetCategory() != null) {
+                set.setSetCategory(setPostDTO.getSetCategory());
+            }
+            if (setPostDTO.getSetStatus() != null) {
+                set.setSetStatus(setPostDTO.getSetStatus());
+            }
+        }
+
+        set = setRepository.saveAndFlush(set);
+        //update settingsfile
+        return set;
 
     }
 
+    /**
+    public User updateUser(UserPostDTO userPostDTO) {
+        User user = getUser(userPostDTO.getUserId());
+
+        if (user == null) {
+            String message = "The user with id: %s can't be found in the database.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getUserId()));
+        }
+        else {
+            if (userPostDTO.getUsername() != null) {
+                user.setUsername(userPostDTO.getUsername());
+            }
+            if (userPostDTO.getName() != null) {
+                user.setName(userPostDTO.getName());
+            }
+            if (userPostDTO.getPassword() != null) {
+                user.setPassword(userPostDTO.getPassword());
+            }
+        }
+
+        user = userRepository.saveAndFlush(user);
+        return user;
+    }
+    */
 
     // Delete a Flashcard Set -> irrevocable
     public void deleteSet(Long setId){
         setRepository.deleteById(setId);
+        settingsRepository.deleteBySetID(setId);
     }
 
     /*

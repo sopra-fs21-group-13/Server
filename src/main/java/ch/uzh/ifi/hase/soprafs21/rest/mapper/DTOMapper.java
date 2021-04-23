@@ -82,7 +82,7 @@ public interface DTOMapper {
     @Mapping(source = "setName", target = "setName")
     @Mapping(source = "user", target = "userId")
     @Mapping(source = "cards", target = "cards")
-    @Mapping(source = "setOrder",target = "setOrder")
+    //@Mapping(source = "setOrder",target = "setOrder")
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
     SetGetDTO convertEntityToSetGetDTO(Set set);

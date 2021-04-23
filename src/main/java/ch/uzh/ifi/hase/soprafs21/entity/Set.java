@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
-import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
+//import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -25,6 +25,9 @@ public class Set implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+    //@SequenceGenerator(name="set_generator", sequenceName = "set_seq", allocationSize=1)
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "set_generator")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long setId;
@@ -40,10 +43,13 @@ public class Set implements Serializable {
     @Column
     @OneToMany(cascade = CascadeType.ALL) // Many cards to one set
     @ElementCollection(targetClass = Card.class) //Since there is no connection back to Set
+    //@OrderColumn(name="card")
     private List<Card> cards;
 
+    /**
     @Column(nullable = false)
     private SetOrder setOrder;
+    */
 
     @Column()
     private SetCategory setCategory;
@@ -83,6 +89,7 @@ public class Set implements Serializable {
         this.cards = cards;
     }
 
+    /**
     public SetOrder getSetOrder() {
         return setOrder;
     }
@@ -90,6 +97,7 @@ public class Set implements Serializable {
     public void setSetOrder(SetOrder setOrder) {
         this.setOrder = setOrder;
     }
+     */
 
     public SetCategory getSetCategory() {
         return setCategory;

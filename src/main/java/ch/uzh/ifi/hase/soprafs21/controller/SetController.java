@@ -51,6 +51,16 @@ public class SetController {
         return setGetDTOs;
     }
 
+    @PutMapping ("/sets/{setId}")
+    @ResponseStatus(HttpStatus.OK)
+    public SetGetDTO getSetByID(@RequestBody SetPostDTO setPostDTO) {
+
+        //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        Set updatedSet = setService.updateSet(setPostDTO);
+
+        return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
+    }
+
     // Get flashcardset with setId
     @GetMapping("/sets/{setId}")
     @ResponseStatus(HttpStatus.ACCEPTED)

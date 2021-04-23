@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Settings Service
@@ -51,6 +48,10 @@ public class SettingsService {
     // Get Settingsfile
     public Settings getSettings(Long  userId, Long setId) {
         return this.settingsRepository.findByUserIDAndSetID(userId, setId);
+    }
+
+    public List<Settings> getAllSettings() {
+        return this.settingsRepository.findAll();
     }
 
     public Settings checkIfUserAndSetExist(SettingsPostDTO settingsPostDTO){
