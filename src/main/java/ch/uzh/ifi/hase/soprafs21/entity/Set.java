@@ -33,10 +33,13 @@ public class Set implements Serializable {
     private Long setId;
 
     @Column(nullable = false)
-    private String setName;
+    private String title;
+
+    @Column(nullable = false)
+    private String explain;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
@@ -52,20 +55,18 @@ public class Set implements Serializable {
     @Column(nullable = false)
     private SetStatus setStatus;
 
+    @Column
+    private String photo;
+
+    @Column
+    private Long liked;
+
     public Long getSetId() {
         return setId;
     }
 
     public void setSetId(Long setId) {
         this.setId = setId;
-    }
-
-    public String getSetName() {
-        return setName;
-    }
-
-    public void setSetName(String setName) {
-        this.setName = setName;
     }
 
     public Long getUser() {
@@ -98,5 +99,37 @@ public class Set implements Serializable {
 
     public void setSetStatus(SetStatus setStatus) {
         this.setStatus = setStatus;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Long getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Long liked) {
+        this.liked = liked;
     }
 }

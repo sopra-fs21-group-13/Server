@@ -73,8 +73,8 @@ public class SetService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, set.getSetId()));
         }
         else {
-            if (set.getSetName() != null) {
-                updatedSet.setSetName(set.getSetName());
+            if (set.getTitle() != null) {
+                updatedSet.setTitle(set.getTitle());
             }
             if (set.getCards() != null) {
                 updatedSet.setCards(set.getCards());

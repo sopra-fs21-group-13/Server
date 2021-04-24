@@ -11,12 +11,14 @@ import java.util.List;
 public class SetGetDTO {
 
     private Long setId;
-    private String setName;
+    private String title;
     private Long userId;
     private List<Card> cards;
-    //private SetOrder setOrder;
     private SetCategory setCategory;
     private SetStatus setStatus;
+    private String explain;
+    private String photo;
+    private Long liked;
 
     public Long getSetId() {
         return setId;
@@ -26,12 +28,12 @@ public class SetGetDTO {
         this.setId = setId;
     }
 
-    public String getSetName() {
-        return setName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSetName(String setName) {
-        this.setName = setName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getUserId() {
@@ -40,6 +42,14 @@ public class SetGetDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Long liked) {
+        this.liked = liked;
     }
 
     public List<Card> getCards() {
@@ -74,5 +84,21 @@ public class SetGetDTO {
 
     public void setSetStatus(SetStatus setStatus) {
         this.setStatus = setStatus;
+    }
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

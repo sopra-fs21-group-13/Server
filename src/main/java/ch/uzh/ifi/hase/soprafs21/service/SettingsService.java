@@ -66,9 +66,9 @@ public class SettingsService {
             updatedSetting = getSettings(settings.getUserID(),settings.getSetID());
             updatedSetting.setCardsShuffled(settings.getCardsShuffled());
             updatedSetting.setStudyStarred(settings.getStudyStarred());
-            updatedSetting.setLastCardID(settings.getLastCardID());
-            updatedSetting.setStarredCards(settings.getStarredCards());
-            updatedSetting.setCardOrder(settings.getCardOrder());
+            updatedSetting.setLastCard(settings.getLastCard());
+            updatedSetting.setMarkedCards(settings.getMarkedCards());
+            updatedSetting.setSavedOrder(settings.getSavedOrder());
         }
         return updatedSetting;
     }
@@ -98,8 +98,8 @@ public class SettingsService {
 
         // Set new default order in dependent setting files and adjust LastCardId
         for (Settings settings: settingFiles){
-            settings.setCardOrder(cardOrder);
-            settings.setLastCardID(cardOrder.get(0));
+            settings.setSavedOrder(cardOrder);
+            settings.setLastCard(cardOrder.get(0));
             settings.setStudyStarred(false);
             settings.setCardsShuffled(false);
         }
@@ -109,9 +109,9 @@ public class SettingsService {
         // Intersection of cardIds in set and the old starred Cards
         // This will exclude all deleted cardIds in the starred list
         for (Settings oldSetting: oldSettings){
-            List<Long> starredCardIds = oldSetting.getStarredCards();
+            List<Long> starredCardIds = oldSetting.getMarkedCards();
             List<Long> newStarredCardIds = intersection(starredCardIds,newCardIds);
-            oldSetting.setStarredCards(newStarredCardIds);
+            oldSetting.setMarkedCards(newStarredCardIds);
         }
     }
 
@@ -142,9 +142,9 @@ public class SettingsService {
         newSetting.setSetID(setId);
         newSetting.setCardsShuffled(false);
         newSetting.setStudyStarred(false);
-        newSetting.setLastCardID(0L);
-        newSetting.setCardOrder(cardOrder);
-        newSetting.setStarredCards(starredCards);
+        newSetting.setLastCard(0L);
+        newSetting.setSavedOrder(cardOrder);
+        newSetting.setMarkedCards(starredCards);
 
         // save & flush to repo
         newSetting = settingsRepository.save(newSetting);

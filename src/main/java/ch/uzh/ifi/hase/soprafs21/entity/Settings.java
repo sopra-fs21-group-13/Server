@@ -26,15 +26,15 @@ public class Settings {
     private Boolean studyStarred;
 
     @Column
-    private Long lastCardID;
+    private Long lastCard;
 
     @Column
     @ElementCollection(targetClass=Long.class)
-    private List<Long> starredCards;
+    private List<Long> markedCards;
 
     @Column
     @ElementCollection(targetClass=Long.class)
-    private List<Long> cardOrder;
+    private List<Long> savedOrder;
 
     public Long getSettingsId() {
         return settingsId;
@@ -76,27 +76,27 @@ public class Settings {
         this.studyStarred = studyStarred;
     }
 
-    public Long getLastCardID() {
-        return lastCardID;
+    public Long getLastCard() {
+        return lastCard;
     }
 
-    public void setLastCardID(Long lastCardID) {
-        this.lastCardID = lastCardID;
+    public void setLastCard(Long lastCard) {
+        this.lastCard = lastCard;
     }
 
-    public List<Long> getCardOrder() {
-        return cardOrder;
+    public List<Long> getMarkedCards() {
+        return markedCards;
     }
 
-    public void setCardOrder(List<Long> cardOrder) {
-        this.cardOrder = cardOrder;
+    public void setMarkedCards(List<Long> markedCards) {
+        this.markedCards = markedCards;
     }
 
-    public List<Long> getStarredCards() {
-        return starredCards;
+    public List<Long> getSavedOrder() {
+        return savedOrder;
     }
 
-    public void setStarredCards(List<Long> starredCards) {
-        this.starredCards = starredCards;
+    public void setSavedOrder(List<Long> savedOrder) {
+        this.savedOrder = savedOrder;
     }
 }

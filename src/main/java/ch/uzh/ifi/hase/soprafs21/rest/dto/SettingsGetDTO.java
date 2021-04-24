@@ -15,11 +15,11 @@ public class SettingsGetDTO {
 
     private Boolean studyStarred;
 
-    private Long lastCardID;
+    private Long lastCard;
 
-    private ArrayList<Long> starredCards;
+    private ArrayList<Long> markedCards;
 
-    private ArrayList<Long> cardOrder;
+    private ArrayList<Long> savedOrder;
 
     public Long getSettingsId() {
         return settingsId;
@@ -61,28 +61,28 @@ public class SettingsGetDTO {
         this.studyStarred = studyStarred;
     }
 
-    public Long getLastCardID() {
-        return lastCardID;
+    public Long getLastCard() {
+        return lastCard;
     }
 
-    public void setLastCardID(Long lastCardID) {
-        this.lastCardID = lastCardID;
+    public void setLastCard(Long lastCard) {
+        this.lastCard = lastCard;
     }
 
-    public ArrayList<Long> getCardOrder() {
-        return cardOrder;
+    public ArrayList<Long> getMarkedCards() {
+        return markedCards;
     }
 
-    public void setCardOrder(ArrayList<Long> cardOrder) {
-        this.cardOrder = cardOrder;
+    public void setMarkedCards(ArrayList<Long> markedCards) {
+        this.markedCards = markedCards;
     }
 
-    public ArrayList<Long> getStarredCards() {
-        return starredCards;
+    public ArrayList<Long> getSavedOrder() {
+        return savedOrder;
     }
 
-    public void setStarredCards(ArrayList<Long> starredCards) {
-        this.starredCards = starredCards;
+    public void setSavedOrder(ArrayList<Long> savedOrder) {
+        this.savedOrder = savedOrder;
     }
 }
 

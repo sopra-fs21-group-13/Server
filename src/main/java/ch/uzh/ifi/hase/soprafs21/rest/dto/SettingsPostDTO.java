@@ -9,10 +9,9 @@ public class SettingsPostDTO {
     private Long setID;
     private Boolean cardsShuffled;
     private Boolean studyStarred;
-    private Long lastCardID;
-    private ArrayList<Long> starredCards;
-    private ArrayList<Long> cardOrder;
-
+    private Long lastCard;
+    private ArrayList<Long> markedCards;
+    private ArrayList<Long> savedOrder;
 
 
     public Long getSettingsId() {
@@ -55,27 +54,27 @@ public class SettingsPostDTO {
         this.studyStarred = studyStarred;
     }
 
-    public Long getLastCardID() {
-        return lastCardID;
+    public Long getLastCard() {
+        return lastCard;
     }
 
-    public void setLastCardID(Long lastCardID) {
-        this.lastCardID = lastCardID;
+    public void setLastCard(Long lastCard) {
+        this.lastCard = lastCard;
     }
 
-    public ArrayList<Long> getStarredCards() {
-        return starredCards;
+    public ArrayList<Long> getMarkedCards() {
+        return markedCards;
     }
 
-    public void setStarredCards(ArrayList<Long> starredCards) {
-        this.starredCards = starredCards;
+    public void setMarkedCards(ArrayList<Long> markedCards) {
+        this.markedCards = markedCards;
     }
 
-    public ArrayList<Long> getCardOrder() {
-        return cardOrder;
+    public ArrayList<Long> getSavedOrder() {
+        return savedOrder;
     }
 
-    public void setCardOrder(ArrayList<Long> cardOrder) {
-        this.cardOrder = cardOrder;
+    public void setSavedOrder(ArrayList<Long> savedOrder) {
+        this.savedOrder = savedOrder;
     }
 }

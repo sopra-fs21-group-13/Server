@@ -52,11 +52,13 @@ public interface DTOMapper {
 
 // Set Mappings
 
-    @Mapping(source = "setName", target = "setName")
+    @Mapping(source = "title", target = "title")
     @Mapping(source = "user", target = "user", qualifiedByName = "User") // Custom Mapper with an Annotation for the card array
     @Mapping(source = "cards", target = "cards", qualifiedByName = "Card") // Custom Mapper with an Annotation for the card array
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
+    @Mapping(source = "explain",target = "explain")
+    @Mapping(source = "photo",target = "photo")
     Set convertSetPostDTOtoEntity(SetPostDTO setPostDTO);
 
     // Qualifier for handling nested json and convert it into entity user
@@ -79,22 +81,26 @@ public interface DTOMapper {
 
 
     @Mapping(source = "setId", target = "setId")
-    @Mapping(source = "setName", target = "setName")
+    @Mapping(source = "title", target = "title")
     @Mapping(source = "user", target = "userId")
     @Mapping(source = "cards", target = "cards")
-    //@Mapping(source = "setOrder",target = "setOrder")
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
+    @Mapping(source = "explain",target = "explain")
+    @Mapping(source = "photo",target = "photo")
     SetGetDTO convertEntityToSetGetDTO(Set set);
 
 
 // Settings Mappings
 
+    @Mapping(source = "settingsId", target = "settingsId")
     @Mapping(source = "userID", target = "userID")
     @Mapping(source = "setID", target = "setID")
     @Mapping(source = "cardsShuffled", target = "cardsShuffled")
     @Mapping(source = "studyStarred", target = "studyStarred")
-    @Mapping(source = "lastCardID", target = "lastCardID")
+    @Mapping(source = "lastCard", target = "lastCard")
+    @Mapping(source = "savedOrder", target = "savedOrder")
+    @Mapping(source = "markedCards", target = "markedCards")
     Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
 
     @Mapping(source = "settingsId", target = "settingsId")
@@ -102,8 +108,9 @@ public interface DTOMapper {
     @Mapping(source = "setID", target = "setID")
     @Mapping(source = "cardsShuffled", target = "cardsShuffled")
     @Mapping(source = "studyStarred", target = "studyStarred")
-    @Mapping(source = "lastCardID", target = "lastCardID")
-    @Mapping(source = "cardOrder", target = "cardOrder")
+    @Mapping(source = "lastCard", target = "lastCard")
+    @Mapping(source = "savedOrder", target = "savedOrder")
+    @Mapping(source = "markedCards", target = "markedCards")
     SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
 
 }
