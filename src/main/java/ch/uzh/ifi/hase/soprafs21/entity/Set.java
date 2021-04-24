@@ -49,7 +49,7 @@ public class Set implements Serializable {
     //@OrderColumn(name="card")
     private List<Card> cards;
 
-    @Column()
+    @Column(nullable = false)
     private SetCategory setCategory;
 
     @Column(nullable = false)
