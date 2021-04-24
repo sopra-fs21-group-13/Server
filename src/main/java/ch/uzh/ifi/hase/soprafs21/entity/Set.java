@@ -46,11 +46,6 @@ public class Set implements Serializable {
     //@OrderColumn(name="card")
     private List<Card> cards;
 
-    /**
-    @Column(nullable = false)
-    private SetOrder setOrder;
-    */
-
     @Column()
     private SetCategory setCategory;
 
@@ -88,16 +83,6 @@ public class Set implements Serializable {
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
-
-    /**
-    public SetOrder getSetOrder() {
-        return setOrder;
-    }
-
-    public void setSetOrder(SetOrder setOrder) {
-        this.setOrder = setOrder;
-    }
-     */
 
     public SetCategory getSetCategory() {
         return setCategory;

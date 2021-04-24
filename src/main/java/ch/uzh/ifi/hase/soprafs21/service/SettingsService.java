@@ -29,11 +29,8 @@ import java.util.List;
 public class SettingsService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
-
     private final SettingsRepository settingsRepository;
-
     private final SetRepository setRepository;
-
     private final UserRepository userRepository;
 
 
@@ -75,18 +72,43 @@ public class SettingsService {
         return updatedSetting;
     }
 
-    // Create Setting file
-    public void createSettings(Long userId, Long setId){
-        // Create default cardOrder arraylist by getting all cardIds
+
+    public void updateCardOrder(Set set){
+        // Throw Error when Set doesn't exist
+        if (!setRepository.existsById(set.getSetId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set doesn't exist");
+        }
+        // Get List of all settings with given setId
+        List<Settings> settingFiles = settingsRepository.findAllBySetID(set.getSetId());
+        if(settingFiles.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No Settingfiles were found when updating set");
+        }
+
+        // Create default cardOrder List
         List<Long> cardOrder =  new ArrayList<>();
-        Set set = setRepository.findById(setId).get();
         List<Card> cards = set.getCards();
         for (Card card: cards) {
             cardOrder.add(card.getCardId());
         }
 
-        //int[] cardOrderInt = IntStream.range(0, cardSetSize).toArray();
-        //List<Integer> cardOrder = IntStream.of(cardOrderInt).boxed().collect(Collectors.toList());
+        // Set new default order in dependent setting files
+        for (Settings settings: settingFiles){
+            settings.setCardOrder(cardOrder);
+        }
+    }
+
+    // Create Setting file
+    public void createSettings(Long userId, Long setId){
+        // Create default cardOrder arraylist by getting all cardIds
+        List<Long> cardOrder =  new ArrayList<>();
+        Set set = setRepository.findById(setId).get();
+        if (set == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
+        }
+        List<Card> cards = set.getCards();
+        for (Card card: cards) {
+            cardOrder.add(card.getCardId());
+        }
 
         // Create empty list for starredCards, sincene default set have no starred cards
         ArrayList<Long> starredCards = new ArrayList<>();
@@ -106,8 +128,7 @@ public class SettingsService {
         settingsRepository.flush();
 
         log.debug("Created Information fo Setting File: {}", newSetting);
-        //in case of return setting file
-        //return newSetting;
     }
+
 
 }

@@ -27,9 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
-
     private final UserRepository userRepository;
-
     private static final AtomicInteger count = new AtomicInteger(0);
 
     @Autowired
@@ -44,7 +42,6 @@ public class UserService {
     public List<User> getOnlineUsers() {
         return this.userRepository.findByStatus(UserStatus.ONLINE);
     }
-
 
     public User getUser(long id) {
         return this.userRepository.findById(id).get();

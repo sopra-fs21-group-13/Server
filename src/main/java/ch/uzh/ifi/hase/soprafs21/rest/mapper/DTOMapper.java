@@ -88,7 +88,7 @@ public interface DTOMapper {
     SetGetDTO convertEntityToSetGetDTO(Set set);
 
 
-    // Settings Mappings
+// Settings Mappings
 
     @Mapping(source = "userID", target = "userID")
     @Mapping(source = "setID", target = "setID")

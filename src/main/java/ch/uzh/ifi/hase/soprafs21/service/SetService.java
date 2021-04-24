@@ -27,11 +27,8 @@ import java.util.List;
 public class SetService {
 
     private final Logger log = LoggerFactory.getLogger(SetService.class);
-
     private final SetRepository setRepository;
-
     private final UserRepository userRepository;
-
     private final SettingsRepository settingsRepository;
 
     @Autowired
@@ -55,11 +52,9 @@ public class SetService {
 
     // Create a flashcard set
     public Set createSet(Set newSet) {
-        // Assign non-nullable properties
-        /**
-        newSet.setSetOrder(SetOrder.NORMAL);
-         */
-
+        if (newSet == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set is empty");
+        }
         // saves the given entity but data is only persisted in the database once flush() is called
         newSet = setRepository.save(newSet);
         setRepository.flush();
@@ -71,7 +66,6 @@ public class SetService {
 
     // Edit a Flashcard Set
     public Set updateSet(Set set){
-
         Set updatedSet = getSetBySetId(set.getSetId());
 
         if (updatedSet == null) {
@@ -92,7 +86,6 @@ public class SetService {
                 updatedSet.setSetStatus(set.getSetStatus());
             }
         }
-
         updatedSet = setRepository.saveAndFlush(updatedSet);
 
         return updatedSet;

@@ -51,17 +51,6 @@ public class SetController {
         return setGetDTOs;
     }
 
-    @PutMapping ("/sets")
-    @ResponseStatus(HttpStatus.OK)
-    public SetGetDTO getSetByID(@RequestBody SetPostDTO setPostDTO) {
-
-        Set setInput = DTOMapper.INSTANCE.convertSetPostDTOtoEntity(setPostDTO);
-
-        Set updatedSet = setService.updateSet(setInput);
-
-        return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
-    }
-
     // Get flashcardset with setId
     @GetMapping("/sets/{setId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -86,27 +75,27 @@ public class SetController {
     }
      */
 
-/*   We dont need this
-
-    // Get created sets of a specific user
-    @GetMapping("/sets/users/{userId}/set")
-    public List<Set> getSetByUser(@PathVariable("userId") Long userId) {
-        System.out.println(userId);
-        // Get User by ID
-        User user = userService.getUser(userId);
-        // Get all sets of user
-        return setService.getSetByUser(user);
-    }
- */
 
 // All Put Mappings:
 
     // Update a specific set of cards
+    @PutMapping ("/sets")
+    @ResponseStatus(HttpStatus.OK)
+    public SetGetDTO getSetByID(@RequestBody SetPostDTO setPostDTO) {
 
+        Set setInput = DTOMapper.INSTANCE.convertSetPostDTOtoEntity(setPostDTO);
+
+        Set updatedSet = setService.updateSet(setInput);
+
+        //update cardOrder -> default order
+        settingsService.updateCardOrder(updatedSet);
+
+        return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
+    }
 
 // All Post Mappings:
 
-    // Add a new Set to the db
+    // Add a new Set to the database
     @PostMapping("/sets")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
