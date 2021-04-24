@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Settings Service
@@ -91,10 +92,32 @@ public class SettingsService {
             cardOrder.add(card.getCardId());
         }
 
-        // Set new default order in dependent setting files
+        //Apply new StarredCards -> adjust for deleted cards
+        updateStarredCards(cardOrder,settingFiles);
+
+
+        // Set new default order in dependent setting files and adjust LastCardId
         for (Settings settings: settingFiles){
             settings.setCardOrder(cardOrder);
+            settings.setLastCardID(cardOrder.get(0));
+            settings.setStudyStarred(false);
+            settings.setCardsShuffled(false);
         }
+    }
+
+    public void updateStarredCards(List<Long> newCardIds, List<Settings> oldSettings){
+        // Intersection of cardIds in set and the old starred Cards
+        // This will exclude all deleted cardIds in the starred list
+        for (Settings oldSetting: oldSettings){
+            List<Long> starredCardIds = oldSetting.getStarredCards();
+            List<Long> newStarredCardIds = intersection(starredCardIds,newCardIds);
+            oldSetting.setStarredCards(newStarredCardIds);
+        }
+    }
+
+    // Helper Method
+    public static List<Long> intersection(List<Long> l1, List<Long> l2) {
+        return l1.stream().filter(l2::contains).collect(Collectors.toList());
     }
 
     // Create Setting file
@@ -110,7 +133,7 @@ public class SettingsService {
             cardOrder.add(card.getCardId());
         }
 
-        // Create empty list for starredCards, sincene default set have no starred cards
+        // Create empty list for starredCards, since default set have no starred cards
         ArrayList<Long> starredCards = new ArrayList<>();
 
         //Creating instance and default settings

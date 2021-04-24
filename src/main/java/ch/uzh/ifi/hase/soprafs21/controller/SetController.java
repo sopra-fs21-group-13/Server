@@ -87,8 +87,11 @@ public class SetController {
 
         Set updatedSet = setService.updateSet(setInput);
 
-        //update cardOrder -> default order
+        //update cardOrder -> default order & lastCardId to first
         settingsService.updateCardOrder(updatedSet);
+
+        //update starredCards
+
 
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
     }
