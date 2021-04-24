@@ -125,7 +125,7 @@ public class SettingsService {
         // Create default cardOrder arraylist by getting all cardIds
         List<Long> cardOrder =  new ArrayList<>();
         Set set = setRepository.findById(setId).get();
-        if (set == null){
+        if (!setRepository.existsById(setId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
         }
         List<Card> cards = set.getCards();
