@@ -86,20 +86,20 @@ public class SettingsService {
         }
 
         // Create default cardOrder List
-        List<Long> cardOrder =  new ArrayList<>();
+        List<Long> savedOrder =  new ArrayList<>();
         List<Card> cards = set.getCards();
         for (Card card: cards) {
-            cardOrder.add(card.getCardId());
+            savedOrder.add(card.getCardId());
         }
 
         //Apply new StarredCards -> adjust for deleted cards
-        updateStarredCards(cardOrder,settingFiles);
+        updateStarredCards(savedOrder,settingFiles);
 
 
         // Set new default order in dependent setting files and adjust LastCardId
         for (Settings settings: settingFiles){
-            settings.setSavedOrder(cardOrder);
-            settings.setLastCard(cardOrder.get(0));
+            settings.setSavedOrder(savedOrder);
+            settings.setLastCard(savedOrder.get(0));
             settings.setStudyStarred(false);
             settings.setCardsShuffled(false);
         }
@@ -109,9 +109,9 @@ public class SettingsService {
         // Intersection of cardIds in set and the old starred Cards
         // This will exclude all deleted cardIds in the starred list
         for (Settings oldSetting: oldSettings){
-            List<Long> starredCardIds = oldSetting.getMarkedCards();
-            List<Long> newStarredCardIds = intersection(starredCardIds,newCardIds);
-            oldSetting.setMarkedCards(newStarredCardIds);
+            List<Long> markedCardIds = oldSetting.getMarkedCards();
+            List<Long> newMarkedCardIds = intersection(markedCardIds,newCardIds);
+            oldSetting.setMarkedCards(newMarkedCardIds);
         }
     }
 
@@ -134,7 +134,7 @@ public class SettingsService {
         }
 
         // Create empty list for starredCards, since default set have no starred cards
-        ArrayList<Long> starredCards = new ArrayList<>();
+        ArrayList<Long> markedCards = new ArrayList<>();
 
         //Creating instance and default settings
         Settings newSetting = new Settings();
@@ -144,7 +144,7 @@ public class SettingsService {
         newSetting.setStudyStarred(false);
         newSetting.setLastCard(0L);
         newSetting.setSavedOrder(cardOrder);
-        newSetting.setMarkedCards(starredCards);
+        newSetting.setMarkedCards(markedCards);
 
         // save & flush to repo
         newSetting = settingsRepository.save(newSetting);

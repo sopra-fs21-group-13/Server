@@ -76,6 +76,9 @@ public class SetService {
             if (set.getTitle() != null) {
                 updatedSet.setTitle(set.getTitle());
             }
+            if (set.getExplain() != null) {
+                updatedSet.setExplain(set.getExplain());
+            }
             if (set.getCards() != null) {
                 updatedSet.setCards(set.getCards());
             }
@@ -84,6 +87,12 @@ public class SetService {
             }
             if (set.getSetStatus() != null) {
                 updatedSet.setSetStatus(set.getSetStatus());
+            }
+            if (set.getPhoto() != null) {
+                updatedSet.setPhoto(set.getPhoto());
+            }
+            if (set.getLiked() != null) {
+                updatedSet.setLiked(set.getLiked());
             }
         }
         updatedSet = setRepository.saveAndFlush(updatedSet);
