@@ -91,7 +91,8 @@ public class UserService {
         User userByUsername = userRepository.findByUsername(userToLogin.getUsername());
         String baseErrorMessage = "The user doesn't exist. Please check the credentials and password!";
         if (userByUsername != null) {
-            if (userByUsername.getName().equals(userToLogin.getName()) && userByUsername.getPassword().equals(userToLogin.getPassword())) {
+            if (userByUsername.getPassword().equals(userToLogin.getPassword())) {
+                userToLogin.setName(userByUsername.getName());
                 userToLogin.setToken(userByUsername.getToken());
                 userToLogin.setStatus(UserStatus.ONLINE);
                 userToLogin.setUserId(userByUsername.getUserId());
