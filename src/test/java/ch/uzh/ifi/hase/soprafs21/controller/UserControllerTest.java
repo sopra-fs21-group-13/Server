@@ -49,6 +49,7 @@ public class UserControllerTest {
         user.setName("Firstname Lastname");
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.OFFLINE);
+        user.setPassword("password");
 
         List<User> allUsers = Collections.singletonList(user);
 
@@ -63,7 +64,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(user.getName())))
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
-                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
+                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$[0].password", is(user.getPassword())));
     }
 
     @Test

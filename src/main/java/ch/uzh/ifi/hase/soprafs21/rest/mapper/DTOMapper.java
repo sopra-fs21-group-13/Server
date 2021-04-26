@@ -42,6 +42,7 @@ public interface DTOMapper {
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
     @Mapping(source = "status", target = "status")
     @Mapping(source = "learnSets", target = "learnSets")
     @Mapping(source = "token", target = "token")
