@@ -60,7 +60,7 @@ public class SettingsController {
             settingsGetDTOS.add(DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(setting));
         }
 
-        // return list of all public sets
+        // return list of all public settings
         return settingsGetDTOS;
     }
 }

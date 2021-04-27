@@ -53,7 +53,7 @@ public class SetService {
     // Create a flashcard set
     public Set createSet(Set newSet) {
         if (newSet == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set is empty");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Set is empty");
         }
         // saves the given entity but data is only persisted in the database once flush() is called
         newSet = setRepository.save(newSet);
