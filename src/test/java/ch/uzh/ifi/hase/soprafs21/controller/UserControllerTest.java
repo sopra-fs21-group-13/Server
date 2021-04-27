@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs21.service.SetService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
+    private SetService setService;
 
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
@@ -66,6 +69,54 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
                 .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
                 .andExpect(jsonPath("$[0].password", is(user.getPassword())));
+    }
+
+    @Test
+    public void givenUsers_whenGetUsersById_thenReturnJsonArray() throws Exception {
+
+        /**
+        //given Set
+        Set set1 = new Set();
+        set1.setSetId(1L);
+        Set set2 = new Set();
+        set1.setSetId(2L);
+
+        ArrayList<Set> listSet = new ArrayList<>();
+        listSet.add(set1);
+        listSet.add(set2);
+
+        System.out.println(listSet);
+        */
+
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Firstname Lastname");
+        user.setUsername("firstname@lastname");
+        user.setStatus(UserStatus.OFFLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
+
+        // this mocks the UserService
+        given(userService.getUser(1L)).willReturn(user);
+
+        // when
+        MockHttpServletRequestBuilder getRequest = get("/users/1").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(getRequest).andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(user.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
     @Test

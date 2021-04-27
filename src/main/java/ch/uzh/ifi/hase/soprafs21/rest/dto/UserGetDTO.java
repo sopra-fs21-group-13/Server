@@ -15,6 +15,8 @@ public class UserGetDTO {
     private String token;
     private String email;
     private String password;
+    private boolean inGame;
+    private int numberOfWins;
 
     //test
 
@@ -77,5 +79,21 @@ public class UserGetDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
+    public int getNumberOfWins() {
+        return numberOfWins;
+    }
+
+    public void setNumberOfWins(int numberOfWins) {
+        this.numberOfWins = numberOfWins;
     }
 }

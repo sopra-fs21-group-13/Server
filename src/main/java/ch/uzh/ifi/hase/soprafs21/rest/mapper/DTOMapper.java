@@ -36,6 +36,8 @@ public interface DTOMapper {
     @Mapping(source = "password", target = "password")
     @Mapping(source = "token", target = "token")
     @Mapping(source = "email", target = "email")
+    @Mapping(source = "inGame", target = "inGame")
+    @Mapping(source = "numberOfWins", target = "numberOfWins")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     //Get Mapping for user with learn sets
@@ -47,6 +49,8 @@ public interface DTOMapper {
     @Mapping(source = "learnSets", target = "learnSets")
     @Mapping(source = "token", target = "token")
     @Mapping(source = "email", target = "email")
+    @Mapping(source = "inGame", target = "inGame")
+    @Mapping(source = "numberOfWins", target = "numberOfWins")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
 

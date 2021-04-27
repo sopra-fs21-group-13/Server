@@ -44,7 +44,7 @@ public class User  {
     private Boolean inGame;
 
     @Column
-    private Integer NumberOfWins;
+    private Integer numberOfWins;
 
     @Column(nullable = true)
     private String email;
@@ -116,11 +116,11 @@ public class User  {
     }
 
     public Integer getNumberOfWins() {
-        return NumberOfWins;
+        return numberOfWins;
     }
 
     public void setNumberOfWins(Integer numberOfWins) {
-        NumberOfWins = numberOfWins;
+        this.numberOfWins = numberOfWins;
     }
 
     public List<Set> getLearnSets() {

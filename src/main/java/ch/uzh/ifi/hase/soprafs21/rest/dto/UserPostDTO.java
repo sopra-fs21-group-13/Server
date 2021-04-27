@@ -11,6 +11,8 @@ public class UserPostDTO {
     private String password;
     private String token;
     private String email;
+    private boolean inGame;
+    private int numberOfWins;
 
     public long getUserId() {
         return userId;
@@ -64,4 +66,19 @@ public class UserPostDTO {
         this.email = email;
     }
 
+    public boolean isInGame() {
+        return inGame;
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
+    public int getNumberOfWins() {
+        return numberOfWins;
+    }
+
+    public void setNumberOfWins(int numberOfWins) {
+        this.numberOfWins = numberOfWins;
+    }
 }
