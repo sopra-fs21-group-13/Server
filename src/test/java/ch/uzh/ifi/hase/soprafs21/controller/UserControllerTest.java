@@ -25,8 +25,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,17 +46,33 @@ public class UserControllerTest {
 
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+
+        /**
+        //given Set
+        Set set1 = new Set();
+        set1.setSetId(0L);
+        set1.setTitle("abc");
+        set1.setExplain("abc1");
+        set1.setSetCategory(SetCategory.GERMAN);
+        set1.setSetStatus(SetStatus.PUBLIC);
+
+        List<Set> listSet = Collections.singletonList(set1);
+        */
+
         // given
         User user = new User();
+        user.setUserId(1L);
         user.setName("Firstname Lastname");
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.OFFLINE);
         user.setPassword("password");
+        user.setLearnSets(new ArrayList<>());
 
         List<User> allUsers = Collections.singletonList(user);
 
         // this mocks the UserService -> we define above what the userService should return when getUsers() is called
         given(userService.getUsers()).willReturn(allUsers);
+
 
         // when
         MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
@@ -65,10 +80,182 @@ public class UserControllerTest {
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].userId", is(1)))
                 .andExpect(jsonPath("$[0].name", is(user.getName())))
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
                 .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
-                .andExpect(jsonPath("$[0].password", is(user.getPassword())));
+                .andExpect(jsonPath("$[0].password", is(user.getPassword())))
+                .andExpect(jsonPath("$[0].learnSets", is(user.getLearnSets())));
+    }
+
+    @Test
+    public void givenUsers_whenOnlineUsers_thenReturnJsonArray() throws Exception {
+
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Firstname Lastname");
+        user.setUsername("firstname@lastname");
+        user.setStatus(UserStatus.ONLINE);
+        user.setPassword("password");
+        user.setLearnSets(new ArrayList<>());
+
+        List<User> allUsers = Collections.singletonList(user);
+
+        // this mocks the UserService -> we define above what the userService should return when getUsers() is called
+        given(userService.getOnlineUsers()).willReturn(allUsers);
+
+
+        // when
+        MockHttpServletRequestBuilder getRequest = get("/users/online").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(getRequest).andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].userId", is(1)))
+                .andExpect(jsonPath("$[0].name", is(user.getName())))
+                .andExpect(jsonPath("$[0].username", is(user.getUsername())))
+                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$[0].password", is(user.getPassword())))
+                .andExpect(jsonPath("$[0].learnSets", is(user.getLearnSets())));
+    }
+
+    @Test
+    public void createUser_validInput_userCreated() throws Exception {
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setStatus(UserStatus.ONLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
+
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setName("Test User");
+        userPostDTO.setUsername("testUsername");
+        userPostDTO.setStatus(UserStatus.ONLINE);
+        userPostDTO.setPassword("password");
+        userPostDTO.setInGame(true);
+        userPostDTO.setNumberOfWins(7);
+        userPostDTO.setEmail("xyz@gmail.com");
+        userPostDTO.setLearnSets(new ArrayList<>());
+
+        given(userService.createUser(Mockito.any())).willReturn(user);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.userId", is(user.getUserId().intValue())))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(user.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
+    }
+
+    @Test
+    public void givenUsers_whenLoginUsers_validInput() throws Exception {
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setStatus(UserStatus.ONLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
+
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setName("Test User");
+        userPostDTO.setUsername("testUsername");
+        userPostDTO.setStatus(UserStatus.ONLINE);
+        userPostDTO.setPassword("password");
+        userPostDTO.setInGame(true);
+        userPostDTO.setNumberOfWins(7);
+        userPostDTO.setEmail("xyz@gmail.com");
+        userPostDTO.setLearnSets(new ArrayList<>());
+
+        given(userService.checkForLogin(Mockito.any())).willReturn(user);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", is(user.getUserId().intValue())))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(user.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
+    }
+
+    @Test
+    public void givenUsers_whenSocialLoginUsers_validInput() throws Exception {
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setStatus(UserStatus.ONLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
+
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setName("Test User");
+        userPostDTO.setUsername("testUsername");
+        userPostDTO.setStatus(UserStatus.ONLINE);
+        userPostDTO.setPassword("password");
+        userPostDTO.setInGame(true);
+        userPostDTO.setNumberOfWins(7);
+        userPostDTO.setEmail("xyz@gmail.com");
+        userPostDTO.setLearnSets(new ArrayList<>());
+
+        given(userService.upserd(Mockito.any())).willReturn(user);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/users/socialLogin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", is(user.getUserId().intValue())))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(user.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
     @Test
@@ -77,13 +264,21 @@ public class UserControllerTest {
         /**
         //given Set
         Set set1 = new Set();
-        set1.setSetId(1L);
-        Set set2 = new Set();
-        set1.setSetId(2L);
+        set1.setSetId(0L);
+        set1.setTitle("abc");
+        set1.setExplain("abc1");
+        set1.setSetCategory(SetCategory.GERMAN);
+        set1.setSetStatus(SetStatus.PUBLIC);
 
-        ArrayList<Set> listSet = new ArrayList<>();
+        Set set2 = new Set();
+        set2.setSetId(2L);
+        set2.setTitle("abc");
+        set2.setExplain("abc1");
+        set2.setSetCategory(SetCategory.GERMAN);
+        set2.setSetStatus(SetStatus.PUBLIC);
+
+        List<Set> listSet = new ArrayList<>();
         listSet.add(set1);
-        listSet.add(set2);
 
         System.out.println(listSet);
         */
@@ -101,7 +296,7 @@ public class UserControllerTest {
         user.setLearnSets(new ArrayList<>());
 
         // this mocks the UserService
-        given(userService.getUser(1L)).willReturn(user);
+        given(userService.getUser(Mockito.eq(1L))).willReturn(user);
 
         // when
         MockHttpServletRequestBuilder getRequest = get("/users/1").contentType(MediaType.APPLICATION_JSON);
@@ -120,33 +315,109 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser_validInput_userCreated() throws Exception {
+    public void givenUsers_updateUser_validInput() throws Exception {
+        // given
+        User newUser = new User();
+        newUser.setUserId(1L);
+        newUser.setName("New Test User");
+        newUser.setUsername("NewUsername");
+        newUser.setToken("1");
+        newUser.setStatus(UserStatus.ONLINE);
+        newUser.setPassword("NewPassword");
+        newUser.setInGame(false);
+        newUser.setNumberOfWins(0);
+        newUser.setEmail("xyz@gmail.com");
+        newUser.setLearnSets(new ArrayList<>());
+
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setName("Test User");
+        userPostDTO.setUsername("testUsername");
+        userPostDTO.setStatus(UserStatus.ONLINE);
+        userPostDTO.setPassword("password");
+        userPostDTO.setInGame(true);
+        userPostDTO.setNumberOfWins(7);
+        userPostDTO.setEmail("xyz@gmail.com");
+        userPostDTO.setLearnSets(new ArrayList<>());
+
+        given(userService.updateUser(Mockito.any())).willReturn(newUser);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        // then
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", is(newUser.getUserId().intValue())))
+                .andExpect(jsonPath("$.name", is(newUser.getName())))
+                .andExpect(jsonPath("$.username", is(newUser.getUsername())))
+                .andExpect(jsonPath("$.status", is(newUser.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(newUser.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(newUser.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(newUser.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(newUser.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(newUser.getEmail())));
+    }
+
+    @Test
+    public void givenUsers_logoutUser_validInput() throws Exception {
         // given
         User user = new User();
         user.setUserId(1L);
         user.setName("Test User");
         user.setUsername("testUsername");
         user.setToken("1");
-        user.setStatus(UserStatus.ONLINE);
+        user.setStatus(UserStatus.OFFLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
 
-        UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
-        userPostDTO.setUsername("testUsername");
-
-        given(userService.createUser(Mockito.any())).willReturn(user);
+        given(userService.logoutUser(Mockito.eq(1L))).willReturn(user);
 
         // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPostDTO));
+        MockHttpServletRequestBuilder putRequest = put("/users/logout/1").contentType(MediaType.APPLICATION_JSON);
+
 
         // then
-        mockMvc.perform(postRequest)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(user.getUserId().intValue())))
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", is(user.getUserId().intValue())))
                 .andExpect(jsonPath("$.name", is(user.getName())))
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.inGame", is(user.getInGame())))
+                .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
+                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
+    }
+
+    @Test
+    public void givenUsers_deleteUser_validInput() throws Exception {
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setName("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setStatus(UserStatus.OFFLINE);
+        user.setPassword("password");
+        user.setInGame(true);
+        user.setNumberOfWins(7);
+        user.setEmail("xyz@gmail.com");
+        user.setLearnSets(new ArrayList<>());
+
+        //given(userService.deleteUser(Mockito.any())).willReturn(user);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder deleteRequest = delete("/users/1").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(deleteRequest)
+                .andExpect(status().isOk());
     }
 
     /**
@@ -155,6 +426,7 @@ public class UserControllerTest {
      * @param object
      * @return string
      */
+
     private String asJsonString(final Object object) {
         try {
             return new ObjectMapper().writeValueAsString(object);
