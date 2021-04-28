@@ -50,10 +50,10 @@ public class UserService {
         Optional<User> checkUser = userRepository.findById(id);
 
         if (checkUser.isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with this userId");
+            return checkUser.get();
         }
         else{
-            return checkUser.get();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with this userId");
         }
     }
 
