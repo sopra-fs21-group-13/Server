@@ -175,8 +175,10 @@ public class DTOMapperTest {
         settingsPostDTO.setSavedOrder(cardOrder);
         settingsPostDTO.setMarkedCards(cardOrder);
 
+        // Map -> get Settings
         Settings settings = DTOMapper.INSTANCE.convertSettingsPostDTOtoEntity(settingsPostDTO);
 
+        // assert correctness
         assertEquals(settingsPostDTO.getSettingsId(), settings.getSettingsId() );
         assertEquals(settingsPostDTO.getUserID(), settings.getUserID());
         assertEquals(settingsPostDTO.getSetID(), settings.getSetID());
@@ -185,6 +187,42 @@ public class DTOMapperTest {
         assertEquals(settingsPostDTO.getLastCard(), settings.getLastCard());
         assertEquals(settingsPostDTO.getSavedOrder(), settings.getSavedOrder());
         assertEquals(settingsPostDTO.getMarkedCards(), settings.getMarkedCards());
+
+    }
+
+    @Test
+    public void testGetSettings_fromSettings_toSettingsGetDTO_success(){
+        // create cardOrderList
+        ArrayList<Long> cardOrder = new ArrayList<>();
+        cardOrder.add(0L);
+        cardOrder.add(1L);
+
+        // create settings
+        Settings settings = new Settings();
+        settings.setSetID(0L);
+        settings.setUserID(0l);
+        settings.setSetID(0L);
+        settings.setCardsShuffled(false);
+        settings.setStudyStarred(false);
+        settings.setLastCard(0L);
+        settings.setSavedOrder(cardOrder);
+        settings.setMarkedCards(cardOrder);
+
+        // Map -> get SettingsGetDTO
+        SettingsGetDTO settingsGetDTO = DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(settings);
+
+        // assert Correctness
+        assertEquals(settingsGetDTO.getSettingsId(), settings.getSettingsId() );
+        assertEquals(settingsGetDTO.getUserID(), settings.getUserID());
+        assertEquals(settingsGetDTO.getSetID(), settings.getSetID());
+        assertEquals(settingsGetDTO.getCardsShuffled(), settings.getCardsShuffled());
+        assertEquals(settingsGetDTO.getStudyStarred(), settings.getStudyStarred());
+        assertEquals(settingsGetDTO.getLastCard(), settings.getLastCard());
+        assertEquals(settingsGetDTO.getSavedOrder(), settings.getSavedOrder());
+        assertEquals(settingsGetDTO.getMarkedCards(), settings.getMarkedCards());
+
+
+
 
     }
 
