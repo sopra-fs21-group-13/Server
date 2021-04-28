@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -30,11 +31,13 @@ public class SetService {
 
     private final Logger log = LoggerFactory.getLogger(SetService.class);
     private final SetRepository setRepository;
+    private final UserRepository userRepository;
     private final SettingsRepository settingsRepository;
 
     @Autowired
     public SetService(@Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository, SettingsRepository settingsRepository) {
         this.setRepository = setRepository;
+        this.userRepository = userRepository;
         this.settingsRepository = settingsRepository;
     }
 
@@ -46,11 +49,13 @@ public class SetService {
 
     // Get set by setId
     public Set getSetBySetId(Long setId){
-
-        if (!isEmpty(setRepository.findBySetId(setId))){
+        Optional<Set> checkSet = setRepository.findBySetId(setId);
+        if (checkSet.isPresent()){
+            return checkSet.get();
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
         }
-        return setRepository.findBySetId(setId).get();
+
     }
 
 
