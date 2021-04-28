@@ -75,8 +75,11 @@ public class UserServiceTest {
         Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testUser);
         Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
 
+
         // then -> attempt to create second user with same user -> check that an error is thrown
         assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
     }
+
+
 
 }

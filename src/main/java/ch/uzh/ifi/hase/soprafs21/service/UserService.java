@@ -144,6 +144,15 @@ public class UserService {
             if (userPostDTO.getPassword() != null) {
                 user.setPassword(userPostDTO.getPassword());
             }
+            if (userPostDTO.getEmail() != null) {
+                user.setEmail(userPostDTO.getEmail());
+            }
+            if (String.valueOf(userPostDTO.isInGame()) != null) {
+                user.setInGame(userPostDTO.isInGame());
+            }
+            if (String.valueOf(userPostDTO.getNumberOfWins()) != null) {
+                user.setNumberOfWins(userPostDTO.getNumberOfWins());
+            }
         }
 
         user = userRepository.saveAndFlush(user);
