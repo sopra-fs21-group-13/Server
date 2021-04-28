@@ -34,11 +34,8 @@ public class User  {
     @Column(nullable = false)
     private UserStatus status;
 
-    @Column(nullable = true)
+    @Column(nullable = false, unique = true)
     private String password;
-
-    @Column
-    private String birthday;
 
     @Column
     private Boolean inGame;
@@ -98,14 +95,6 @@ public class User  {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
 
     public Boolean getInGame() {
         return inGame;

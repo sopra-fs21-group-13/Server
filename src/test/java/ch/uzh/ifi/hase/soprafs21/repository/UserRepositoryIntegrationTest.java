@@ -97,6 +97,42 @@ public class UserRepositoryIntegrationTest {
     }
 
     @Test
+    public void findByPassword_success() {
+        // create set list
+        List<Set> emptyList = new ArrayList<>();
+
+        // given
+        User user = new User();
+        user.setName("Firstname Lastname");
+        user.setUsername("firsty");
+        user.setEmail("first@email.com");
+        user.setPassword("password");
+        user.setLearnSets(emptyList);
+        user.setStatus(UserStatus.OFFLINE);
+        user.setToken("1");
+        user.setInGame(false);
+        user.setNumberOfWins(1);
+
+        entityManager.persist(user);
+        entityManager.flush();
+
+        // when
+        User found = userRepository.findByPassword(user.getPassword());
+
+        // then
+        assertNotNull(found.getUserId());
+        assertEquals(found.getName(), user.getName());
+        assertEquals(found.getUsername(), user.getUsername());
+        assertEquals(found.getEmail(), user.getEmail());
+        assertEquals(found.getPassword(), user.getPassword());
+        assertEquals(found.getLearnSets(), user.getLearnSets());
+        assertEquals(found.getStatus(), user.getStatus());
+        assertEquals(found.getToken(), user.getToken());
+        assertEquals(found.getInGame(), user.getInGame());
+        assertEquals(found.getNumberOfWins(), user.getNumberOfWins());
+    }
+
+    @Test
     public void findByEmail_success() {
         // create set list
         List<Set> emptyList = new ArrayList<>();
