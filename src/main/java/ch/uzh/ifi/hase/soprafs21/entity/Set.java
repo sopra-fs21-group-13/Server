@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
-//import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

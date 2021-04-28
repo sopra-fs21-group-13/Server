@@ -6,7 +6,6 @@ import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.SetService;
 import ch.uzh.ifi.hase.soprafs21.service.SettingsService;
-import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +22,27 @@ import java.util.List;
 @RestController
 public class SetController {
 
+    /**
+    private final UserService userService;
+    private final SetService setService;
+    private final SettingsService settingsService;
+
+    public SetController(UserService userService, SetService setService, SettingsService settingsService) {
+
+        this.userService = userService;
+        this.setService = setService;
+        this.settingsService = settingsService;
+    }
+    */
+
+
     @Autowired
     private SetService setService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private SettingsService settingsService;
+
+
 
 // All Get Mappings:
 

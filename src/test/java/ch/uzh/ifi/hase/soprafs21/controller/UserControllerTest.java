@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs21.service.SetService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +41,6 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
-    private SetService setService;
 
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
