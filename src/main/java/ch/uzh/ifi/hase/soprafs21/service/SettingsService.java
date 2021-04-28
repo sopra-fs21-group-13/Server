@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
@@ -126,11 +127,12 @@ public class SettingsService {
     public void createSettings(Long userId, Long setId){
         // Create default cardOrder arraylist by getting all cardIds
         List<Long> cardOrder =  new ArrayList<>();
-        if (isEmpty(setRepository.findById(setId))){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
+        Optional<Set> checkSet = setRepository.findById(setId);
+        Set set = new Set();
+        if (checkSet.isPresent()){
+            set= checkSet.get();
         }
-        Set set = setRepository.findById(setId).get();
-        if (!setRepository.existsById(setId)){
+        else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
         }
         List<Card> cards = set.getCards();
