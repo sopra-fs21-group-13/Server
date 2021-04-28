@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 /**
  * Settings Service
  * This class is the "worker" and responsible for all functionality related to the user
@@ -124,6 +126,9 @@ public class SettingsService {
     public void createSettings(Long userId, Long setId){
         // Create default cardOrder arraylist by getting all cardIds
         List<Long> cardOrder =  new ArrayList<>();
+        if (isEmpty(setRepository.findById(setId))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
+        }
         Set set = setRepository.findById(setId).get();
         if (!setRepository.existsById(setId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");

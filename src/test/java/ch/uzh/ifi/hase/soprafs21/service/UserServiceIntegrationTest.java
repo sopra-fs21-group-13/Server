@@ -276,7 +276,7 @@ public class UserServiceIntegrationTest {
         userService.createUser(testUser);
 
         // check that an error is thrown
-        assertThrows(NoSuchElementException.class, () -> userService.updateUser(userPostDTO));
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(userPostDTO));
     }
 
     @Test
@@ -312,7 +312,7 @@ public class UserServiceIntegrationTest {
         userService.createUser(testUser);
 
         // check that an error is thrown
-        assertThrows(NoSuchElementException.class, () -> userService.logoutUser(0L));
+        assertThrows(ResponseStatusException.class, () -> userService.logoutUser(0L));
 
     }
 

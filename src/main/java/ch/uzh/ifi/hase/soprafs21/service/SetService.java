@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 /**
  * Set Service
  * This class is the "worker" and responsible for all functionality related to the flashcard set
@@ -46,6 +48,10 @@ public class SetService {
 
     // Get set by setId
     public Set getSetBySetId(Long setId){
+
+        if (! isEmpty(setRepository.findBySetId(setId))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+        }
         return setRepository.findBySetId(setId).get();
     }
 

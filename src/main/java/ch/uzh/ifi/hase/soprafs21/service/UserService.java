@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 /**
  * User Service
  * This class is the "worker" and responsible for all functionality related to the user
@@ -44,6 +46,9 @@ public class UserService {
     }
 
     public User getUser(long id) {
+        if (isEmpty(userRepository.findById(id))){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with this userId");
+        }
         return this.userRepository.findById(id).get();
     }
 
@@ -130,7 +135,7 @@ public class UserService {
     public User updateUser(UserPostDTO userPostDTO) {
         User user = getUser(userPostDTO.getUserId());
 
-        if (user == null) {
+        if (isEmpty(user)) {
             String message = "The user with id: %s can't be found in the database.";
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getUserId()));
         }
