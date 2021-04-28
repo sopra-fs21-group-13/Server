@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -46,10 +47,14 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        if (isEmpty(userRepository.findById(id))){
+        Optional<User> checkUser = userRepository.findById(id);
+
+        if (checkUser.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with this userId");
         }
-        return this.userRepository.findById(id).get();
+        else{
+            return checkUser.get();
+        }
     }
 
 
