@@ -24,6 +24,22 @@ public class SettingsController {
     @Autowired
     private SettingsService settingsService;
 
+    @GetMapping("/settings")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SettingsGetDTO> getAllSettingss(){
+        // fetch all sets in the internal representation
+        List<Settings> AllSettings = settingsService.getAllSettings();
+        List<SettingsGetDTO> settingsGetDTOS = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (Settings setting : AllSettings){
+            settingsGetDTOS.add(DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(setting));
+        }
+
+        // return list of all public settings
+        return settingsGetDTOS;
+    }
+
     // Get Settings with setId and UserID
     @GetMapping("/settings/{userId}/{setId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -47,26 +63,7 @@ public class SettingsController {
         // convert internal representation of set back to API
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(UpdatedSettings);
     }
-
-    @GetMapping("/settings")
-    @ResponseStatus(HttpStatus.OK)
-    public List<SettingsGetDTO> getAllSettingss(){
-        // fetch all sets in the internal representation
-        List<Settings> AllSettings = settingsService.getAllSettings();
-        List<SettingsGetDTO> settingsGetDTOS = new ArrayList<>();
-
-        // convert each user to the API representation
-        for (Settings setting : AllSettings){
-            settingsGetDTOS.add(DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(setting));
-        }
-
-        // return list of all public settings
-        return settingsGetDTOS;
-    }
 }
-
-
-
 
 //set.setCards();
 

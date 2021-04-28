@@ -22,26 +22,24 @@ import java.util.List;
 @RestController
 public class SetController {
 
-    /**
-    private final UserService userService;
-    private final SetService setService;
-    private final SettingsService settingsService;
-
-    public SetController(UserService userService, SetService setService, SettingsService settingsService) {
-
-        this.userService = userService;
-        this.setService = setService;
-        this.settingsService = settingsService;
-    }
-    */
-
-
     @Autowired
     private SetService setService;
 
     @Autowired
     private SettingsService settingsService;
 
+    /**
+     private final UserService userService;
+     private final SetService setService;
+     private final SettingsService settingsService;
+
+     public SetController(UserService userService, SetService setService, SettingsService settingsService) {
+
+     this.userService = userService;
+     this.setService = setService;
+     this.settingsService = settingsService;
+     }
+     */
 
 
 // All Get Mappings:

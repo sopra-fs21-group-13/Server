@@ -30,13 +30,11 @@ public class SetService {
 
     private final Logger log = LoggerFactory.getLogger(SetService.class);
     private final SetRepository setRepository;
-    private final UserRepository userRepository;
     private final SettingsRepository settingsRepository;
 
     @Autowired
     public SetService(@Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository, SettingsRepository settingsRepository) {
         this.setRepository = setRepository;
-        this.userRepository = userRepository;
         this.settingsRepository = settingsRepository;
     }
 
@@ -49,7 +47,7 @@ public class SetService {
     // Get set by setId
     public Set getSetBySetId(Long setId){
 
-        if (! isEmpty(setRepository.findBySetId(setId))){
+        if (!isEmpty(setRepository.findBySetId(setId))){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
         }
         return setRepository.findBySetId(setId).get();
