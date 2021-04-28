@@ -4,6 +4,9 @@
 ## SonarQube - Details
 
 <p align="center">
+  <a href="https://github.com/sopra-fs21-group-13/Server/actions">
+    <img src="https://github.com/sopra-fs21-group-13/Server/workflows/Deploy%20Project/badge.svg">
+  </a>
   <a href="https://heroku-badge.herokuapp.com/?app=sopra-fs21-group-13-Server"><img src="https://heroku-badge.herokuapp.com/?app=sopra-fs21-group-13-Server"></a>
   <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-13_Server">
       <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-13_Server&metric=coverage">
