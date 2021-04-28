@@ -221,9 +221,6 @@ public class DTOMapperTest {
         assertEquals(settingsGetDTO.getSavedOrder(), settings.getSavedOrder());
         assertEquals(settingsGetDTO.getMarkedCards(), settings.getMarkedCards());
 
-
-
-
     }
 
 }

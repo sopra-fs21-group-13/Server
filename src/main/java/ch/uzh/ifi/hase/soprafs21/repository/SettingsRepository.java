@@ -20,6 +20,6 @@ public interface SettingsRepository extends JpaRepository<Settings,Long> {
 
     boolean existsByUserIDAndSetID(Long userID, Long setID);
 
-    long deleteBySetID(Long setID);
+    void deleteBySetID(Long setID);
 
 }
