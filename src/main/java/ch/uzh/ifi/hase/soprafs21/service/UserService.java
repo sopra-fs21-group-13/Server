@@ -128,7 +128,8 @@ public class UserService {
             user.setUsername("NoName" + uniqueUsername);
             user.setStatus(UserStatus.ONLINE);
 
-            return userRepository.save(user);
+            User newUser = userRepository.save(user);
+            return newUser;
         }
         else{
             return user;

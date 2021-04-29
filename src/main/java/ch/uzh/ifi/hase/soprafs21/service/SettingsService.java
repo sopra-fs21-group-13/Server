@@ -47,6 +47,9 @@ public class SettingsService {
 
     // Get Settingsfile
     public Settings getSettings(Long  userId, Long setId) {
+        if(!settingsRepository.existsByUserIDAndSetID(userId,setId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not settings file found with this userId or setId");
+        }
         return this.settingsRepository.findByUserIDAndSetID(userId, setId);
     }
 
@@ -55,9 +58,7 @@ public class SettingsService {
     }
 
     public Settings updateSettings(Settings settings){
-
         Settings updatedSetting;
-
         if (!userRepository.existsById(settings.getUserID())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User doesn't exist");
         } else if(!settingsRepository.existsByUserIDAndSetID(settings.getUserID(), settings.getSetID())) {
@@ -98,7 +99,6 @@ public class SettingsService {
         //Apply new StarredCards -> adjust for deleted cards
         updateStarredCards(savedOrder,settingFiles);
 
-
         // Set new default order in dependent setting files and adjust LastCardId
         for (Settings settings: settingFiles){
             settings.setSavedOrder(savedOrder);
@@ -126,15 +126,21 @@ public class SettingsService {
     // Create Setting file
     public void createSettings(Long userId, Long setId){
         // Create default cardOrder arraylist by getting all cardIds
+        if(!userRepository.existsById(userId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found with userId while creating settings file ");
+        }
+        if(!setRepository.existsById(setId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found with setId while creating settings file ");
+        }
         List<Long> cardOrder =  new ArrayList<>();
         Optional<Set> checkSet = setRepository.findById(setId);
-        Set set = new Set();
-        if (checkSet.isPresent()){
-            set= checkSet.get();
+        Set set;
+        if (checkSet.isPresent()) {
+            set = checkSet.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found wiht setId while creating setting file");
         }
-        else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found for creating setting file");
-        }
+        // Fill up cards with getCards
         List<Card> cards = set.getCards();
         for (Card card: cards) {
             cardOrder.add(card.getCardId());
