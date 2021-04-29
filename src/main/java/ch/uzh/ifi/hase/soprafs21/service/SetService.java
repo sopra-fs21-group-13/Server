@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
@@ -60,8 +61,8 @@ public class SetService {
 
 
     // Create a flashcard set
-    public Set createSet(Set newSet) {
-        if (newSet == null){
+    public Set createSet(Set newSet){
+        if (checkSet(newSet)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Set is empty");
         }
         // saves the given entity but data is only persisted in the database once flush() is called
@@ -70,6 +71,22 @@ public class SetService {
 
         log.debug("Created Information for User: {}", newSet);
         return newSet;
+    }
+
+    // Check for completeness of set
+    public boolean checkSet(Set set){
+        if (isNull(set.getTitle())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Title");
+        } if ( isNull(set.getExplain())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Explanation");
+        } if (isNull(set.getUser())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no User");
+        } if (isNull(set.getSetCategory())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetCategory");
+        } if (isNull(set.getSetStatus())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetStatus");
+        }
+        return false;
     }
 
 
@@ -111,6 +128,9 @@ public class SetService {
 
     // Delete a Flashcard Set -> irrevocable
     public void deleteSet(Long setId){
+        if (!setRepository.existsById(setId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set with this SetId those not exist");
+        }
         setRepository.deleteById(setId);
         settingsRepository.deleteBySetID(setId);
     }
