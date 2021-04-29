@@ -18,8 +18,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 /**
  * User Service
  * This class is the "worker" and responsible for all functionality related to the user
@@ -53,7 +51,8 @@ public class UserService {
             return checkUser.get();
         }
         else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with this userId");
+            String message = "The user with id: %s can't be found in the database.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, id));
         }
     }
 
@@ -127,7 +126,6 @@ public class UserService {
         {
             int uniqueUsername = count.incrementAndGet();
             user.setUsername("NoName" + uniqueUsername);
-
             user.setStatus(UserStatus.ONLINE);
 
             return userRepository.save(user);
@@ -138,34 +136,23 @@ public class UserService {
     }
 
     public User updateUser(UserPostDTO userPostDTO) {
-        User user = getUser(userPostDTO.getUserId());
 
-        if (isEmpty(user)) {
-            String message = "The user with id: %s can't be found in the database.";
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, user.getUserId()));
-        }
-        else {
-            if (userPostDTO.getUsername() != null) {
-                user.setUsername(userPostDTO.getUsername());
-            }
-            if (userPostDTO.getName() != null) {
-                user.setName(userPostDTO.getName());
-            }
-            if (userPostDTO.getPassword() != null) {
-                user.setPassword(userPostDTO.getPassword());
-            }
-            if (userPostDTO.getEmail() != null) {
-                user.setEmail(userPostDTO.getEmail());
-            }
-            if (String.valueOf(userPostDTO.isInGame()) != null) {
-                user.setInGame(userPostDTO.isInGame());
-            }
-            if (String.valueOf(userPostDTO.getNumberOfWins()) != null) {
-                user.setNumberOfWins(userPostDTO.getNumberOfWins());
-            }
-        }
+        User user = userRepository.findById(userPostDTO.getUserId()).orElseThrow(IllegalArgumentException::new);
 
-        user = userRepository.saveAndFlush(user);
+        if (userPostDTO.getUsername() != null) {
+                user.setUsername(userPostDTO.getUsername());}
+        if (userPostDTO.getName() != null) {
+                user.setName(userPostDTO.getName()); }
+        if (userPostDTO.getPassword() != null) {
+                user.setPassword(userPostDTO.getPassword()); }
+        if (userPostDTO.getEmail() != null) {
+                user.setEmail(userPostDTO.getEmail()); }
+
+        user.setInGame(userPostDTO.isInGame());
+        user.setNumberOfWins(userPostDTO.getNumberOfWins());
+
+        user = userRepository.save(user);
+        userRepository.flush();
         return user;
     }
 
@@ -174,7 +161,8 @@ public class UserService {
 
         if (user != null){
             user.setStatus(UserStatus.OFFLINE);
-            user = userRepository.saveAndFlush(user);
+            user = userRepository.save(user);
+            userRepository.flush();
         }
 
         return user;
