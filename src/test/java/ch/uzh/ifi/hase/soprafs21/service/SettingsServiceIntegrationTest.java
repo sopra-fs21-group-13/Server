@@ -2,15 +2,12 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.Settings;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @WebAppConfiguration
 @SpringBootTest
-public class SetServiceIntegrationTest {
+public class SettingsServiceIntegrationTest {
 
     @Qualifier("userRepository")
     @Autowired
@@ -63,11 +60,10 @@ public class SetServiceIntegrationTest {
     }
 
     @Test
-    public void createSettings_validInputs_success() {
+    public void createSet_validInputs_success() {
         // given
         assertNull(userRepository.findByUsername("testUsername"));
         assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
         // cardList
         List<Card> emptyList = new ArrayList<>();
         // user setup
@@ -75,102 +71,77 @@ public class SetServiceIntegrationTest {
         testUser.setName("testName");
         testUser.setUsername("testUsername");
         testUser.setPassword("password");
-        User createdUser = userService.createUser(testUser);
         // set setup
         Set testSet = new Set();
         testSet.setTitle("title");
-        testSet.setUser(createdUser);
+        testSet.setUser(testUser);
         testSet.setCards(emptyList);
         testSet.setSetCategory(SetCategory.BIOLOGY);
         testSet.setSetStatus(SetStatus.PUBLIC);
         testSet.setExplain("explain");
         testSet.setPhoto("photo");
+
         // when
+        User createdUser = userService.createUser(testUser);
         Set createdSet = setService.createSet(testSet);
-        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
-
-        //setUp testSetting
-        Settings testSettings = new Settings();
-        testSettings.setUserID(createdUser.getUserId());
-        testSettings.setSetID(createdSet.getSetId());
-        testSettings.setCardsShuffled(false);
-        testSettings.setStudyStarred(false);
-
-        Settings createdSettings = settingsRepository.findByUserIDAndSetID(createdUser.getUserId(),createdSet.getSetId());
 
         // then
-        assertEquals(testSettings.getUserID(), createdSettings.getSetID());
-        assertEquals(testSettings.getSetID(), createdSettings.getSetID());
-        assertEquals(testSettings.getCardsShuffled(), createdSettings.getCardsShuffled());
-        assertNotNull(createdSettings.getSettingsId());
+        assertEquals(createdSet.getTitle(), testSet.getTitle());
+        assertEquals(createdSet.getUser(), testSet.getUser());
+        assertEquals(createdSet.getCards(), testSet.getCards());
+        assertNotNull(createdSet.getSetId());
+        assertEquals(createdSet.getSetCategory(), testSet.getSetCategory());
+        assertEquals(createdSet.getSetStatus(), testSet.getSetStatus());
+        assertEquals(createdSet.getExplain(), testSet.getExplain());
+        assertEquals(createdSet.getPhoto(), testSet.getPhoto());
     }
 
     @Test
-    public void createSettings_wrongSetId_throwsException() {
-        // given
-        assertNull(userRepository.findByUsername("testUsername"));
+    public void createSet_emptySet_throwsException() {
+        //given
         assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
-        // cardList
+        // card List
         List<Card> emptyList = new ArrayList<>();
         // user setup
         User testUser = new User();
         testUser.setName("testName");
         testUser.setUsername("testUsername");
         testUser.setPassword("password");
-        User createdUser = userService.createUser(testUser);
         // set setup
         Set testSet = new Set();
-        testSet.setTitle("title");
-        testSet.setUser(createdUser);
-        testSet.setCards(emptyList);
-        testSet.setSetCategory(SetCategory.BIOLOGY);
-        testSet.setSetStatus(SetStatus.PUBLIC);
-        testSet.setExplain("explain");
-        testSet.setPhoto("photo");
-        // when
-        setService.createSet(testSet);
 
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(createdUser.getUserId(),2L));
+        assertThrows(ResponseStatusException.class, () -> setService.createSet(testSet));
     }
 
     @Test
-    public void createSettings_wrongUserId_throwsException() {
-        // given
-        assertNull(userRepository.findByUsername("testUsername"));
+    public void createSet_NoTitle_throwsException() {
+        //given
         assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
-        // cardList
+        // card List
         List<Card> emptyList = new ArrayList<>();
         // user setup
         User testUser = new User();
         testUser.setName("testName");
         testUser.setUsername("testUsername");
         testUser.setPassword("password");
-        User createdUser = userService.createUser(testUser);
         // set setup
         Set testSet = new Set();
-        testSet.setTitle("title");
-        testSet.setUser(createdUser);
+        testSet.setUser(testUser);
         testSet.setCards(emptyList);
         testSet.setSetCategory(SetCategory.BIOLOGY);
         testSet.setSetStatus(SetStatus.PUBLIC);
         testSet.setExplain("explain");
         testSet.setPhoto("photo");
-        // when
-        Set createdSet = setService.createSet(testSet);
-
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(2L,createdSet.getSetId()));
+        assertThrows(ResponseStatusException.class, () -> setService.createSet(testSet));
     }
 
     @Test
-    public void checkGetSettings_ValidInput_success() {
+    public void checkUpdateSet_ValidInput_success() {
         // given
         assertNull(userRepository.findByUsername("testUsername"));
         assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
         // cardList
         List<Card> emptyList = new ArrayList<>();
         // user setup
@@ -188,105 +159,123 @@ public class SetServiceIntegrationTest {
         testSet.setSetStatus(SetStatus.PUBLIC);
         testSet.setExplain("explain");
         testSet.setPhoto("photo");
-        // when
         Set createdSet = setService.createSet(testSet);
-        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
+        // set2 setup
+        Set testSet2 = new Set();
+        testSet2.setSetId(createdSet.getSetId());
+        testSet2.setTitle("title2");
+        testSet2.setUser(createdUser);
+        testSet2.setCards(emptyList);
+        testSet2.setSetCategory(SetCategory.GERMAN);
+        testSet2.setSetStatus(SetStatus.PRIVATE);
+        testSet2.setExplain("explain2");
+        testSet2.setPhoto("photo2");
 
-        //setUp testSetting
-        Settings testSettings = new Settings();
-        testSettings.setUserID(createdUser.getUserId());
-        testSettings.setSetID(createdSet.getSetId());
-        testSettings.setCardsShuffled(false);
-        testSettings.setStudyStarred(false);
-
-        Settings createdSettings = settingsService.getSettings(createdUser.getUserId(),createdSet.getSetId());
-        // then
-        assertEquals(testSettings.getUserID(), createdSettings.getSetID());
-        assertEquals(testSettings.getSetID(), createdSettings.getSetID());
-        assertEquals(testSettings.getCardsShuffled(), createdSettings.getCardsShuffled());
-        assertNotNull(createdSettings.getSettingsId());
-    }
-
-    @Test
-    public void checkGetSettings_WrongInputs_Throw() {
-        // given
-        assertNull(userRepository.findByUsername("testUsername"));
-        assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
-        // cardList
-        List<Card> emptyList = new ArrayList<>();
-        // user setup
-        User testUser = new User();
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
-        testUser.setPassword("password");
-        User createdUser = userService.createUser(testUser);
-        // set setup
-        Set testSet = new Set();
-        testSet.setTitle("title");
-        testSet.setUser(createdUser);
-        testSet.setCards(emptyList);
-        testSet.setSetCategory(SetCategory.BIOLOGY);
-        testSet.setSetStatus(SetStatus.PUBLIC);
-        testSet.setExplain("explain");
-        testSet.setPhoto("photo");
         // when
-        Set createdSet = setService.createSet(testSet);
-        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
-
-        //setUp testSetting
-        Settings testSettings = new Settings();
-        testSettings.setUserID(createdUser.getUserId());
-        testSettings.setSetID(createdSet.getSetId());
-        testSettings.setCardsShuffled(false);
-        testSettings.setStudyStarred(false);
-
-        // throw Exception catcher
-        assertThrows(ResponseStatusException.class, () -> settingsService.getSettings(2L,2L));
-
-    }
-
-    @Test
-    public void checkGetAllSettings_ValidInput_success() {
-        // given
-        assertNull(userRepository.findByUsername("testUsername"));
-        assertTrue(setRepository.findAll().isEmpty());
-        assertTrue(settingsRepository.findAll().isEmpty());
-        // cardList
-        List<Card> emptyList = new ArrayList<>();
-        // user setup
-        User testUser = new User();
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
-        testUser.setPassword("password");
-        User createdUser = userService.createUser(testUser);
-        // set setup
-        Set testSet = new Set();
-        testSet.setTitle("title");
-        testSet.setUser(createdUser);
-        testSet.setCards(emptyList);
-        testSet.setSetCategory(SetCategory.BIOLOGY);
-        testSet.setSetStatus(SetStatus.PUBLIC);
-        testSet.setExplain("explain");
-        testSet.setPhoto("photo");
-        // when
-        Set createdSet = setService.createSet(testSet);
-        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
-
-        //setUp testSetting
-        Settings testSettings = new Settings();
-        testSettings.setUserID(createdUser.getUserId());
-        testSettings.setSetID(createdSet.getSetId());
-        testSettings.setCardsShuffled(false);
-        testSettings.setStudyStarred(false);
-
-        List<Settings> createdSettings = settingsService.getAllSettings();
+        Set updateSet = setService.updateSet(testSet2);
 
         // then
-        assertEquals(testSettings.getUserID(), createdSettings.get(0).getSetID());
-        assertEquals(testSettings.getSetID(), createdSettings.get(0).getSetID());
-        assertEquals(testSettings.getCardsShuffled(), createdSettings.get(0).getCardsShuffled());
-        assertNotNull(createdSettings.get(0).getSettingsId());
+        assertEquals(testSet2.getTitle(), updateSet.getTitle());
+        assertEquals(testSet2.getUser(), updateSet.getUser());
+        assertEquals(testSet2.getCards(), updateSet.getCards());
+        assertNotNull(testSet2.getSetId());
+        assertEquals(testSet2.getSetCategory(), updateSet.getSetCategory());
+        assertEquals(testSet2.getSetStatus(), updateSet.getSetStatus());
+        assertEquals(testSet2.getExplain(), updateSet.getExplain());
+        assertEquals(testSet2.getPhoto(), updateSet.getPhoto());
     }
 
+    @Test
+    public void checkUpdatedSet_emptySet_Throw(){
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+        // cardList
+        List<Card> emptyList = new ArrayList<>();
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+        // set setup
+        Set testSet = new Set();
+        testSet.setTitle("title");
+        testSet.setUser(createdUser);
+        testSet.setCards(emptyList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+        Set createdSet = setService.createSet(testSet);
+        // set2 setup
+        Set testSet2 = new Set();
+        // when
+        assertThrows(ResponseStatusException.class, () -> setService.updateSet(testSet2));
+    }
+
+    @Test
+    public void checkDeleteSet_ValidInput_success(){
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+
+        // card List
+        List<Card> emptyList = new ArrayList<>();
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+        // set setup
+        Set testSet = new Set();
+        testSet.setUser(createdUser);
+        testSet.setTitle("title");
+        testSet.setCards(emptyList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+
+        // when
+        Set createdSet = setService.createSet(testSet);
+        assertTrue(setRepository.findBySetId(createdSet.getSetId()).isPresent());
+        setService.deleteSet(createdSet.getSetId());
+
+        // assert no instances of set in repo
+        assertTrue(setRepository.findAll().isEmpty());
+    }
+
+    @Test
+    public void checkDeleteSet_wrongSetId_Throw(){
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+
+        // card List
+        List<Card> emptyList = new ArrayList<>();
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+        // set setup
+        Set testSet = new Set();
+        testSet.setUser(createdUser);
+        testSet.setTitle("title");
+        testSet.setCards(emptyList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+
+        // when
+        Set createdSet = setService.createSet(testSet);
+        assertTrue(setRepository.findBySetId(createdSet.getSetId()).isPresent());
+
+        // Assert throw
+        assertThrows(ResponseStatusException.class,() -> setService.deleteSet(2L));
+    }
 }

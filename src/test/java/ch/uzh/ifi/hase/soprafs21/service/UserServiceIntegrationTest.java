@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,9 +35,26 @@ public class UserServiceIntegrationTest {
     @Autowired
     private UserService userService;
 
+    @Qualifier("setRepository")
+    @Autowired
+    private SetRepository setRepository;
+
+    @Autowired
+    private SetService setService;
+
+    @Qualifier("settingsRepository")
+    @Autowired
+    private SettingsRepository settingsRepository;
+
+    @Autowired
+    private SettingsService settingsService;
+
+
     @BeforeEach
     public void setup() {
         userRepository.deleteAll();
+        setRepository.deleteAll();
+        settingsRepository.deleteAll();
     }
 
     @Test
