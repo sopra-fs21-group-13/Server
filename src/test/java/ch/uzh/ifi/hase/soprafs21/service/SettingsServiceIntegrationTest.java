@@ -289,4 +289,137 @@ public class SettingsServiceIntegrationTest {
         assertNotNull(createdSettings.get(0).getSettingsId());
     }
 
+    @Test
+    public void checkUpdateSettings_ValidInput_success(){
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+        assertTrue(settingsRepository.findAll().isEmpty());
+        // cardList
+        List<Card> cardList = new ArrayList<>();
+        Card card1 = new Card();
+        card1.setAnswer("answer");
+        card1.setQuestion("question");
+        Card card2 = new Card();
+        card2.setAnswer("answer2");
+        card2.setQuestion("question2");
+        cardList.add(card1);
+        cardList.add(card2);
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+        // set setup
+        Set testSet = new Set();
+        testSet.setTitle("title");
+        testSet.setUser(createdUser);
+        testSet.setCards(cardList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+        // when
+        Set createdSet = setService.createSet(testSet);
+        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
+
+        Card card3 = new Card();
+        card3.setAnswer("answer3");
+        card3.setQuestion("question3");
+        cardList.add(card3);
+
+        List<Long> savedOrder = new ArrayList<>();
+        savedOrder.add(1L);
+        savedOrder.add(2L);
+        savedOrder.add(3L);
+
+        //setUp testSetting
+        Settings testSettings = new Settings();
+        testSettings.setUserID(createdUser.getUserId());
+        testSettings.setSetID(createdSet.getSetId());
+        testSettings.setCardsShuffled(true);
+        testSettings.setStudyStarred(true);
+        testSettings.setSavedOrder(savedOrder);
+
+        Settings updatedSettings = settingsService.updateSettings(testSettings);
+
+        assertEquals(testSettings.getUserID(), updatedSettings.getUserID());
+        assertEquals(testSettings.getSetID(), updatedSettings.getSetID());
+        assertEquals(testSettings.getCardsShuffled(), updatedSettings.getCardsShuffled());
+        assertEquals(testSettings.getStudyStarred(), updatedSettings.getStudyStarred());
+        assertEquals(testSettings.getSavedOrder(), updatedSettings.getSavedOrder());
+        assertNotNull(updatedSettings.getSettingsId());
+    }
+
+
+    @Test
+    public void checkUpdateSettings_updateCards_success(){
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+        assertTrue(settingsRepository.findAll().isEmpty());
+        // cardList
+        List<Card> cardList = new ArrayList<>();
+        Card card1 = new Card();
+        card1.setAnswer("answer");
+        card1.setQuestion("question");
+        Card card2 = new Card();
+        card2.setAnswer("answer2");
+        card2.setQuestion("question2");
+        cardList.add(card1);
+        cardList.add(card2);
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+        // set setup
+        Set testSet = new Set();
+        testSet.setTitle("title");
+        testSet.setUser(createdUser);
+        testSet.setCards(cardList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+        // when
+        Set createdSet = setService.createSet(testSet);
+        settingsService.createSettings(createdUser.getUserId(),createdSet.getSetId());
+
+        Settings createdSettings = settingsRepository.findByUserIDAndSetID(createdUser.getUserId(),createdSet.getSetId());
+
+        Card card3 = new Card();
+        card3.setAnswer("answer3");
+        card3.setQuestion("question3");
+        cardList.add(card3);
+        createdSet.setCards(cardList);
+
+        settingsService.updateCardOrder(createdSet);
+
+        List<Long> savedOrder = new ArrayList<>();
+        savedOrder.add(1L);
+        savedOrder.add(2L);
+        savedOrder.add(3L);
+
+        //setUp testSetting
+        Settings testSettings = new Settings();
+        testSettings.setUserID(createdUser.getUserId());
+        testSettings.setSetID(createdSet.getSetId());
+        testSettings.setCardsShuffled(false);
+        testSettings.setStudyStarred(false);
+        testSettings.setSavedOrder(savedOrder);
+
+        Settings updatedSettings = settingsService.updateSettings(testSettings);
+
+        assertEquals(testSettings.getUserID(), updatedSettings.getUserID());
+        assertEquals(testSettings.getSetID(), updatedSettings.getSetID());
+        assertEquals(testSettings.getCardsShuffled(), updatedSettings.getCardsShuffled());
+        assertEquals(testSettings.getStudyStarred(), updatedSettings.getStudyStarred());
+        assertEquals(testSettings.getSavedOrder(), updatedSettings.getSavedOrder());
+        assertNotNull(updatedSettings.getSettingsId());
+    }
+
+
 }

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Set Service
