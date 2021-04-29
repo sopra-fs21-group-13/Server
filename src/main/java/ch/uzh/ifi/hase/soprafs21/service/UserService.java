@@ -130,7 +130,8 @@ public class UserService {
 
             user.setStatus(UserStatus.ONLINE);
 
-            return userRepository.save(user);
+            User newUser = userRepository.save(user);
+            return newUser;
         }
         else{
             return user;
