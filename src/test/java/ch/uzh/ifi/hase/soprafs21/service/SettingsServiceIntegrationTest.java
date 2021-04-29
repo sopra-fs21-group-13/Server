@@ -132,7 +132,7 @@ public class SettingsServiceIntegrationTest {
         setService.createSet(testSet);
 
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(createdUser.getUserId(),3L));
+        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(createdUser.getUserId(),2L));
     }
 
     @Test
