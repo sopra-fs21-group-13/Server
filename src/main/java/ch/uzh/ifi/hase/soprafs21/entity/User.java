@@ -41,6 +41,9 @@ public class User  {
     private Boolean inGame;
 
     @Column
+    private String photo;
+
+    @Column
     private Integer numberOfWins;
 
     @Column(nullable = true)
@@ -58,6 +61,13 @@ public class User  {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+    
+    public String getPhoto() {
+        return photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getName() {

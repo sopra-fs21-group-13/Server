@@ -148,6 +148,8 @@ public class UserService {
                 user.setPassword(userPostDTO.getPassword()); }
         if (userPostDTO.getEmail() != null) {
                 user.setEmail(userPostDTO.getEmail()); }
+        if (userPostDTO.getPhoto() != null) {
+            user.setPhoto(userPostDTO.getPhoto()); }
 
         user.setInGame(userPostDTO.isInGame());
         user.setNumberOfWins(userPostDTO.getNumberOfWins());

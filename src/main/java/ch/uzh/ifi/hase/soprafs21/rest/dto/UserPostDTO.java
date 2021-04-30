@@ -17,6 +17,7 @@ public class UserPostDTO {
     private String email;
     private boolean inGame;
     private int numberOfWins;
+    private String photo;
 
     public long getUserId() {
         return userId;
@@ -40,6 +41,13 @@ public class UserPostDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public UserStatus getStatus() {

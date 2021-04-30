@@ -295,7 +295,7 @@ public class UserServiceIntegrationTest {
         userService.createUser(testUser);
 
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.updateUser(userPostDTO));
+        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(userPostDTO));
     }
 
     @Test
