@@ -58,7 +58,6 @@ public class SetService {
 
     }
 
-
     // Create a flashcard set
     public Set createSet(Set newSet){
         if (checkSet(newSet)){
@@ -93,34 +92,30 @@ public class SetService {
     public Set updateSet(Set set){
         Set updatedSet = getSetBySetId(set.getSetId());
 
-        if (updatedSet == null) {
-            String message = "The set with id: %s can't be found in the database.";
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(message, set.getSetId()));
-        }
-        else {
-            if (set.getTitle() != null) {
+        if (set.getTitle() != null) {
                 updatedSet.setTitle(set.getTitle());
-            }
-            if (set.getExplain() != null) {
-                updatedSet.setExplain(set.getExplain());
-            }
-            if (set.getCards() != null) {
-                updatedSet.setCards(set.getCards());
-            }
-            if (set.getSetCategory() != null) {
-                updatedSet.setSetCategory(set.getSetCategory());
-            }
-            if (set.getSetStatus() != null) {
-                updatedSet.setSetStatus(set.getSetStatus());
-            }
-            if (set.getPhoto() != null) {
-                updatedSet.setPhoto(set.getPhoto());
-            }
-            if (set.getLiked() != null) {
-                updatedSet.setLiked(set.getLiked());
-            }
         }
-        updatedSet = setRepository.saveAndFlush(updatedSet);
+        if (set.getExplain() != null) {
+                updatedSet.setExplain(set.getExplain());
+        }
+        if (set.getCards() != null) {
+                updatedSet.setCards(set.getCards());
+        }
+        if (set.getSetCategory() != null) {
+                updatedSet.setSetCategory(set.getSetCategory());
+        }
+        if (set.getSetStatus() != null) {
+                updatedSet.setSetStatus(set.getSetStatus());
+        }
+        if (set.getPhoto() != null) {
+                updatedSet.setPhoto(set.getPhoto());
+        }
+        if (set.getLiked() != null) {
+                updatedSet.setLiked(set.getLiked());
+        }
+
+        updatedSet = setRepository.save(updatedSet);
+        setRepository.flush();
 
         return updatedSet;
     }

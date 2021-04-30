@@ -112,7 +112,6 @@ public class UserServiceTest {
         // when -> setup additional mocks for UserRepository
         Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
 
-
         // then -> attempt to create second user with same user -> check that an error is thrown
         assertThrows(ResponseStatusException.class, () -> userService.checkForLogin(createdUser));
 
@@ -226,8 +225,6 @@ public class UserServiceTest {
 
     @Test
     public void logoutUser_UserExistInRepository() {
-
-        testUser.setUserId(1L);
 
         // when -> setup additional mocks for UserRepository
         Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(testUser));
