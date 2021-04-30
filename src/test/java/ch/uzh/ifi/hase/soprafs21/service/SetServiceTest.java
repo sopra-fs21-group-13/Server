@@ -49,7 +49,7 @@ public class SetServiceTest {
     }
 
     @Test
-    public void getPublicSets_validInputs_success() {
+    public void getPublicSets_validInputs() {
 
         setService.getPublicSets();
 

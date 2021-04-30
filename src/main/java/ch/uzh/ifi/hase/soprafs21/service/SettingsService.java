@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 /**
  * Settings Service
  * This class is the "worker" and responsible for all functionality related to the user
@@ -48,7 +46,7 @@ public class SettingsService {
     // Get Settingsfile
     public Settings getSettings(Long  userId, Long setId) {
         if(!settingsRepository.existsByUserIDAndSetID(userId,setId)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not settings file found with this userId or setId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No settings file found with this userId or setId");
         }
         return this.settingsRepository.findByUserIDAndSetID(userId, setId);
     }
@@ -138,7 +136,7 @@ public class SettingsService {
         if (checkSet.isPresent()) {
             set = checkSet.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found wiht setId while creating setting file");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found with setId while creating setting file");
         }
         // Fill up cards with getCards
         List<Card> cards = set.getCards();
