@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 /**
  *  The method of only userService will be executed because we created the actual object of userService using @InjectMocks annotation.
@@ -53,7 +54,7 @@ public class UserServiceTest {
 
         // then
         //This verifies that the method save (you could also use existById etc. -> everything from UserRepository) was called 1 times on the mocked object.
-        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        verify(userRepository, Mockito.times(1)).save(Mockito.any());
 
         assertEquals(testUser.getUserId(), createdUser.getUserId());
         assertEquals(testUser.getName(), createdUser.getName());
@@ -126,7 +127,7 @@ public class UserServiceTest {
 
         // then
         //This verifies that the method save (you could also use existById etc. -> everything from UserRepository) was called 1 times on the mocked object.
-        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        verify(userRepository, Mockito.times(1)).save(Mockito.any());
 
         // when -> any object is being save in the userRepository -> return the dummy testUser
         User newCreatedUser = new User();
@@ -173,7 +174,7 @@ public class UserServiceTest {
 
         userService.upserd(createdUser);
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        verify(userRepository, Mockito.times(1)).save(Mockito.any());
 
         assertEquals(createdUser.getUsername(), "NoName1");
         assertEquals(createdUser.getStatus(), UserStatus.ONLINE);
@@ -189,18 +190,80 @@ public class UserServiceTest {
         userPostDTO.setName("testName");
         userPostDTO.setUsername("testUsername");
         userPostDTO.setPassword("password");
+        userPostDTO.setEmail("test email");
+        userPostDTO.setInGame(true);
+        userPostDTO.setNumberOfWins(23);
 
         Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(testUser));
 
+        // user = testUser (user is testUser)
         User user = userService.updateUser(userPostDTO);
 
-        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        verify(userRepository, Mockito.times(1)).save(Mockito.any());
 
         assertEquals(testUser.getName(), user.getName());
         assertEquals(testUser.getUsername(), user.getUsername());
         assertEquals(testUser.getPassword(), user.getPassword());
+        assertEquals(testUser.getEmail(), user.getEmail());
+        assertEquals(testUser.getInGame(), user.getInGame());
+        assertEquals(testUser.getNumberOfWins(), user.getNumberOfWins());
 
     }
 
+    @Test
+    public void updateUser_UserDoesntExistInRepository() {
+
+        // when -> any object is being save in the userRepository -> return the dummy testUser
+        UserPostDTO userPostDTO = new UserPostDTO();
+
+        // when -> setup additional mocks for UserRepository
+        Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.empty());
+
+        // then -> attempt to create second user with same user -> check that an error is thrown
+        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(userPostDTO));
+
+    }
+
+    @Test
+    public void logoutUser_UserExistInRepository() {
+
+        testUser.setUserId(1L);
+
+        // when -> setup additional mocks for UserRepository
+        Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(testUser));
+
+        // user = testUser (user is testUser)
+        User user = userService.logoutUser(testUser.getUserId());
+
+        verify(userRepository, Mockito.times(1)).save(Mockito.any());
+
+        // then -> attempt to create second user with same user -> check that an error is thrown
+        assertEquals(testUser.getName(), user.getName());
+        assertEquals(testUser.getUsername(), user.getUsername());
+        assertEquals(testUser.getPassword(), user.getPassword());
+        assertEquals(user.getStatus(), UserStatus.OFFLINE);
+
+    }
+
+    @Test
+    public void logoutUser_UserDoesntExistInRepository() {
+
+        // when -> setup additional mocks for UserRepository
+        Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.empty());
+
+        // then -> attempt to create second user with same user -> check that an error is thrown
+        assertThrows(IllegalArgumentException.class, () -> userService.logoutUser(testUser.getUserId()));
+
+    }
+
+    @Test
+    public void deleteUser_UserDoesntExistInRepository() {
+
+        userService.deleteUser(testUser.getUserId());
+
+        // verify that method userRepository.deleteById(userId) is called
+        verify(userRepository).deleteById(Mockito.any());
+
+    }
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "SET")
-public class Set implements Serializable {
+public class    Set implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

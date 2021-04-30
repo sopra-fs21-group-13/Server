@@ -158,14 +158,12 @@ public class UserService {
     }
 
     public User logoutUser(Long userId){
-        User user = getUser(userId);
 
-        if (user != null){
-            user.setStatus(UserStatus.OFFLINE);
-            user = userRepository.save(user);
-            userRepository.flush();
-        }
+        User user = userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
 
+        user.setStatus(UserStatus.OFFLINE);
+        user = userRepository.save(user);
+        userRepository.flush();
         return user;
     }
 
