@@ -28,20 +28,6 @@ public class SetController {
     @Autowired
     private SettingsService settingsService;
 
-    /**
-     private final UserService userService;
-     private final SetService setService;
-     private final SettingsService settingsService;
-
-     public SetController(UserService userService, SetService setService, SettingsService settingsService) {
-
-     this.userService = userService;
-     this.setService = setService;
-     this.settingsService = settingsService;
-     }
-     */
-
-
 // All Get Mappings:
 
     // Get all public sets
@@ -72,20 +58,6 @@ public class SetController {
     }
 
 
-    /*  Obsolete since you can get all learning sets from calling user
-
-    // Get Sets of a user
-    @GetMapping("/users/{userId}/learnsets")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void getLearnSetsByUser(@PathVariable("userId") Long userId) {
-        // Get specific user by userId
-        User user = userService.getUser(userId);
-        //
-
-    }
-     */
-
-
 // All Put Mappings:
 
     // Update a specific set of cards
@@ -109,10 +81,9 @@ public class SetController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public SetGetDTO updateMembersSet(@PathVariable("userId") Long userId, @PathVariable("setId") Long setId){
         Set set = setService.addMember(userId,setId);
+        settingsService.createSettings(userId, setId);
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
     }
-
-
 
 // All Post Mappings:
 
@@ -145,6 +116,8 @@ public class SetController {
         setService.deleteSet(setId);
     }
 
+
+    //Remove a specific member from the member list of a set
     @DeleteMapping("/sets/{userId}/{setId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public SetGetDTO removeMember(@PathVariable("userId") Long userId, @PathVariable("setId") Long setId){

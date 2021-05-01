@@ -22,4 +22,6 @@ public interface SettingsRepository extends JpaRepository<Settings,Long> {
 
     void deleteBySetID(Long setID);
 
+    void deleteByUserIDAndSetID(Long userID, Long setID);
+
 }

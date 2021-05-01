@@ -43,6 +43,9 @@ public class SetService {
         this.settingsRepository = settingsRepository;
     }
 
+    @Autowired
+    private SettingsService settingsService;
+
     // Get all sets available -> not useful though
     public List<Set> getPublicSets() {
         return this.setRepository.findBySetStatus(SetStatus.PUBLIC);
@@ -122,14 +125,6 @@ public class SetService {
         if (set.getLiked() != null) {
                 updatedSet.setLiked(set.getLiked());
             }
-        if (set.getMembers() != null){
-            List<User> members = new ArrayList();
-            for (Long memberId: set.getMembers()){
-                members.add(userRepository.findById(memberId).get());
-            }
-            updatedSet.setMembers(members);
-        }
-
 
         updatedSet = setRepository.save(updatedSet);
         setRepository.flush();
@@ -164,6 +159,9 @@ public class SetService {
     // Delete a Member from the set
     public Set removeMember(Long userId, Long setId){
         Set set = setRepository.findBySetId(setId).get();
+        if (set.getUser().equals(userId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not remove the creator of a list from the Member List");
+        }
         List<Long> memberIds = set.getMembers();
         List<User> members = new ArrayList<>();
         for (Long memberId:memberIds){
@@ -172,33 +170,8 @@ public class SetService {
             }
         }
         set.setMembers(members);
+        settingsRepository.deleteByUserIDAndSetID(userId,setId);
         return set;
     }
-
-    /*
-    // Not needed now
-    // Get set that were created by user x
-    public List<Set> getSetByUser(User user){
-        return setRepository.findByUser(user);
-    }
-    */
-
-
-    /* Probably obsolete -> since you can get all learn sets from calling a single user
-
-    // SaveFile needs to be implemented first
-    // Get learn sets of a user
-    public List<Set> getLearnSetByUser(Long userId){
-        User user = userRepository.findById(userId).get();
-        // Get SaveFile and the List of setIds
-
-        // Get List of actual Sets
-        List<Set> learnSets = null;
-
-        return learnSets;
-    }
-
-     */
-
 
 }
