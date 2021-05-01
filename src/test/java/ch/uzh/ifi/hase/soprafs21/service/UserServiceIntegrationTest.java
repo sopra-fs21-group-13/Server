@@ -10,12 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -331,7 +328,7 @@ public class UserServiceIntegrationTest {
         userService.createUser(testUser);
 
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.logoutUser(0L));
+        assertThrows(IllegalArgumentException.class, () -> userService.logoutUser(0L));
 
     }
 
