@@ -301,7 +301,7 @@ public class UserControllerTest {
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.*", hasSize(11)))
                 .andExpect(jsonPath("$.name", is(user.getName())))
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
