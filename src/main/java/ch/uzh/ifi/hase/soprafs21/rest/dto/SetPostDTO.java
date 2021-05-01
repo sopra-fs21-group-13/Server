@@ -12,12 +12,14 @@ public class SetPostDTO {
     private Long setId;
     private String title;
     private User user;
+    private List<User> members;
     private List<Card> cards;
     private SetCategory setCategory;
     private SetStatus setStatus;
     private String explain;
     private String photo;
     private Long liked;
+
 
     public Long getSetId() {
         return setId;
@@ -41,6 +43,14 @@ public class SetPostDTO {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 
     public List<Card> getCards() {

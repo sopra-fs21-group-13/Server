@@ -101,10 +101,18 @@ public class SetController {
         settingsService.updateCardOrder(updatedSet);
 
         //update starredCards
-
-
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(updatedSet);
     }
+
+    // Update members of a specific set of cards
+    @PutMapping("/sets/{userId}/{setId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public SetGetDTO updateMembersSet(@PathVariable("userId") Long userId, @PathVariable("setId") Long setId){
+        Set set = setService.addMember(userId,setId);
+        return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
+    }
+
+
 
 // All Post Mappings:
 
@@ -137,5 +145,11 @@ public class SetController {
         setService.deleteSet(setId);
     }
 
+    @DeleteMapping("/sets/{userId}/{setId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public SetGetDTO removeMember(@PathVariable("userId") Long userId, @PathVariable("setId") Long setId){
+        Set set = setService.removeMember(userId,setId);
+        return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
+    }
 
 }

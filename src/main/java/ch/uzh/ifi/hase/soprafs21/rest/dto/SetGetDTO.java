@@ -6,13 +6,13 @@ import ch.uzh.ifi.hase.soprafs21.entity.Card;
 
 import java.util.List;
 
-//import ch.uzh.ifi.hase.soprafs21.constant.SetOrder;
 
 public class SetGetDTO {
 
     private Long setId;
     private String title;
     private Long userId;
+    private List<Long> memberIds;
     private List<Card> cards;
     private SetCategory setCategory;
     private SetStatus setStatus;
@@ -42,6 +42,14 @@ public class SetGetDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public List<Long> getMemberIds() {
+        return memberIds;
+    }
+
+    public void setMemberIds(List<Long> memberIds) {
+        this.memberIds = memberIds;
     }
 
     public Long getLiked() {

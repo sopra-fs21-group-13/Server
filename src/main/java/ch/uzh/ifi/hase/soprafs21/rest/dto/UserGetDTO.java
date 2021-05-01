@@ -11,6 +11,7 @@ public class UserGetDTO {
     private String name;
     private String username;
     private UserStatus status;
+    private List<Set> createdSets;
     private List<Set> learnSets;
     private String token;
     private String email;
@@ -59,6 +60,14 @@ public class UserGetDTO {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public List<Set> getCreatedSets() {
+        return createdSets;
+    }
+
+    public void setCreatedSets(List<Set> createdSets) {
+        this.createdSets = createdSets;
     }
 
     public List<Set> getLearnSets() {

@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
+import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +65,14 @@ public class SetService {
         if (checkSet(newSet)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Set is empty");
         }
+
+        List<User> initialMember = new ArrayList<>();
+        newSet.setMembers(initialMember);
+        initialMember.add(userRepository.findById(newSet.getUser()).get());
+
+        if (newSet.getMembers().isEmpty()){
+            newSet.setMembers(initialMember);
+        }
         // saves the given entity but data is only persisted in the database once flush() is called
         newSet = setRepository.save(newSet);
         setRepository.flush();
@@ -86,7 +96,6 @@ public class SetService {
         }
         return false;
     }
-
 
     // Edit a Flashcard Set
     public Set updateSet(Set set){
@@ -112,13 +121,36 @@ public class SetService {
         }
         if (set.getLiked() != null) {
                 updatedSet.setLiked(set.getLiked());
+            }
+        if (set.getMembers() != null){
+            List<User> members = new ArrayList();
+            for (Long memberId: set.getMembers()){
+                members.add(userRepository.findById(memberId).get());
+            }
+            updatedSet.setMembers(members);
         }
+
 
         updatedSet = setRepository.save(updatedSet);
         setRepository.flush();
 
         return updatedSet;
     }
+
+    // Add member to set
+    public Set addMember(Long userId, Long setId){
+        User user = userRepository.findById(userId).get();
+        Set set = setRepository.findBySetId(setId).get();
+        List<Long> memberIds = set.getMembers();
+        List<User> members = new ArrayList<>();
+        for (Long memberId:memberIds){
+            members.add(userRepository.findById(memberId).get());
+        }
+        members.add(user);
+        set.setMembers(members);
+        return set;
+    }
+
 
     // Delete a Flashcard Set -> irrevocable
     public void deleteSet(Long setId){
@@ -127,6 +159,20 @@ public class SetService {
         }
         setRepository.deleteById(setId);
         settingsRepository.deleteBySetID(setId);
+    }
+
+    // Delete a Member from the set
+    public Set removeMember(Long userId, Long setId){
+        Set set = setRepository.findBySetId(setId).get();
+        List<Long> memberIds = set.getMembers();
+        List<User> members = new ArrayList<>();
+        for (Long memberId:memberIds){
+            if (!memberId.equals(userId)){
+                members.add(userRepository.findById(memberId).get());
+            }
+        }
+        set.setMembers(members);
+        return set;
     }
 
     /*

@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public interface DTOMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "createdSets", target = "createdSets")
     @Mapping(source = "learnSets", target = "learnSets")
     @Mapping(source = "token", target = "token")
     @Mapping(source = "email", target = "email")
@@ -56,11 +58,11 @@ public interface DTOMapper {
     UserGetDTO convertEntityToUserGetDTO(User user);
 
 
-
 // Set Mappings
 
     @Mapping(source = "title", target = "title")
     @Mapping(source = "user", target = "user", qualifiedByName = "User") // Custom Mapper with an Annotation for the card array
+    @Mapping(source = "members", target = "members", qualifiedByName = "Members")
     @Mapping(source = "cards", target = "cards", qualifiedByName = "Card") // Custom Mapper with an Annotation for the card array
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")
@@ -77,6 +79,17 @@ public interface DTOMapper {
         return user;
     }
 
+    @Named("Members")
+    default User jsonToUser(List<String> members) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> memberIds = new ArrayList<>();
+        // Convert Json array to user entity
+        for (String member:members) {
+            memberIds.add(mapper.readValue(member, User.class ));
+        }
+        return (User) memberIds;
+    }
+
     //Qualifier for handling json array -> conversion into list of objects
     @Named("Card")
     default List<Card> jsonToCardsI(String cardsString) throws JsonProcessingException {
@@ -90,6 +103,7 @@ public interface DTOMapper {
     @Mapping(source = "setId", target = "setId")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "user", target = "userId")
+    @Mapping(source = "members", target = "memberIds")
     @Mapping(source = "cards", target = "cards")
     @Mapping(source = "setCategory",target = "setCategory")
     @Mapping(source = "setStatus",target = "setStatus")

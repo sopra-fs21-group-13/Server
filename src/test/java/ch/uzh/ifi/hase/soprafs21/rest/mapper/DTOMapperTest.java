@@ -60,7 +60,7 @@ public class DTOMapperTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -76,7 +76,7 @@ public class DTOMapperTest {
         assertEquals(user.getStatus(), userGetDTO.getStatus());
         assertEquals(user.getPassword(), userGetDTO.getPassword());
         assertEquals(user.getToken(), userGetDTO.getToken());
-        assertEquals(user.getLearnSets(), userGetDTO.getLearnSets());
+        assertEquals(user.getCreatedSets(), userGetDTO.getCreatedSets());
         assertEquals(user.getEmail(), userGetDTO.getEmail());
         assertEquals(user.getInGame(), userGetDTO.isInGame());
         assertEquals(user.getNumberOfWins(), userGetDTO.getNumberOfWins());

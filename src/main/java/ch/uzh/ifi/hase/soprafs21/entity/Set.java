@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,10 +43,12 @@ public class    Set implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<User> members;
+
     @Column
     @OneToMany(cascade = CascadeType.ALL) // Many cards to one set
     @ElementCollection(targetClass = Card.class) //Since there is no connection back to Set
-    //@OrderColumn(name="card")
     private List<Card> cards;
 
     @Column(nullable = false)
@@ -130,5 +133,17 @@ public class    Set implements Serializable {
 
     public void setLiked(Long liked) {
         this.liked = liked;
+    }
+
+    public List<Long> getMembers() {
+        List<Long> memberIds =  new ArrayList<>();
+        for (User member: members){
+            memberIds.add(member.getUserId());
+        }
+        return memberIds;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 }

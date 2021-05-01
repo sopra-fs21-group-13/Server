@@ -1,13 +1,17 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.SetPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs21.service.SettingsService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,9 @@ public class UserController {
 
         this.userService = userService;
     }
+
+    @Autowired
+    private SettingsService settingsService;
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
@@ -122,6 +129,7 @@ public class UserController {
        //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
         User updatedUser = userService.updateUser(userPostDTO);
 
+
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
@@ -135,6 +143,7 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
+    
     // Delete a specific User
     @DeleteMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)

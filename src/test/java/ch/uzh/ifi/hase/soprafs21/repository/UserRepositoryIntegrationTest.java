@@ -34,7 +34,7 @@ public class UserRepositoryIntegrationTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -52,7 +52,7 @@ public class UserRepositoryIntegrationTest {
         assertEquals(found.getUsername(), user.getUsername());
         assertEquals(found.getEmail(), user.getEmail());
         assertEquals(found.getPassword(), user.getPassword());
-        assertEquals(found.getLearnSets(), user.getLearnSets());
+        assertEquals(found.getCreatedSets(), user.getCreatedSets());
         assertEquals(found.getStatus(), user.getStatus());
         assertEquals(found.getToken(), user.getToken());
         assertEquals(found.getInGame(), user.getInGame());
@@ -71,7 +71,7 @@ public class UserRepositoryIntegrationTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -89,7 +89,7 @@ public class UserRepositoryIntegrationTest {
         assertEquals(found.getUsername(), user.getUsername());
         assertEquals(found.getEmail(), user.getEmail());
         assertEquals(found.getPassword(), user.getPassword());
-        assertEquals(found.getLearnSets(), user.getLearnSets());
+        assertEquals(found.getCreatedSets(), user.getCreatedSets());
         assertEquals(found.getStatus(), user.getStatus());
         assertEquals(found.getToken(), user.getToken());
         assertEquals(found.getInGame(), user.getInGame());
@@ -107,7 +107,7 @@ public class UserRepositoryIntegrationTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -125,7 +125,7 @@ public class UserRepositoryIntegrationTest {
         assertEquals(found.getUsername(), user.getUsername());
         assertEquals(found.getEmail(), user.getEmail());
         assertEquals(found.getPassword(), user.getPassword());
-        assertEquals(found.getLearnSets(), user.getLearnSets());
+        assertEquals(found.getCreatedSets(), user.getCreatedSets());
         assertEquals(found.getStatus(), user.getStatus());
         assertEquals(found.getToken(), user.getToken());
         assertEquals(found.getInGame(), user.getInGame());
@@ -143,7 +143,7 @@ public class UserRepositoryIntegrationTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -161,7 +161,7 @@ public class UserRepositoryIntegrationTest {
         assertEquals(found.getUsername(), user.getUsername());
         assertEquals(found.getEmail(), user.getEmail());
         assertEquals(found.getPassword(), user.getPassword());
-        assertEquals(found.getLearnSets(), user.getLearnSets());
+        assertEquals(found.getCreatedSets(), user.getCreatedSets());
         assertEquals(found.getStatus(), user.getStatus());
         assertEquals(found.getToken(), user.getToken());
         assertEquals(found.getInGame(), user.getInGame());
@@ -179,7 +179,7 @@ public class UserRepositoryIntegrationTest {
         user.setUsername("firsty");
         user.setEmail("first@email.com");
         user.setPassword("password");
-        user.setLearnSets(emptyList);
+        user.setCreatedSets(emptyList);
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
         user.setInGame(false);
@@ -194,7 +194,7 @@ public class UserRepositoryIntegrationTest {
         user2.setUsername("Secondly");
         user2.setEmail("first2@email.com");
         user2.setPassword("password2");
-        user2.setLearnSets(emptyList);
+        user2.setCreatedSets(emptyList);
         user2.setStatus(UserStatus.ONLINE);
         user2.setToken("2");
         user2.setInGame(false);
@@ -212,7 +212,7 @@ public class UserRepositoryIntegrationTest {
         assertEquals(foundList.get(0).getUsername(), user2.getUsername());
         assertEquals(foundList.get(0).getEmail(), user2.getEmail());
         assertEquals(foundList.get(0).getPassword(), user2.getPassword());
-        assertEquals(foundList.get(0).getLearnSets(), user2.getLearnSets());
+        assertEquals(foundList.get(0).getCreatedSets(), user2.getCreatedSets());
         assertEquals(foundList.get(0).getStatus(), user2.getStatus());
         assertEquals(foundList.get(0).getToken(), user2.getToken());
         assertEquals(foundList.get(0).getInGame(), user2.getInGame());

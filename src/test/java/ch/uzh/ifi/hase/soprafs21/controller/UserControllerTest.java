@@ -64,7 +64,7 @@ public class UserControllerTest {
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.OFFLINE);
         user.setPassword("password");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         List<User> allUsers = Collections.singletonList(user);
 
@@ -83,7 +83,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
                 .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
                 .andExpect(jsonPath("$[0].password", is(user.getPassword())))
-                .andExpect(jsonPath("$[0].learnSets", is(user.getLearnSets())));
+                .andExpect(jsonPath("$[0].learnSets", is(user.getCreatedSets())));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class UserControllerTest {
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.ONLINE);
         user.setPassword("password");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         List<User> allUsers = Collections.singletonList(user);
 
@@ -115,7 +115,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
                 .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())))
                 .andExpect(jsonPath("$[0].password", is(user.getPassword())))
-                .andExpect(jsonPath("$[0].learnSets", is(user.getLearnSets())));
+                .andExpect(jsonPath("$[0].learnSets", is(user.getCreatedSets())));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setName("Test User");
@@ -141,7 +141,7 @@ public class UserControllerTest {
         userPostDTO.setInGame(true);
         userPostDTO.setNumberOfWins(7);
         userPostDTO.setEmail("xyz@gmail.com");
-        userPostDTO.setLearnSets(new ArrayList<>());
+        userPostDTO.setCreatedSets(new ArrayList<>());
 
         given(userService.createUser(Mockito.any())).willReturn(user);
 
@@ -160,7 +160,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(user.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(user.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
@@ -177,7 +177,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setName("Test User");
@@ -187,7 +187,7 @@ public class UserControllerTest {
         userPostDTO.setInGame(true);
         userPostDTO.setNumberOfWins(7);
         userPostDTO.setEmail("xyz@gmail.com");
-        userPostDTO.setLearnSets(new ArrayList<>());
+        userPostDTO.setCreatedSets(new ArrayList<>());
 
         given(userService.checkForLogin(Mockito.any())).willReturn(user);
 
@@ -206,7 +206,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(user.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(user.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
@@ -223,7 +223,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setName("Test User");
@@ -233,7 +233,7 @@ public class UserControllerTest {
         userPostDTO.setInGame(true);
         userPostDTO.setNumberOfWins(7);
         userPostDTO.setEmail("xyz@gmail.com");
-        userPostDTO.setLearnSets(new ArrayList<>());
+        userPostDTO.setCreatedSets(new ArrayList<>());
 
         given(userService.upserd(Mockito.any())).willReturn(user);
 
@@ -252,7 +252,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(user.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(user.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
@@ -291,7 +291,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         // this mocks the UserService
         given(userService.getUser(Mockito.eq(1L))).willReturn(user);
@@ -308,7 +308,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(user.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(user.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
@@ -325,7 +325,7 @@ public class UserControllerTest {
         newUser.setInGame(false);
         newUser.setNumberOfWins(0);
         newUser.setEmail("xyz@gmail.com");
-        newUser.setLearnSets(new ArrayList<>());
+        newUser.setCreatedSets(new ArrayList<>());
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setName("Test User");
@@ -335,7 +335,7 @@ public class UserControllerTest {
         userPostDTO.setInGame(true);
         userPostDTO.setNumberOfWins(7);
         userPostDTO.setEmail("xyz@gmail.com");
-        userPostDTO.setLearnSets(new ArrayList<>());
+        userPostDTO.setCreatedSets(new ArrayList<>());
 
         given(userService.updateUser(Mockito.any())).willReturn(newUser);
 
@@ -354,7 +354,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(newUser.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(newUser.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(newUser.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(newUser.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(newUser.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(newUser.getEmail())));
     }
 
@@ -371,7 +371,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         given(userService.logoutUser(Mockito.eq(1L))).willReturn(user);
 
@@ -389,7 +389,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.inGame", is(user.getInGame())))
                 .andExpect(jsonPath("$.numberOfWins", is(user.getNumberOfWins())))
-                .andExpect(jsonPath("$.learnSets", is(user.getLearnSets())))
+                .andExpect(jsonPath("$.learnSets", is(user.getCreatedSets())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())));
     }
 
@@ -406,7 +406,7 @@ public class UserControllerTest {
         user.setInGame(true);
         user.setNumberOfWins(7);
         user.setEmail("xyz@gmail.com");
-        user.setLearnSets(new ArrayList<>());
+        user.setCreatedSets(new ArrayList<>());
 
         //given(userService.deleteUser(Mockito.any())).willReturn(user);
 

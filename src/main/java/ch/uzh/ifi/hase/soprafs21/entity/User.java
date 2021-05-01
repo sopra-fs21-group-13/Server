@@ -46,14 +46,19 @@ public class User  {
     @Column
     private Integer numberOfWins;
 
-    @Column(nullable = true)
+    @Column
     private String email;
 
     // This column contains all sets a users has access to learn from
     // aka not equal to the created sets!
     @Column
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Set> createdSets;
+
+    @Column
+    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
     private List<Set> learnSets;
+
 
     public Long getUserId() {
         return userId;
@@ -122,12 +127,12 @@ public class User  {
         this.numberOfWins = numberOfWins;
     }
 
-    public List<Set> getLearnSets() {
-        return learnSets;
+    public List<Set> getCreatedSets() {
+        return createdSets;
     }
 
-    public void setLearnSets(List<Set> learnSets) {
-        this.learnSets = learnSets;
+    public void setCreatedSets(List<Set> createdSets) {
+        this.createdSets = createdSets;
     }
 
     public String getEmail() {
@@ -138,4 +143,11 @@ public class User  {
         this.email = email;
     }
 
+    public List<Set> getLearnSets() {
+        return learnSets;
+    }
+
+    public void setLearnSets(List<Set> learnSets) {
+        this.learnSets = learnSets;
+    }
 }
