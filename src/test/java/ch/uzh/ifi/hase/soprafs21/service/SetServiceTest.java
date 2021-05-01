@@ -47,6 +47,7 @@ public class SetServiceTest {
         testSet.setExplain("testExplain");
         testSet.setPhoto("testPhoto");
         testSet.setLiked(2L);
+        testSet.setMembers(new ArrayList<>());
 
         // when -> any object is being save in the setRepository -> return the dummy testUser
         Mockito.when(setRepository.save(Mockito.any())).thenReturn(testSet);

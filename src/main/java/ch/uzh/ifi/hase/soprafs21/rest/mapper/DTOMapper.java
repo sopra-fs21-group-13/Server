@@ -40,6 +40,7 @@ public interface DTOMapper {
     @Mapping(source = "photo", target = "photo")
     @Mapping(source = "inGame", target = "inGame")
     @Mapping(source = "numberOfWins", target = "numberOfWins")
+    @Mapping(source = "learnSets", target = "learnSets")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     //Get Mapping for user with learn sets

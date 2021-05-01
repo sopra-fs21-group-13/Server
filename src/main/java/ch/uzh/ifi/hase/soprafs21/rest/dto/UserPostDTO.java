@@ -12,6 +12,7 @@ public class UserPostDTO {
     private String username;
     private UserStatus status;
     private List<Set> createdSets;
+    private List<Set> learnSets;
     private String password;
     private String token;
     private String email;
@@ -102,4 +103,11 @@ public class UserPostDTO {
         this.numberOfWins = numberOfWins;
     }
 
+    public List<Set> getLearnSets() {
+        return learnSets;
+    }
+
+    public void setLearnSets(List<Set> learnSets) {
+        this.learnSets = learnSets;
+    }
 }
