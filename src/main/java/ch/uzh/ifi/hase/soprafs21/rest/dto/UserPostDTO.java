@@ -101,4 +101,5 @@ public class UserPostDTO {
     public void setNumberOfWins(int numberOfWins) {
         this.numberOfWins = numberOfWins;
     }
+
 }

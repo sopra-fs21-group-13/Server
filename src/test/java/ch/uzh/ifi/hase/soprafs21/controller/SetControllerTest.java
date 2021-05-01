@@ -53,6 +53,7 @@ public class SetControllerTest {
         set.setTitle("Set example");
         set.setExplain("explain text");
         set.setUser(new User());
+        set.setMembers(Collections.singletonList(new User()));
         set.setCards(new ArrayList<>());
         set.setSetCategory(SetCategory.GERMAN);
         set.setSetStatus(SetStatus.PUBLIC);
@@ -76,6 +77,7 @@ public class SetControllerTest {
                 .andExpect(jsonPath("$[0].title", is(set.getTitle())))
                 .andExpect(jsonPath("$[0].explain", is(set.getExplain())))
                 .andExpect(jsonPath("$[0].userId", is(set.getUser())))
+                .andExpect(jsonPath("$[0].memberIds", is(set.getMembers())))
                 .andExpect(jsonPath("$[0].cards", is(set.getCards())))
                 .andExpect(jsonPath("$[0].setCategory", is(set.getSetCategory().toString())))
                 .andExpect(jsonPath("$[0].setStatus", is(set.getSetStatus().toString())))
@@ -93,6 +95,7 @@ public class SetControllerTest {
         set.setTitle("Set example");
         set.setExplain("explain text");
         set.setUser(new User());
+        set.setMembers(Collections.singletonList(new User()));
         set.setCards(new ArrayList<>());
         set.setSetCategory(SetCategory.GERMAN);
         set.setSetStatus(SetStatus.PUBLIC);
@@ -108,11 +111,12 @@ public class SetControllerTest {
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(10)))
                 .andExpect(jsonPath("$.setId", is(1)))
                 .andExpect(jsonPath("$.title", is(set.getTitle())))
                 .andExpect(jsonPath("$.explain", is(set.getExplain())))
                 .andExpect(jsonPath("$.userId", is(set.getUser())))
+                .andExpect(jsonPath("$.memberIds", is(set.getMembers())))
                 .andExpect(jsonPath("$.cards", is(set.getCards())))
                 .andExpect(jsonPath("$.setCategory", is(set.getSetCategory().toString())))
                 .andExpect(jsonPath("$.setStatus", is(set.getSetStatus().toString())))
@@ -129,6 +133,7 @@ public class SetControllerTest {
         newSet.setTitle("New Set example");
         newSet.setExplain("New explain text");
         newSet.setUser(new User());
+        newSet.setMembers(Collections.singletonList(new User()));
         newSet.setCards(new ArrayList<>());
         newSet.setSetCategory(SetCategory.GERMAN);
         newSet.setSetStatus(SetStatus.PUBLIC);
@@ -139,6 +144,7 @@ public class SetControllerTest {
         setPostDTO.setTitle("Set example");
         setPostDTO.setExplain("explain text");
         setPostDTO.setUser(new User());
+        setPostDTO.setMembers(Collections.singletonList(new User()));
         setPostDTO.setCards(new ArrayList<>());
         setPostDTO.setSetCategory(SetCategory.ENGLISH);
         setPostDTO.setSetStatus(SetStatus.PUBLIC);
@@ -154,11 +160,12 @@ public class SetControllerTest {
 
         // then
         mockMvc.perform(putRequest).andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(10)))
                 .andExpect(jsonPath("$.setId", is(1)))
                 .andExpect(jsonPath("$.title", is(newSet.getTitle())))
                 .andExpect(jsonPath("$.explain", is(newSet.getExplain())))
                 .andExpect(jsonPath("$.userId", is(newSet.getUser())))
+                .andExpect(jsonPath("$.memberIds", is(newSet.getMembers())))
                 .andExpect(jsonPath("$.cards", is(newSet.getCards())))
                 .andExpect(jsonPath("$.setCategory", is(newSet.getSetCategory().toString())))
                 .andExpect(jsonPath("$.setStatus", is(newSet.getSetStatus().toString())))
@@ -174,6 +181,7 @@ public class SetControllerTest {
         newSet.setTitle("Set example");
         newSet.setExplain("explain text");
         newSet.setUser(new User());
+        newSet.setMembers(Collections.singletonList(new User()));
         newSet.setCards(new ArrayList<>());
         newSet.setSetCategory(SetCategory.GERMAN);
         newSet.setSetStatus(SetStatus.PUBLIC);
@@ -184,6 +192,7 @@ public class SetControllerTest {
         setPostDTO.setTitle("Set example");
         setPostDTO.setExplain("explain text");
         setPostDTO.setUser(new User());
+        setPostDTO.setMembers(Collections.singletonList(new User()));
         setPostDTO.setCards(new ArrayList<>());
         setPostDTO.setSetCategory(SetCategory.ENGLISH);
         setPostDTO.setSetStatus(SetStatus.PUBLIC);
@@ -199,11 +208,12 @@ public class SetControllerTest {
 
         // then
         mockMvc.perform(postRequest).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.*", hasSize(9)))
+                .andExpect(jsonPath("$.*", hasSize(10)))
                 .andExpect(jsonPath("$.setId", is(1)))
                 .andExpect(jsonPath("$.title", is(newSet.getTitle())))
                 .andExpect(jsonPath("$.explain", is(newSet.getExplain())))
                 .andExpect(jsonPath("$.userId", is(newSet.getUser())))
+                .andExpect(jsonPath("$.memberIds", is(newSet.getMembers())))
                 .andExpect(jsonPath("$.cards", is(newSet.getCards())))
                 .andExpect(jsonPath("$.setCategory", is(newSet.getSetCategory().toString())))
                 .andExpect(jsonPath("$.setStatus", is(newSet.getSetStatus().toString())))
@@ -220,6 +230,7 @@ public class SetControllerTest {
         set.setTitle("Set example");
         set.setExplain("explain text");
         set.setUser(new User());
+        set.setMembers(Collections.singletonList(new User()));
         set.setCards(new ArrayList<>());
         set.setSetCategory(SetCategory.GERMAN);
         set.setSetStatus(SetStatus.PUBLIC);

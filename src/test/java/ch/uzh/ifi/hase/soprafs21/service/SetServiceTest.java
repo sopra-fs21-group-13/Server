@@ -6,6 +6,7 @@ import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,12 +15,16 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 public class SetServiceTest {
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private SetRepository setRepository;
@@ -43,7 +48,7 @@ public class SetServiceTest {
         testSet.setPhoto("testPhoto");
         testSet.setLiked(2L);
 
-        // when -> any object is being save in the userRepository -> return the dummy testUser
+        // when -> any object is being save in the setRepository -> return the dummy testUser
         Mockito.when(setRepository.save(Mockito.any())).thenReturn(testSet);
 
     }
@@ -89,6 +94,8 @@ public class SetServiceTest {
         testSet.setUser(user);
         testSet.setSetCategory(SetCategory.GERMAN);
         testSet.setSetStatus(SetStatus.PUBLIC);
+
+        Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
 
         Set createdSet = setService.createSet(testSet);
 
@@ -148,6 +155,7 @@ public class SetServiceTest {
         createdSet.setExplain("testExplain2");
         createdSet.setPhoto("testPhoto2");
         createdSet.setLiked(20L);
+        createdSet.setMembers(new ArrayList<>());
 
         Mockito.when(setRepository.findBySetId(Mockito.any())).thenReturn(Optional.of(testSet));
 
@@ -157,6 +165,7 @@ public class SetServiceTest {
         assertEquals(testSet.getExplain(), createdSet.getExplain());
         assertEquals(testSet.getPhoto(), createdSet.getPhoto());
         assertEquals(testSet.getLiked(), createdSet.getLiked());
+        assertEquals(testSet.getMembers(), createdSet.getMembers());
 
     }
 

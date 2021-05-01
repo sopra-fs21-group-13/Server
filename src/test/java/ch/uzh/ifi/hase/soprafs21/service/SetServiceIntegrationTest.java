@@ -159,6 +159,7 @@ public class SetServiceIntegrationTest {
         testSet.setSetStatus(SetStatus.PUBLIC);
         testSet.setExplain("explain");
         testSet.setPhoto("photo");
+        testSet.setMembers(new ArrayList<>());
         Set createdSet = setService.createSet(testSet);
         // set2 setup
         Set testSet2 = new Set();
@@ -170,6 +171,7 @@ public class SetServiceIntegrationTest {
         testSet2.setSetStatus(SetStatus.PRIVATE);
         testSet2.setExplain("explain2");
         testSet2.setPhoto("photo2");
+        testSet2.setMembers(new ArrayList<>());
 
         // when
         Set updateSet = setService.updateSet(testSet2);
@@ -183,6 +185,7 @@ public class SetServiceIntegrationTest {
         assertEquals(testSet2.getSetStatus(), updateSet.getSetStatus());
         assertEquals(testSet2.getExplain(), updateSet.getExplain());
         assertEquals(testSet2.getPhoto(), updateSet.getPhoto());
+        assertEquals(testSet2.getMembers(), updateSet.getMembers());
     }
 
     @Test

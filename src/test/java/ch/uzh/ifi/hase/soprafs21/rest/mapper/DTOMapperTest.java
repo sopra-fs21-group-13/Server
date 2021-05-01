@@ -132,6 +132,7 @@ public class DTOMapperTest {
         user.setPassword("password");
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
+        user.setLearnSets(new ArrayList<>());
 
         // create setPostDTO
         Set set = new Set();
@@ -142,6 +143,7 @@ public class DTOMapperTest {
         set.setSetStatus(SetStatus.PUBLIC);
         set.setExplain("explain");
         set.setPhoto("photo");
+        set.setMembers(new ArrayList<>());
 
         // Map -> create Set
         SetGetDTO setGetDTO = DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
@@ -155,6 +157,7 @@ public class DTOMapperTest {
         assertEquals(setGetDTO.getSetStatus(), set.getSetStatus());
         assertEquals(setGetDTO.getExplain(), set.getExplain());
         assertEquals(setGetDTO.getPhoto(), set.getPhoto());
+        assertEquals(setGetDTO.getMemberIds(), set.getMembers());
     }
 
     @Test
