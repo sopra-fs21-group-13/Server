@@ -170,6 +170,7 @@ public class SetService {
             }
         }
         set.setMembers(members);
+        settingsRepository.deleteByUserIDAndSetID(userId,setId);
         return set;
     }
 

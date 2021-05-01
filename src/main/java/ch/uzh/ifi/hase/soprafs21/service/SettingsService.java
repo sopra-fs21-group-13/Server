@@ -164,4 +164,9 @@ public class SettingsService {
         log.debug("Created Information fo Setting File: {}", newSetting);
     }
 
+    public void deleteSettings(Long userId, Long SetId){
+        
+
+    }
+
 }
