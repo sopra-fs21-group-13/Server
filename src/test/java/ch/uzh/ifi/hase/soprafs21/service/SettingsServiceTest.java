@@ -1,6 +1,9 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Card;
+import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.Settings;
+import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,6 +24,9 @@ public class SettingsServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private SetRepository setRepository;
 
     @Mock
     private SettingsRepository settingsRepository;
@@ -44,7 +50,7 @@ public class SettingsServiceTest {
         testSettings.setMarkedCards(Arrays.asList(1L,2L,3L));
         testSettings.setSavedOrder(Arrays.asList(4L,5L,6L));
 
-        // when -> any object is being save in the userRepository -> return the dummy testUser
+        // when -> any object is being save in the setRepository -> return the dummy testUser
         Mockito.when(settingsRepository.save(Mockito.any())).thenReturn(testSettings);
 
     }
@@ -93,7 +99,6 @@ public class SettingsServiceTest {
         assertEquals(testSettings.getSetID(), createdSettings.getSetID());
         assertEquals(testSettings.getCardsShuffled(), createdSettings.getCardsShuffled());
         assertEquals(testSettings.getStudyStarred(), createdSettings.getStudyStarred());
-        assertEquals(testSettings.getStudyStarred(), createdSettings.getStudyStarred());
         assertEquals(testSettings.getLastCard(), createdSettings.getLastCard());
         assertEquals(testSettings.getMarkedCards(), createdSettings.getMarkedCards());
         assertEquals(testSettings.getSavedOrder(), createdSettings.getSavedOrder());
@@ -101,7 +106,7 @@ public class SettingsServiceTest {
     }
 
     @Test
-    public void updateSettings_validInputs_UnSuccess() {
+    public void updateSettings_UserDoesntExist_UnSuccess() {
 
         Mockito.when(userRepository.existsById(Mockito.any())).thenReturn(false);
 
@@ -114,42 +119,182 @@ public class SettingsServiceTest {
     @Test
     public void updateCardOrder_Success() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(3L);
+        Card card2 = new Card();
+        card2.setCardId(8L);
+        Card card3 = new Card();
+        card3.setCardId(9L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        List<Settings> settingsFiles = new ArrayList<Settings>();
+        settingsFiles.add(testSettings);
+
+        Mockito.when(setRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(settingsRepository.findAllBySetID(Mockito.any())).thenReturn(settingsFiles);
+
+        settingsService.updateCardOrder(createdSet);
+
+        for (Settings settings: settingsFiles){
+            assertEquals(settings.getCardsShuffled(), false);
+            assertEquals(settings.getStudyStarred(), false);
+            assertEquals(settings.getLastCard(), 3L);
+            assertEquals(settings.getMarkedCards(), Collections.singletonList(3L));
+            assertEquals(settings.getSavedOrder(), Arrays.asList(3L,8L,9L));
+        }
+
     }
+
 
     @Test
     public void updateCardOrder_UnSuccess_SetDoesntExist() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(3L);
+        Card card2 = new Card();
+        card2.setCardId(8L);
+        Card card3 = new Card();
+        card3.setCardId(9L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        Mockito.when(setRepository.existsById(Mockito.any())).thenReturn(false);
+
+        assertThrows(ResponseStatusException.class, () -> settingsService.updateCardOrder(createdSet));
+
+        Exception e = assertThrows(ResponseStatusException.class, () -> settingsService.updateCardOrder(createdSet));
+        assertEquals("400 BAD_REQUEST \"Set doesn't exist\"", e.getMessage());
     }
 
     @Test
     public void updateCardOrder_UnSuccess_SettingsDoesntExist() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(3L);
+        Card card2 = new Card();
+        card2.setCardId(8L);
+        Card card3 = new Card();
+        card3.setCardId(9L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        List<Settings> settingsFiles = new ArrayList<Settings>();
+
+        Mockito.when(setRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(settingsRepository.findAllBySetID(Mockito.any())).thenReturn(settingsFiles);
+
+        assertThrows(ResponseStatusException.class, () -> settingsService.updateCardOrder(createdSet));
+
+        Exception e = assertThrows(ResponseStatusException.class, () -> settingsService.updateCardOrder(createdSet));
+        assertEquals("400 BAD_REQUEST \"No Settingfiles were found when updating set\"", e.getMessage());
     }
 
     @Test
     public void updateStarredCards_Success() {
 
-        //
+        List<Long> newCardIds = Arrays.asList(1L,3L,23L);
+
+
+        List<Settings> settingsFiles = new ArrayList<Settings>();
+        settingsFiles.add(testSettings);
+
+        settingsService.updateStarredCards(newCardIds, settingsFiles);
+
+        for (Settings settings: settingsFiles){
+            assertEquals(settings.getMarkedCards(), Arrays.asList(1L,3L));
+        }
     }
 
     @Test
     public void createSettings_Success() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(13L);
+        Card card2 = new Card();
+        card2.setCardId(14L);
+        Card card3 = new Card();
+        card3.setCardId(15L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        Mockito.when(userRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(setRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(setRepository.findById(Mockito.any())).thenReturn(Optional.of(createdSet));
+
+        settingsService.createSettings(10L,20L);
+
+        verify(settingsRepository, Mockito.times(1)).save(Mockito.any());
     }
 
     @Test
     public void createSettings_UnSuccess_UserDoesntExist() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(13L);
+        Card card2 = new Card();
+        card2.setCardId(14L);
+        Card card3 = new Card();
+        card3.setCardId(15L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        Mockito.when(userRepository.existsById(Mockito.any())).thenReturn(false);
+
+        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(10L,20L));
+
+        Exception e = assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(10L,20L));
+        assertEquals("400 BAD_REQUEST \"User not found with userId while creating settings file\"", e.getMessage());
     }
 
     @Test
     public void createSettings_UnSuccess_SetDoesntExist() {
 
-        //
+        Card card1 = new Card();
+        card1.setCardId(13L);
+        Card card2 = new Card();
+        card2.setCardId(14L);
+        Card card3 = new Card();
+        card3.setCardId(15L);
+        List<Card> cardList = new ArrayList<>();
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+
+        Set createdSet = new Set();
+        createdSet.setCards(cardList);
+
+        Mockito.when(userRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(setRepository.existsById(Mockito.any())).thenReturn(false);
+
+        assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(10L,20L));
+
+        Exception e = assertThrows(ResponseStatusException.class, () -> settingsService.createSettings(10L,20L));
+        assertEquals("400 BAD_REQUEST \"Set not found with setId while creating settings file\"", e.getMessage());
     }
 }

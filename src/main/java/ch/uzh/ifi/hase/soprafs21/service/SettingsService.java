@@ -125,10 +125,10 @@ public class SettingsService {
     public void createSettings(Long userId, Long setId){
         // Create default cardOrder arraylist by getting all cardIds
         if(!userRepository.existsById(userId)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found with userId while creating settings file ");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found with userId while creating settings file");
         }
         if(!setRepository.existsById(setId)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found with setId while creating settings file ");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set not found with setId while creating settings file");
         }
         List<Long> cardOrder =  new ArrayList<>();
         Optional<Set> checkSet = setRepository.findById(setId);
@@ -163,6 +163,5 @@ public class SettingsService {
 
         log.debug("Created Information fo Setting File: {}", newSetting);
     }
-
 
 }
