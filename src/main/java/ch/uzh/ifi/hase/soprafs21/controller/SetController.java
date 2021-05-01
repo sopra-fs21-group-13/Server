@@ -81,6 +81,7 @@ public class SetController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public SetGetDTO updateMembersSet(@PathVariable("userId") Long userId, @PathVariable("setId") Long setId){
         Set set = setService.addMember(userId,setId);
+        settingsService.createSettings(userId, setId);
         return DTOMapper.INSTANCE.convertEntityToSetGetDTO(set);
     }
 
