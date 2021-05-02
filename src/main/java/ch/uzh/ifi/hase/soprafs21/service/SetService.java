@@ -71,7 +71,14 @@ public class SetService {
 
         List<User> initialMember = new ArrayList<>();
         newSet.setMembers(initialMember);
-        initialMember.add(userRepository.findById(newSet.getUser()).get());
+
+        //initialMember.add(userRepository.findById(newSet.getUser()).get());
+        Optional<User> newUser = userRepository.findById(newSet.getUser());
+        if (newUser.isPresent()){
+            initialMember.add(newUser.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+        }
 
         if (newSet.getMembers().isEmpty()){
             newSet.setMembers(initialMember);
@@ -134,16 +141,39 @@ public class SetService {
 
     // Add member to set
     public Set addMember(Long userId, Long setId){
-        User user = userRepository.findById(userId).get();
-        Set set = setRepository.findBySetId(setId).get();
-        List<Long> memberIds = set.getMembers();
+
+        //User user = userRepository.findById(userId).get();
+        User newUser;
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()){
+            newUser = user.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+        }
+
+        //Set set = setRepository.findBySetId(setId).get();
+        Set newSet;
+        Optional<Set> set = setRepository.findBySetId(setId);
+        if (set.isPresent()){
+            newSet = set.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+        }
+
+        List<Long> memberIds = newSet.getMembers();
         List<User> members = new ArrayList<>();
         for (Long memberId:memberIds){
-            members.add(userRepository.findById(memberId).get());
+            //members.add(userRepository.findById(memberId).get());
+            Optional<User> createdUser = userRepository.findById(memberId);
+            if (createdUser.isPresent()){
+                members.add(createdUser.get());
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+            }
         }
-        members.add(user);
-        set.setMembers(members);
-        return set;
+        members.add(newUser);
+        newSet.setMembers(members);
+        return newSet;
     }
 
 
@@ -158,20 +188,35 @@ public class SetService {
 
     // Delete a Member from the set
     public Set removeMember(Long userId, Long setId){
-        Set set = setRepository.findBySetId(setId).get();
-        if (set.getUser().equals(userId)){
+
+        //Set set = setRepository.findBySetId(setId).get();
+        Set newSet;
+        Optional<Set> set = setRepository.findBySetId(setId);
+        if (set.isPresent()){
+            newSet = set.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+        }
+
+        if (newSet.getUser().equals(userId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not remove the creator of a list from the Member List");
         }
-        List<Long> memberIds = set.getMembers();
+        List<Long> memberIds = newSet.getMembers();
         List<User> members = new ArrayList<>();
         for (Long memberId:memberIds){
             if (!memberId.equals(userId)){
-                members.add(userRepository.findById(memberId).get());
+                //members.add(userRepository.findById(memberId).get());
+                Optional<User> createdUser = userRepository.findById(memberId);
+                if (createdUser.isPresent()){
+                    members.add(createdUser.get());
+                } else {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+                }
             }
         }
-        set.setMembers(members);
+        newSet.setMembers(members);
         settingsRepository.deleteByUserIDAndSetID(userId,setId);
-        return set;
+        return newSet;
     }
 
 }
