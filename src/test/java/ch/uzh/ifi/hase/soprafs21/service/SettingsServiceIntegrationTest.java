@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.Settings;
@@ -10,7 +9,6 @@ import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.SetRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.SettingsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +97,7 @@ public class SettingsServiceIntegrationTest {
         Settings createdSettings = settingsRepository.findByUserIDAndSetID(createdUser.getUserId(),createdSet.getSetId());
 
         // then
-        assertEquals(testSettings.getUserID(), createdSettings.getSetID());
+        assertEquals(testSettings.getUserID(), createdSettings.getUserID());
         assertEquals(testSettings.getSetID(), createdSettings.getSetID());
         assertEquals(testSettings.getCardsShuffled(), createdSettings.getCardsShuffled());
         assertNotNull(createdSettings.getSettingsId());
@@ -201,7 +199,7 @@ public class SettingsServiceIntegrationTest {
 
         Settings createdSettings = settingsService.getSettings(createdUser.getUserId(),createdSet.getSetId());
         // then
-        assertEquals(testSettings.getUserID(), createdSettings.getSetID());
+        assertEquals(testSettings.getUserID(), createdSettings.getUserID());
         assertEquals(testSettings.getSetID(), createdSettings.getSetID());
         assertEquals(testSettings.getCardsShuffled(), createdSettings.getCardsShuffled());
         assertNotNull(createdSettings.getSettingsId());
@@ -283,7 +281,7 @@ public class SettingsServiceIntegrationTest {
         List<Settings> createdSettings = settingsService.getAllSettings();
 
         // then
-        assertEquals(testSettings.getUserID(), createdSettings.get(0).getSetID());
+        assertEquals(testSettings.getUserID(), createdSettings.get(0).getUserID());
         assertEquals(testSettings.getSetID(), createdSettings.get(0).getSetID());
         assertEquals(testSettings.getCardsShuffled(), createdSettings.get(0).getCardsShuffled());
         assertNotNull(createdSettings.get(0).getSettingsId());
