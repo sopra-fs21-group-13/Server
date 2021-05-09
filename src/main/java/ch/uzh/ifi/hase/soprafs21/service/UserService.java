@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
@@ -122,18 +121,22 @@ public class UserService {
         }
     }
 
+    //need to create a PW
     public User upserd (User user){
+
         if(userRepository.findByEmail(user.getEmail())==null)
         {
             int uniqueUsername = count.incrementAndGet();
             user.setUsername("NoName" + uniqueUsername);
+            user.setPassword("defaultPassword");
             user.setStatus(UserStatus.ONLINE);
 
             User newUser = userRepository.save(user);
             return newUser;
         }
         else{
-            return user;
+            User newUser = userRepository.findByEmail(user.getEmail());
+            return newUser;
         }
     }
 
