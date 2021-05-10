@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs21.entity.Invitation;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class UserGetDTO {
     private String photo;
     private boolean inGame;
     private int numberOfWins;
+    private List<Invitation> invitations;
 
     //test
 
@@ -112,5 +114,13 @@ public class UserGetDTO {
 
     public void setNumberOfWins(int numberOfWins) {
         this.numberOfWins = numberOfWins;
+    }
+
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
     }
 }

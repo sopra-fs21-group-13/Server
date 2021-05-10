@@ -36,6 +36,9 @@ public class Settings {
     @ElementCollection(targetClass=Long.class)
     private List<Long> savedOrder;
 
+
+    // Getters & Setters
+
     public Long getSettingsId() {
         return settingsId;
     }

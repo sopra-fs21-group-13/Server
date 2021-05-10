@@ -35,7 +35,7 @@ public class    Set implements Serializable {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 512)
     private String explain;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)

@@ -43,9 +43,6 @@ public class SetService {
         this.settingsRepository = settingsRepository;
     }
 
-    @Autowired
-    private SettingsService settingsService;
-
     // Get all sets available -> not useful though
     public List<Set> getPublicSets() {
         return this.setRepository.findBySetStatus(SetStatus.PUBLIC);

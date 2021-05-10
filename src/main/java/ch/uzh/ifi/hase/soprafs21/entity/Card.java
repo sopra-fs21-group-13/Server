@@ -26,7 +26,7 @@ public class Card implements Serializable {
     @Column(nullable = false)
     private String question;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = false)
     private String answer;
 
     public Long getCardId() {

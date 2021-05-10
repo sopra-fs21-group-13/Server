@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs21.entity.Card;
-import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.Settings;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.entity.GameSetting;
+import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +39,7 @@ public interface DTOMapper {
     @Mapping(source = "inGame", target = "inGame")
     @Mapping(source = "numberOfWins", target = "numberOfWins")
     @Mapping(source = "learnSets", target = "learnSets")
+    @Mapping(source = "invitations", target = "invitations")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     //Get Mapping for user with learn sets
@@ -56,13 +55,14 @@ public interface DTOMapper {
     @Mapping(source = "photo", target = "photo")
     @Mapping(source = "inGame", target = "inGame")
     @Mapping(source = "numberOfWins", target = "numberOfWins")
+    @Mapping(source = "invitations", target = "invitations")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
 
 // Set Mappings
 
     @Mapping(source = "title", target = "title")
-    @Mapping(source = "user", target = "user", qualifiedByName = "User") // Custom Mapper with an Annotation for the card array
+    @Mapping(source = "user", target = "user", qualifiedByName = "User") // Custom Mapper with an Annotation for the user
     @Mapping(source = "members", target = "members", qualifiedByName = "Members")
     @Mapping(source = "cards", target = "cards", qualifiedByName = "Card") // Custom Mapper with an Annotation for the card array
     @Mapping(source = "setCategory",target = "setCategory")
@@ -134,5 +134,68 @@ public interface DTOMapper {
     @Mapping(source = "savedOrder", target = "savedOrder")
     @Mapping(source = "markedCards", target = "markedCards")
     SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
+
+
+
+// Game Mappings
+
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
+    @Mapping(source = "inviter", target = "inviter", qualifiedByName = "User")
+    @Mapping(source = "playSetId", target = "playSetId")
+    @Mapping(source = "playCards", target = "playCards", qualifiedByName = "Card")
+    @Mapping(source = "countDown", target = "countDown")
+    @Mapping(source = "history", target = "history")
+    @Mapping(source = "score", target = "score")
+    Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
+
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
+    @Mapping(source = "inviter", target = "inviter")
+    @Mapping(source = "playSetId", target = "playSetId")
+    @Mapping(source = "playCards", target = "playCards")
+    @Mapping(source = "players", target = "players")
+    @Mapping(source = "countDown", target = "countDown")
+    @Mapping(source = "history", target = "history")
+    @Mapping(source = "score", target = "score")
+    GameGetDTO convertEntityToGameGetDTO(Game game);
+
+
+
+    @Named("GameSetting")
+    default GameSetting jsonToGameSetting(String gameSettingString) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        // Convert Json array to user entity
+        GameSetting gameSetting = mapper.readValue(gameSettingString, GameSetting.class );
+        return gameSetting;
+    }
+
+    @Named("Set")
+    default Set jsonToSet(String setString) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        // Convert Json array to user entity
+        Set set = mapper.readValue(setString, Set.class );
+        return set;
+    }
+
+    @Mapping(source = "timeStamp", target = "timeStamp")
+    @Mapping(source = "senderId", target = "senderId")
+    @Mapping(source = "message", target = "message")
+    Message convertMessagePostDTOtoEntity(MessagePostDTO messagePostDTO);
+
+    @Mapping(source = "invitationId", target = "invitationId")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "sentFromId", target = "sentFromId")
+    @Mapping(source = "receivers", target = "receivers", qualifiedByName = "Members")
+    @Mapping(source = "gameSetting", target = "gameSetting", qualifiedByName = "GameSetting")
+    Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
+
+    @Mapping(source = "invitationId", target = "invitationId")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "sentFromId", target = "sentFromId")
+    @Mapping(source = "receivers", target = "receivers")
+    @Mapping(source = "gameSetting", target = "gameSetting")
+    InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
 
 }

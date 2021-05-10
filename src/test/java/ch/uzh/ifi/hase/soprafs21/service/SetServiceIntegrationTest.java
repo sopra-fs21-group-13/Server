@@ -65,7 +65,11 @@ public class SetServiceIntegrationTest {
         assertNull(userRepository.findByUsername("testUsername"));
         assertTrue(setRepository.findAll().isEmpty());
         // cardList
-        List<Card> emptyList = new ArrayList<>();
+        List<Card> cardList = new ArrayList<>();
+        Card card = new Card();
+        card.setQuestion("what?");
+        card.setAnswer("Because!");
+        cardList.add(card);
         // user setup
         User testUser = new User();
         testUser.setName("testName");
@@ -75,14 +79,13 @@ public class SetServiceIntegrationTest {
         Set testSet = new Set();
         testSet.setTitle("title");
         testSet.setUser(testUser);
-        testSet.setCards(emptyList);
+        testSet.setCards(cardList);
         testSet.setSetCategory(SetCategory.BIOLOGY);
         testSet.setSetStatus(SetStatus.PUBLIC);
         testSet.setExplain("explain");
         testSet.setPhoto("photo");
 
         // when
-        User createdUser = userService.createUser(testUser);
         Set createdSet = setService.createSet(testSet);
 
         // then

@@ -20,6 +20,9 @@ public class SetGetDTO {
     private String photo;
     private Long liked;
 
+
+    // Setters & Getters
+
     public Long getSetId() {
         return setId;
     }
@@ -67,16 +70,6 @@ public class SetGetDTO {
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
-
-    /**
-    public SetOrder getSetOrder() {
-        return setOrder;
-    }
-
-    public void setSetOrder(SetOrder setOrder) {
-        this.setOrder = setOrder;
-    }
-     */
 
     public SetCategory getSetCategory() {
         return setCategory;

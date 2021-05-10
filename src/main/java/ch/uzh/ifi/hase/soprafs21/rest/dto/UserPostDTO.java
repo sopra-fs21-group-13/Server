@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs21.entity.Invitation;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class UserPostDTO {
     private boolean inGame;
     private int numberOfWins;
     private String photo;
+    private List<Invitation> invitations;
 
     public long getUserId() {
         return userId;
@@ -110,4 +112,13 @@ public class UserPostDTO {
     public void setLearnSets(List<Set> learnSets) {
         this.learnSets = learnSets;
     }
+
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
+    }
 }
+

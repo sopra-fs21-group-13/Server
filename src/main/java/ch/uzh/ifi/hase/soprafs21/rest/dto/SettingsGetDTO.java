@@ -6,20 +6,15 @@ import java.util.ArrayList;
 public class SettingsGetDTO {
 
     private Long settingsId;
-
     private Long userID;
-
     private Long setID;
-
     private Boolean cardsShuffled;
-
     private Boolean studyStarred;
-
     private Long lastCard;
-
     private ArrayList<Long> markedCards;
-
     private ArrayList<Long> savedOrder;
+
+    // Getters & Setters
 
     public Long getSettingsId() {
         return settingsId;

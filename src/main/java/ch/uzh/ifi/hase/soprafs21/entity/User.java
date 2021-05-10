@@ -59,6 +59,12 @@ public class User  {
     @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
     private List<Set> learnSets;
 
+    @Column
+    @ManyToMany(mappedBy = "receivers", cascade = CascadeType.ALL)
+    private List<Invitation> invitations;
+
+
+    // Getters & Setters
 
     public Long getUserId() {
         return userId;
@@ -71,6 +77,7 @@ public class User  {
     public String getPhoto() {
         return photo;
     }
+
     public void setPhoto(String photo) {
         this.photo = photo;
     }
@@ -150,4 +157,13 @@ public class User  {
     public void setLearnSets(List<Set> learnSets) {
         this.learnSets = learnSets;
     }
+
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
+    }
+
 }
