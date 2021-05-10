@@ -109,6 +109,10 @@ public class UserService {
                 userToLogin.setToken(userByUsername.getToken());
                 userToLogin.setStatus(UserStatus.ONLINE);
                 userToLogin.setUserId(userByUsername.getUserId());
+                //update repo as "ONLINE"
+                userByUsername.setStatus(UserStatus.ONLINE);
+                userByUsername = userRepository.save(userByUsername);
+                userRepository.flush();
                 return userToLogin;
             }
             else {
