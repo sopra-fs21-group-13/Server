@@ -75,6 +75,7 @@ public class SetServiceIntegrationTest {
         testUser.setName("testName");
         testUser.setUsername("testUsername");
         testUser.setPassword("password");
+        testUser = userService.createUser(testUser);
         // set setup
         Set testSet = new Set();
         testSet.setTitle("title");
