@@ -56,8 +56,6 @@ public class Game {
     @Column
     private Long score;
 
-
-
     // Getters & Setters
 
     public Long getGameId() {
