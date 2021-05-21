@@ -1,8 +1,8 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Game;
 import ch.uzh.ifi.hase.soprafs21.entity.Invitation;
 import ch.uzh.ifi.hase.soprafs21.entity.Message;
-import ch.uzh.ifi.hase.soprafs21.entity.Game;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.GameService;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +112,7 @@ public class GameController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public GameGetDTO addMessageToHistory(@PathVariable("gameId") Long gameId, @RequestBody MessagePostDTO messagePostDTO){
+        System.out.println("hello"+messagePostDTO.getMessage());
         Message message = DTOMapper.INSTANCE.convertMessagePostDTOtoEntity(messagePostDTO);
         // Add Message to Game History
         Game newGame = gameService.addMessageToHistory(gameId, message);

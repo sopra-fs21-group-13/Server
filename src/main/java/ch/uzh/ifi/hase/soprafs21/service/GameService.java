@@ -1,8 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
-import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
-import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
+import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,9 +109,6 @@ public class GameService {
         }
         return false;
     }
-
-
-
 
 
     // Edit a Game
