@@ -166,7 +166,7 @@ public interface DTOMapper {
     @Named("GameSetting")
     default GameSetting jsonToGameSetting(String gameSettingString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        // Convert Json array to user entity
+        // Convert Json array to gameSetting entity
         GameSetting gameSetting = mapper.readValue(gameSettingString, GameSetting.class );
         return gameSetting;
     }
@@ -188,6 +188,7 @@ public interface DTOMapper {
     @Mapping(source = "gameId", target = "gameId")
     @Mapping(source = "sentFromId", target = "sentFromId")
     @Mapping(source = "receivers", target = "receivers", qualifiedByName = "Members")
+    @Mapping(source= "setTitle", target = "setTitle")
     @Mapping(source = "gameSetting", target = "gameSetting", qualifiedByName = "GameSetting")
     Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
 
@@ -195,6 +196,7 @@ public interface DTOMapper {
     @Mapping(source = "gameId", target = "gameId")
     @Mapping(source = "sentFromId", target = "sentFromId")
     @Mapping(source = "receivers", target = "receivers")
+    @Mapping(source= "setTitle", target = "setTitle")
     @Mapping(source = "gameSetting", target = "gameSetting")
     InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
 

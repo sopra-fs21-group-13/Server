@@ -14,5 +14,9 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
     // Delete Function
     void deleteByGameId(Long gameId);
+
+    // Delete Invitation
+    void deleteByInvitationId(Long inivitationId);
+
 }
 

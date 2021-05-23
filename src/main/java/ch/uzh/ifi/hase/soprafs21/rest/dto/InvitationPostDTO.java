@@ -13,6 +13,7 @@ public class InvitationPostDTO {
     private Long gameId;
     private Long sentFromId;
     private List<User> receivers;
+    private String setTitle;
     private GameSetting gameSetting;
 
 
@@ -48,6 +49,14 @@ public class InvitationPostDTO {
 
     public void setReceivers(List<User> receivers) {
         this.receivers = receivers;
+    }
+
+    public String getSetTitle() {
+        return setTitle;
+    }
+
+    public void setSetTitle(String setTitle) {
+        this.setTitle = setTitle;
     }
 
     public GameSetting getGameSetting() {

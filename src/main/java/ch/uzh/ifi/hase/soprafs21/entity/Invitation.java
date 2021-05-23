@@ -23,6 +23,9 @@ public class Invitation {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<User> receivers;
 
+    @Column
+    private String setTitle;
+
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id")
     private GameSetting gameSetting;
@@ -72,5 +75,13 @@ public class Invitation {
 
     public void setGameSetting(GameSetting gameSetting) {
         this.gameSetting = gameSetting;
+    }
+
+    public String getSetTitle() {
+        return setTitle;
+    }
+
+    public void setSetTitle(String setTitle) {
+        this.setTitle = setTitle;
     }
 }

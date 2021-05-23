@@ -205,12 +205,17 @@ public class GameService {
 
 
     // Delete a Game and its corresponding GameSetting
-
     public void deleteGame(Long gameId){
         Game game = getGameByGameID(gameId);
         invitationRepository.deleteByGameId(gameId);
         gameSettingRepository.deleteById(game.getGameSettings().getGameSettingId());
         gameRepository.deleteById(gameId);
+    }
+
+
+    // Delete a invitation by its id (when game is closed)
+    public void deleteInvitation(Long invitationId){
+        invitationRepository.deleteByInvitationId(invitationId);
     }
 
 }

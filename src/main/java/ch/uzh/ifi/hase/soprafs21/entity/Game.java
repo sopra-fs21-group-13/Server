@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
-
 import javax.persistence.*;
 import java.util.List;
 

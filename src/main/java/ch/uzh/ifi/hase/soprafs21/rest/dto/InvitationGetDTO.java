@@ -14,6 +14,7 @@ public class InvitationGetDTO {
     private Long gameId;
     private Long sentFromId;
     private List<Long> receivers;
+    private String setTitle;
     private GameSetting gameSetting;
 
 
@@ -53,6 +54,14 @@ public class InvitationGetDTO {
 
     public GameSetting getGameSetting() {
         return gameSetting;
+    }
+
+    public String getSetTitle() {
+        return setTitle;
+    }
+
+    public void setSetTitle(String setTitle) {
+        this.setTitle = setTitle;
     }
 
     public void setGameSetting(GameSetting gameSetting) {

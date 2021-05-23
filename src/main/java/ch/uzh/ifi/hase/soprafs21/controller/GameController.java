@@ -32,6 +32,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
+
 // Get Mapping
 
     @GetMapping("/games")
@@ -146,5 +147,11 @@ public class GameController {
     public void deleteGame(@PathVariable Long gameId){
         gameService.deleteGame(gameId);
     }
+
+
+    // Delete Invitation
+    @DeleteMapping("/games/invitations/{invitationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInvitation(@PathVariable Long invitationId) {gameService.deleteInvitation(invitationId);}
 
 }
