@@ -51,12 +51,6 @@ public class Game {
     @ElementCollection(targetClass = Message.class)
     private List<Message> history;
 
-    @Column
-    private Long firstPlayerScore;
-
-    @Column
-    private Long secondPlayerScore;
-
     // Getters & Setters
 
     public Long getGameId() {
@@ -130,20 +124,5 @@ public class Game {
     public void setHistory(List<Message> history) {
         this.history = history;
     }
-
-    public Long getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public void setFirstPlayerScore(Long firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
-    public Long getSecondPlayerScore() {
-        return secondPlayerScore;
-    }
-
-    public void setSecondPlayerScore(Long secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
+    
 }
