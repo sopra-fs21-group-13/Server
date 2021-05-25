@@ -52,7 +52,10 @@ public class Game {
     private List<Message> history;
 
     @Column
-    private Long score;
+    private Long firstPlayerScore;
+
+    @Column
+    private Long secondPlayerScore;
 
     // Getters & Setters
 
@@ -128,11 +131,19 @@ public class Game {
         this.history = history;
     }
 
-    public Long getScore() {
-        return score;
+    public Long getFirstPlayerScore() {
+        return firstPlayerScore;
     }
 
-    public void setScore(Long score) {
-        this.score = score;
+    public void setFirstPlayerScore(Long firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
+    }
+
+    public Long getSecondPlayerScore() {
+        return secondPlayerScore;
+    }
+
+    public void setSecondPlayerScore(Long secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
     }
 }

@@ -104,7 +104,6 @@ public class GameController {
         }
         Game updateGame = gameService.updateGame(game);
 
-
         return DTOMapper.INSTANCE.convertEntityToGameGetDTO(updateGame);
     }
 
@@ -113,7 +112,8 @@ public class GameController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public GameGetDTO addMessageToHistory(@PathVariable("gameId") Long gameId, @RequestBody MessagePostDTO messagePostDTO){
-        //System.out.println("hello"+messagePostDTO.getMessage());
+        System.out.println("hello"+messagePostDTO.getScore());
+
         Message message = DTOMapper.INSTANCE.convertMessagePostDTOtoEntity(messagePostDTO);
         // Add Message to Game History
         Game newGame = gameService.addMessageToHistory(gameId, message);

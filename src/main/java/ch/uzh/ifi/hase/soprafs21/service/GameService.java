@@ -134,6 +134,7 @@ public class GameService {
                 updatedGame.setCountDown(game.getCountDown());
         }
 
+
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();
 

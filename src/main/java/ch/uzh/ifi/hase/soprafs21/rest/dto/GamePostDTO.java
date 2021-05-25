@@ -18,7 +18,6 @@ public class GamePostDTO {
     private List<Card> playCards;
     private Boolean countDown;
     private List<Message> history;
-    private Long score;
 
 
     // Getters & Setters
@@ -86,11 +85,4 @@ public class GamePostDTO {
         this.history = history;
     }
 
-    public Long getScore() {
-        return score;
-    }
-
-    public void setScore(Long score) {
-        this.score = score;
-    }
 }

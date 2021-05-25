@@ -7,7 +7,8 @@ public class MessagePostDTO {
     private LocalDateTime timeStamp;
     private Long senderId;
     private String message;
-
+    private Long cardId;
+    private Long score;
 
     // Setters & Getters
 
@@ -35,5 +36,20 @@ public class MessagePostDTO {
         this.message = message;
     }
 
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
 }
 
