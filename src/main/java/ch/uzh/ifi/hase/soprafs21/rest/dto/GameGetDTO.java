@@ -19,7 +19,7 @@ public class GameGetDTO {
     private List<User> players;
     private Boolean countDown;
     private List<Message> history; // Change to Object Message with timeStamp / creator etc.
-    private Long score;
+    private Long timer;
 
 
     // Getters & Setters
@@ -96,11 +96,11 @@ public class GameGetDTO {
         this.history = history;
     }
 
-    public Long getScore() {
-        return score;
+    public Long getTimer() {
+        return timer;
     }
 
-    public void setScore(Long score) {
-        this.score = score;
+    public void setTimer(Long timer) {
+        this.timer = timer;
     }
 }

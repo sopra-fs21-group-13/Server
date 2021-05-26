@@ -47,12 +47,13 @@ public class Game {
     @Column
     private Boolean countDown;
 
+
+    @Column
+    private Long timer;
+
     @Column
     @ElementCollection(targetClass = Message.class)
     private List<Message> history;
-
-    @Column
-    private Long score;
 
     // Getters & Setters
 
@@ -128,11 +129,11 @@ public class Game {
         this.history = history;
     }
 
-    public Long getScore() {
-        return score;
+    public Long getTimer() {
+        return timer;
     }
 
-    public void setScore(Long score) {
-        this.score = score;
+    public void setTimer(Long timer) {
+        this.timer = timer;
     }
 }

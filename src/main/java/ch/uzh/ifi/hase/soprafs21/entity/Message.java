@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -26,6 +25,12 @@ public class Message implements Serializable {
 
     @Column(nullable = false)
     private String message;
+
+    @Column(nullable = true)
+    private Long cardId;
+
+    @Column(nullable = true)
+    private Long score;
 
 
     // Setters & Getters
@@ -59,5 +64,21 @@ public class Message implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
     }
 }
