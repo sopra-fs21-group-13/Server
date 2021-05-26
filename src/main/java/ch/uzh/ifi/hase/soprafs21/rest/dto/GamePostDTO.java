@@ -18,6 +18,7 @@ public class GamePostDTO {
     private List<Card> playCards;
     private Boolean countDown;
     private List<Message> history;
+    private Long timer;
 
 
     // Getters & Setters
@@ -85,4 +86,11 @@ public class GamePostDTO {
         this.history = history;
     }
 
+    public Long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Long timer) {
+        this.timer = timer;
+    }
 }

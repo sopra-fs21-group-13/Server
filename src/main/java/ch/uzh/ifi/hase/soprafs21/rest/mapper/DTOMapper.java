@@ -146,6 +146,7 @@ public interface DTOMapper {
     @Mapping(source = "playCards", target = "playCards", qualifiedByName = "Card")
     @Mapping(source = "countDown", target = "countDown")
     @Mapping(source = "history", target = "history")
+    @Mapping(source = "timer", target = "timer")
     Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
 
     @Mapping(source = "gameId", target = "gameId")
@@ -157,6 +158,7 @@ public interface DTOMapper {
     @Mapping(source = "players", target = "players")
     @Mapping(source = "countDown", target = "countDown")
     @Mapping(source = "history", target = "history")
+    @Mapping(source = "timer", target = "timer")
     GameGetDTO convertEntityToGameGetDTO(Game game);
 
 

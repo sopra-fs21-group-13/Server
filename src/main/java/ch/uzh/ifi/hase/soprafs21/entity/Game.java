@@ -47,6 +47,10 @@ public class Game {
     @Column
     private Boolean countDown;
 
+
+    @Column
+    private Long timer;
+
     @Column
     @ElementCollection(targetClass = Message.class)
     private List<Message> history;
@@ -124,5 +128,12 @@ public class Game {
     public void setHistory(List<Message> history) {
         this.history = history;
     }
-    
+
+    public Long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Long timer) {
+        this.timer = timer;
+    }
 }

@@ -81,6 +81,8 @@ public class GameService {
         newGame.setHistory(emptyHistory);
         // Add Creator to the InviterList for proper updating
         newGame.getPlayers().add(newGame.getInviter());
+        //set Timer
+        newGame.setTimer(100L);
         //Add GameSettings to Repo
         GameSetting gameSetting = gameSettingRepository.save(newGame.getGameSettings());
         gameSettingRepository.flush();
@@ -118,12 +120,13 @@ public class GameService {
         if (game.getStatus() != null) {
                 updatedGame.setStatus(game.getStatus());
         }
+        /*
         if (game.getGameSettings() != null &&
                 game.getGameSettings().getGameSettingId().equals(updatedGame.getGameSettings().getGameSettingId())) {
                 updatedGame.setGameSettings(game.getGameSettings());
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "GameSettingId doesn't comply with Game instance");
-        }
+        }*/
         if (game.getPlayCards() != null) {
                 updatedGame.setPlayCards(game.getPlayCards());
         }
@@ -133,7 +136,9 @@ public class GameService {
         if (game.getCountDown() != null) {
                 updatedGame.setCountDown(game.getCountDown());
         }
-
+        if (game.getTimer() != null) {
+            updatedGame.setTimer(game.getTimer());
+        }
 
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();
