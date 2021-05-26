@@ -12,6 +12,7 @@ public class InvitationPostDTO {
     private Long invitationId;
     private Long gameId;
     private Long sentFromId;
+    private String sentFromUserName;
     private List<User> receivers;
     private String setTitle;
     private GameSetting gameSetting;
@@ -37,6 +38,14 @@ public class InvitationPostDTO {
 
     public Long getSentFromId() {
         return sentFromId;
+    }
+
+    public String getSentFromUserName() {
+        return sentFromUserName;
+    }
+
+    public void setSentFromUserName(String sentFromUserName) {
+        this.sentFromUserName = sentFromUserName;
     }
 
     public void setSentFromId(Long sentFromId) {

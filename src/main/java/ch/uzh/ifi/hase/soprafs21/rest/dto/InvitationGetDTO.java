@@ -13,6 +13,7 @@ public class InvitationGetDTO {
     private Long invitationId;
     private Long gameId;
     private Long sentFromId;
+    private String sentFromUserName;
     private List<Long> receivers;
     private String setTitle;
     private GameSetting gameSetting;
@@ -46,6 +47,14 @@ public class InvitationGetDTO {
 
     public List<Long> getReceivers() {
         return receivers;
+    }
+
+    public String getSentFromUserName() {
+        return sentFromUserName;
+    }
+
+    public void setSentFromUserName(String sentFromUserName) {
+        this.sentFromUserName = sentFromUserName;
     }
 
     public void setReceivers(List<Long> receivers) {

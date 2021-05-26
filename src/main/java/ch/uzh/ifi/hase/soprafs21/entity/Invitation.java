@@ -20,6 +20,9 @@ public class Invitation {
     private Long sentFromId;
 
     @Column
+    private String sentFromUserName;
+
+    @Column
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<User> receivers;
 
@@ -55,6 +58,14 @@ public class Invitation {
 
     public void setSentFromId(Long sentFromId) {
         this.sentFromId = sentFromId;
+    }
+
+    public String getSentFromUserName() {
+        return sentFromUserName;
+    }
+
+    public void setSentFromUserName(String sentFromUserName) {
+        this.sentFromUserName = sentFromUserName;
     }
 
     public List<Long> getReceivers() {
