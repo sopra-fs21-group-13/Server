@@ -104,8 +104,6 @@ public class GameService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game has no PlaySetId");
         } if (isNull(game.getCountDown())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Countdown is not set");
-        } if (isNull(game.getTimer())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Timer is not set");
         }
         return false;
     }
