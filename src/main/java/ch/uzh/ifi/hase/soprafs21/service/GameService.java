@@ -59,18 +59,18 @@ public class GameService {
         if (checkGame.isPresent()){
             return checkGame.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no game with gameId");
         }
 
     }
 
     // Create a flashcard set
     public Game createGame(Game newGame){
-        /*
-        if (checkSet(newGame)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Set is empty");
+
+        if (checkGame(newGame)){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Game is Empty");
         }
-         */
+
 
         newGame.setStatus(GameStatus.OPEN);
         // Create empty Player List
@@ -97,17 +97,15 @@ public class GameService {
     }
 
     // Check for completeness of set
-    public boolean checkSet(Set set){
-        if (isNull(set.getTitle())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Title");
-        } if ( isNull(set.getExplain())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Explanation");
-        } if (isNull(set.getUser())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no User");
-        } if (isNull(set.getSetCategory())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetCategory");
-        } if (isNull(set.getSetStatus())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetStatus");
+    public boolean checkGame(Game game){
+        if (isNull(game.getInviter())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game has no Inviter");
+        } if ( isNull(game.getPlaySetId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game has no PlaySetId");
+        } if (isNull(game.getCountDown())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Countdown is not set");
+        } if (isNull(game.getTimer())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Timer is not set");
         }
         return false;
     }
@@ -145,6 +143,7 @@ public class GameService {
 
         return updatedGame;
     }
+
 
     // Add Message to History
     public Game addMessageToHistory(Long gameId, Message message){

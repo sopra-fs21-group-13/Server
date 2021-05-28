@@ -51,7 +51,7 @@ public class GameController {
     }
 
     @GetMapping("/games/{gameId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public GameGetDTO getGame(@PathVariable Long gameId) {
         // fetch all users in the internal representation
@@ -94,7 +94,7 @@ public class GameController {
 
     //Normal update
     @PutMapping ("/games")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public GameGetDTO updateGame(@RequestBody GamePostDTO gamePostDTO) {
         Game game;
         if (!isNull(gamePostDTO.getGameId())) {

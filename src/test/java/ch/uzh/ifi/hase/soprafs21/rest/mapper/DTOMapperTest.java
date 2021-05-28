@@ -1,16 +1,16 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
 import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
 import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.Card;
-import ch.uzh.ifi.hase.soprafs21.entity.Set;
-import ch.uzh.ifi.hase.soprafs21.entity.Settings;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -83,7 +83,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testCreateSet_fromSetPostDTO_fromSet_success() {
+    public void testCreateSet_fromSetPostDTO_toSet_success() {
         // create list of cards
         List<Card> emptyList = new ArrayList<>();
 
@@ -223,6 +223,167 @@ public class DTOMapperTest {
         assertEquals(settingsGetDTO.getLastCard(), settings.getLastCard());
         assertEquals(settingsGetDTO.getSavedOrder(), settings.getSavedOrder());
         assertEquals(settingsGetDTO.getMarkedCards(), settings.getMarkedCards());
+
+    }
+
+    @Test
+    public void testGetGame_fromGame_toGameGetDTO_success(){
+
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        // create Game
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(new User());
+        game.setPlaySetId(1L);
+        game.setPlayers(Collections.singletonList(new User()));
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(Collections.singletonList(new Message()));
+
+        // Map -> get SettingsGetDTO
+        GameGetDTO gameGetDTO = DTOMapper.INSTANCE.convertEntityToGameGetDTO(game);
+
+        // assert Correctness
+        assertEquals(gameGetDTO.getGameId(), game.getGameId() );
+        assertEquals(gameGetDTO.getStatus(), game.getStatus());
+        assertEquals(gameGetDTO.getGameSettings(), game.getGameSettings());
+        assertEquals(gameGetDTO.getInviter(), game.getInviter());
+        assertEquals(gameGetDTO.getPlaySetId(), game.getPlaySetId());
+        assertEquals(gameGetDTO.getPlayers(), game.getPlayers());
+        assertEquals(gameGetDTO.getTimer(), game.getTimer());
+        assertEquals(gameGetDTO.getHistory(), game.getHistory());
+
+    }
+
+    @Test
+    public void testGetGame_fromGamePostDTO_toGame_success(){
+
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        // create Game
+        GamePostDTO gamePostDTO = new GamePostDTO();
+        gamePostDTO.setGameId(1L);
+        gamePostDTO.setStatus(GameStatus.OPEN);
+        gamePostDTO.setGameSettings(gameSetting);
+        gamePostDTO.setInviter(new User());
+        gamePostDTO.setPlaySetId(1L);
+        gamePostDTO.setCountDown(false);
+        gamePostDTO.setTimer(10L);
+        gamePostDTO.setHistory(Collections.singletonList(new Message()));
+
+        // Map -> get SettingsGetDTO
+        Game game = DTOMapper.INSTANCE.convertGamePostDTOtoEntity(gamePostDTO);
+
+        // assert Correctness
+        assertEquals(gamePostDTO.getGameId(), game.getGameId() );
+        assertEquals(gamePostDTO.getStatus(), game.getStatus());
+        assertEquals(gamePostDTO.getGameSettings(), game.getGameSettings());
+        assertEquals(gamePostDTO.getInviter(), game.getInviter());
+        assertEquals(gamePostDTO.getPlaySetId(), game.getPlaySetId());
+        assertEquals(gamePostDTO.getTimer(), game.getTimer());
+        assertEquals(gamePostDTO.getHistory(), game.getHistory());
+
+    }
+
+    @Test
+    public void testGetInvitation_fromInvitation_toInvitationGetDTO_success(){
+
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        // create Invitation
+        Invitation invitation = new Invitation();
+        invitation.setInvitationId(1L);
+        invitation.setGameId(1L);
+        invitation.setSentFromId(1L);
+        invitation.setSentFromUserName("user");
+        invitation.setReceivers(Collections.singletonList(new User()));
+        invitation.setSetTitle("title");
+        invitation.setGameSetting(gameSetting);
+
+        // Map -> get SettingsGetDTO
+        InvitationGetDTO invitationGetDTO = DTOMapper.INSTANCE.convertEntityToInvitationGetDTO(invitation);
+
+        // assert Correctness
+        assertEquals(invitationGetDTO.getGameId(), invitation.getGameId() );
+        assertEquals(invitationGetDTO.getInvitationId(), invitation.getInvitationId());
+        assertEquals(invitationGetDTO.getSentFromUserName(), invitation.getSentFromUserName());
+        assertEquals(invitationGetDTO.getSentFromId(), invitation.getSentFromId());
+        assertEquals(invitationGetDTO.getReceivers(), invitation.getReceivers());
+        assertEquals(invitationGetDTO.getSetTitle(), invitation.getSetTitle());
+        assertEquals(invitationGetDTO.getGameSetting(), invitation.getGameSetting());
+
+    }
+
+    @Test
+    public void testGetInvitation_fromInvitationPostDTO_toInvitation_success(){
+
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        // create Invitation
+        InvitationPostDTO invitationPostDTO = new InvitationPostDTO();
+        invitationPostDTO.setInvitationId(1L);
+        invitationPostDTO.setGameId(1L);
+        invitationPostDTO.setSentFromId(1L);
+        invitationPostDTO.setSentFromUserName("user");
+        invitationPostDTO.setSetTitle("title");
+        invitationPostDTO.setGameSetting(gameSetting);
+
+        // Map -> get SettingsGetDTO
+        Invitation invitation = DTOMapper.INSTANCE.convertInvitationPostDTOToEntity(invitationPostDTO);
+
+        // assert Correctness
+        assertEquals(invitationPostDTO.getGameId(), invitation.getGameId() );
+        assertEquals(invitationPostDTO.getInvitationId(), invitation.getInvitationId());
+        assertEquals(invitationPostDTO.getSentFromUserName(), invitation.getSentFromUserName());
+        assertEquals(invitationPostDTO.getSentFromId(), invitation.getSentFromId());
+        assertEquals(invitationPostDTO.getSetTitle(), invitation.getSetTitle());
+        assertEquals(invitationPostDTO.getGameSetting(), invitation.getGameSetting());
+
+    }
+
+    @Test
+    public void testPostMessage_fromMessagePostDTO_toMessage_success(){
+
+        // create Message
+        MessagePostDTO messagePostDTO = new MessagePostDTO();
+        messagePostDTO.setTimeStamp(LocalDateTime.now());
+        messagePostDTO.setSenderId(1L);
+        messagePostDTO.setMessage("message");
+        messagePostDTO.setCardId(1L);
+        messagePostDTO.setScore(1L);
+
+        // Map -> get SettingsGetDTO
+        Message message = DTOMapper.INSTANCE.convertMessagePostDTOtoEntity(messagePostDTO);
+
+        // assert Correctness
+        assertEquals(messagePostDTO.getTimeStamp(), message.getTimeStamp() );
+        assertEquals(messagePostDTO.getSenderId(), message.getSenderId());
+        assertEquals(messagePostDTO.getMessage(), message.getMessage());
+        assertEquals(messagePostDTO.getCardId(), message.getCardId());
+        assertEquals(messagePostDTO.getScore(), message.getScore());
 
     }
 
