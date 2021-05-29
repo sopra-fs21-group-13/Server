@@ -55,14 +55,15 @@ public class User  {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Set> createdSets;
 
+    // All sets that a user can learn with
     @Column
     @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
     private List<Set> learnSets;
 
+    // List of Invitations for open games
     @Column
     @ManyToMany(mappedBy = "receivers", cascade = CascadeType.ALL)
     private List<Invitation> invitations;
-
 
     // Getters & Setters
 

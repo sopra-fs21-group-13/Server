@@ -17,7 +17,6 @@ public class InvitationPostDTO {
     private String setTitle;
     private GameSetting gameSetting;
 
-
     // Getters & Setters
 
     public Long getInvitationId() {

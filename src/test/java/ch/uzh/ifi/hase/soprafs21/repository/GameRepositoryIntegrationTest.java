@@ -1,10 +1,10 @@
 package ch.uzh.ifi.hase.soprafs21.repository;
 
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
-import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
-import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.*;
+import ch.uzh.ifi.hase.soprafs21.entity.Card;
+import ch.uzh.ifi.hase.soprafs21.entity.Game;
+import ch.uzh.ifi.hase.soprafs21.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

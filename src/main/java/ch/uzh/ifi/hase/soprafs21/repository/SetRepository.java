@@ -4,7 +4,6 @@ import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,16 +16,5 @@ public interface SetRepository extends JpaRepository<Set, Long> {
     List<Set> findBySetStatus(SetStatus setStatus);
 
 
-
-    // Future implementation -> searchbar / Display created Sets
-    /*
-    List<Set> findByUser(User user);
-
-    boolean existsByUser_id(Long userID);
-
-    Set findBySetName(String setName);
-
-    Set findByCategory(SetCategory setCategory);
-    */
 }
 

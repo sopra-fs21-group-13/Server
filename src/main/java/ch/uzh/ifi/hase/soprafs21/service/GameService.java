@@ -52,7 +52,6 @@ public class GameService {
         return this.gameRepository.findAll();
     }
 
-
     // Get set by setId
     public Game getGameByGameID(Long gameId){
         Optional<Game> checkGame = gameRepository.findByGameId(gameId);
@@ -61,7 +60,6 @@ public class GameService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no game with gameId");
         }
-
     }
 
     // Create a flashcard set
@@ -70,23 +68,27 @@ public class GameService {
         if (checkGame(newGame)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Game is Empty");
         }
-
-
         newGame.setStatus(GameStatus.OPEN);
+
         // Create empty Player List
         List<User> initialPlayers = new ArrayList<>();
         newGame.setPlayers(initialPlayers);
+
         // Create empty History List
         List<Message> emptyHistory = new ArrayList<>();
         newGame.setHistory(emptyHistory);
+
         // Add Creator to the InviterList for proper updating
         newGame.getPlayers().add(newGame.getInviter());
+
         //set Timer
         newGame.setTimer(30L);
+
         //Add GameSettings to Repo
         GameSetting gameSetting = gameSettingRepository.save(newGame.getGameSettings());
         gameSettingRepository.flush();
         newGame.setGameSettings(gameSetting);
+
         // saves the given entity but data is only persisted in the database once flush() is called
         newGame = gameRepository.save(newGame);
         gameRepository.flush();
@@ -108,7 +110,6 @@ public class GameService {
         return false;
     }
 
-
     // Edit a Game
     public Game updateGame(Game game){
         Game updatedGame = getGameByGameID(game.getGameId());
@@ -116,13 +117,6 @@ public class GameService {
         if (game.getStatus() != null) {
                 updatedGame.setStatus(game.getStatus());
         }
-        /*
-        if (game.getGameSettings() != null &&
-                game.getGameSettings().getGameSettingId().equals(updatedGame.getGameSettings().getGameSettingId())) {
-                updatedGame.setGameSettings(game.getGameSettings());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "GameSettingId doesn't comply with Game instance");
-        }*/
         if (game.getPlayCards() != null) {
                 updatedGame.setPlayCards(game.getPlayCards());
         }
@@ -136,12 +130,12 @@ public class GameService {
             updatedGame.setTimer(game.getTimer());
         }
 
+        // save & flush
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();
 
         return updatedGame;
     }
-
 
     // Add Message to History
     public Game addMessageToHistory(Long gameId, Message message){
@@ -165,7 +159,6 @@ public class GameService {
         return game;
     }
 
-
     // Add Players to Game
     public Game addPlayerToGame(Long gameId, Long userId){
         // Get Game by gameId
@@ -181,7 +174,6 @@ public class GameService {
         // return modified game
         return game;
     }
-
 
     // Remove Player from Game
     public Game removePlayerFromGame(Long gameId, Long userId){
@@ -206,7 +198,6 @@ public class GameService {
         return invitation;
     }
 
-
     // Delete a Game and its corresponding GameSetting
     public void deleteGame(Long gameId){
         Game game = getGameByGameID(gameId);
@@ -214,7 +205,6 @@ public class GameService {
         gameSettingRepository.deleteById(game.getGameSettings().getGameSettingId());
         gameRepository.deleteById(gameId);
     }
-
 
     // Delete a invitation by its id (when game is closed)
     public void deleteInvitation(Long invitationId){

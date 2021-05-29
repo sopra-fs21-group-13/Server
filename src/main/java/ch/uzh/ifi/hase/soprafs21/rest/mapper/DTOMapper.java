@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs21.entity.GameSetting;
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -58,7 +57,6 @@ public interface DTOMapper {
     @Mapping(source = "invitations", target = "invitations")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
-
 // Set Mappings
 
     @Mapping(source = "title", target = "title")
@@ -70,6 +68,95 @@ public interface DTOMapper {
     @Mapping(source = "explain",target = "explain")
     @Mapping(source = "photo",target = "photo")
     Set convertSetPostDTOtoEntity(SetPostDTO setPostDTO);
+
+    @Mapping(source = "setId", target = "setId")
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "user", target = "userId")
+    @Mapping(source = "members", target = "memberIds")
+    @Mapping(source = "cards", target = "cards")
+    @Mapping(source = "setCategory",target = "setCategory")
+    @Mapping(source = "setStatus",target = "setStatus")
+    @Mapping(source = "explain",target = "explain")
+    @Mapping(source = "photo",target = "photo")
+    SetGetDTO convertEntityToSetGetDTO(Set set);
+
+// Settings Mappings
+
+    @Mapping(source = "settingsId", target = "settingsId")
+    @Mapping(source = "userID", target = "userID")
+    @Mapping(source = "setID", target = "setID")
+    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
+    @Mapping(source = "studyStarred", target = "studyStarred")
+    @Mapping(source = "lastCard", target = "lastCard")
+    @Mapping(source = "savedOrder", target = "savedOrder")
+    @Mapping(source = "markedCards", target = "markedCards")
+    Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
+
+    @Mapping(source = "settingsId", target = "settingsId")
+    @Mapping(source = "userID", target = "userID")
+    @Mapping(source = "setID", target = "setID")
+    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
+    @Mapping(source = "studyStarred", target = "studyStarred")
+    @Mapping(source = "lastCard", target = "lastCard")
+    @Mapping(source = "savedOrder", target = "savedOrder")
+    @Mapping(source = "markedCards", target = "markedCards")
+    SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
+
+// Game Mappings
+
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
+    @Mapping(source = "inviter", target = "inviter", qualifiedByName = "User")
+    @Mapping(source = "playSetId", target = "playSetId")
+    @Mapping(source = "playCards", target = "playCards", qualifiedByName = "Card")
+    @Mapping(source = "countDown", target = "countDown")
+    @Mapping(source = "history", target = "history")
+    @Mapping(source = "timer", target = "timer")
+    Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
+
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
+    @Mapping(source = "inviter", target = "inviter")
+    @Mapping(source = "playSetId", target = "playSetId")
+    @Mapping(source = "playCards", target = "playCards")
+    @Mapping(source = "players", target = "players")
+    @Mapping(source = "countDown", target = "countDown")
+    @Mapping(source = "history", target = "history")
+    @Mapping(source = "timer", target = "timer")
+    GameGetDTO convertEntityToGameGetDTO(Game game);
+
+// Message Mappings
+
+    @Mapping(source = "timeStamp", target = "timeStamp")
+    @Mapping(source = "senderId", target = "senderId")
+    @Mapping(source = "message", target = "message")
+    @Mapping(source = "cardId", target = "cardId")
+    @Mapping(source = "score", target = "score")
+    Message convertMessagePostDTOtoEntity(MessagePostDTO messagePostDTO);
+
+// Invitation Mappings
+
+    @Mapping(source = "invitationId", target = "invitationId")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "sentFromId", target = "sentFromId")
+    @Mapping(source = "sentFromUserName", target = "sentFromUserName")
+    @Mapping(source = "receivers", target = "receivers", qualifiedByName = "Members")
+    @Mapping(source= "setTitle", target = "setTitle")
+    @Mapping(source = "gameSetting", target = "gameSetting", qualifiedByName = "GameSetting")
+    Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
+
+    @Mapping(source = "invitationId", target = "invitationId")
+    @Mapping(source = "gameId", target = "gameId")
+    @Mapping(source = "sentFromId", target = "sentFromId")
+    @Mapping(source = "sentFromUserName", target = "sentFromUserName")
+    @Mapping(source = "receivers", target = "receivers")
+    @Mapping(source= "setTitle", target = "setTitle")
+    @Mapping(source = "gameSetting", target = "gameSetting")
+    InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
+
+
+// Qualifiers for correct transfer of data
 
     // Qualifier for handling nested json and convert it into entity user
     @Named("User")
@@ -100,69 +187,6 @@ public interface DTOMapper {
         return cardEntities;
     }
 
-
-    @Mapping(source = "setId", target = "setId")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "user", target = "userId")
-    @Mapping(source = "members", target = "memberIds")
-    @Mapping(source = "cards", target = "cards")
-    @Mapping(source = "setCategory",target = "setCategory")
-    @Mapping(source = "setStatus",target = "setStatus")
-    @Mapping(source = "explain",target = "explain")
-    @Mapping(source = "photo",target = "photo")
-    SetGetDTO convertEntityToSetGetDTO(Set set);
-
-
-// Settings Mappings
-
-    @Mapping(source = "settingsId", target = "settingsId")
-    @Mapping(source = "userID", target = "userID")
-    @Mapping(source = "setID", target = "setID")
-    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
-    @Mapping(source = "studyStarred", target = "studyStarred")
-    @Mapping(source = "lastCard", target = "lastCard")
-    @Mapping(source = "savedOrder", target = "savedOrder")
-    @Mapping(source = "markedCards", target = "markedCards")
-    Settings convertSettingsPostDTOtoEntity(SettingsPostDTO settingsPostDTO);
-
-    @Mapping(source = "settingsId", target = "settingsId")
-    @Mapping(source = "userID", target = "userID")
-    @Mapping(source = "setID", target = "setID")
-    @Mapping(source = "cardsShuffled", target = "cardsShuffled")
-    @Mapping(source = "studyStarred", target = "studyStarred")
-    @Mapping(source = "lastCard", target = "lastCard")
-    @Mapping(source = "savedOrder", target = "savedOrder")
-    @Mapping(source = "markedCards", target = "markedCards")
-    SettingsGetDTO convertEntityToSettingsGetDTO(Settings settings);
-
-
-
-// Game Mappings
-
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
-    @Mapping(source = "inviter", target = "inviter", qualifiedByName = "User")
-    @Mapping(source = "playSetId", target = "playSetId")
-    @Mapping(source = "playCards", target = "playCards", qualifiedByName = "Card")
-    @Mapping(source = "countDown", target = "countDown")
-    @Mapping(source = "history", target = "history")
-    @Mapping(source = "timer", target = "timer")
-    Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
-
-    @Mapping(source = "gameId", target = "gameId")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "gameSettings", target = "gameSettings", qualifiedByName = "GameSetting")
-    @Mapping(source = "inviter", target = "inviter")
-    @Mapping(source = "playSetId", target = "playSetId")
-    @Mapping(source = "playCards", target = "playCards")
-    @Mapping(source = "players", target = "players")
-    @Mapping(source = "countDown", target = "countDown")
-    @Mapping(source = "history", target = "history")
-    @Mapping(source = "timer", target = "timer")
-    GameGetDTO convertEntityToGameGetDTO(Game game);
-
-
-
     @Named("GameSetting")
     default GameSetting jsonToGameSetting(String gameSettingString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -178,30 +202,5 @@ public interface DTOMapper {
         Set set = mapper.readValue(setString, Set.class );
         return set;
     }
-
-    @Mapping(source = "timeStamp", target = "timeStamp")
-    @Mapping(source = "senderId", target = "senderId")
-    @Mapping(source = "message", target = "message")
-    @Mapping(source = "cardId", target = "cardId")
-    @Mapping(source = "score", target = "score")
-    Message convertMessagePostDTOtoEntity(MessagePostDTO messagePostDTO);
-
-    @Mapping(source = "invitationId", target = "invitationId")
-    @Mapping(source = "gameId", target = "gameId")
-    @Mapping(source = "sentFromId", target = "sentFromId")
-    @Mapping(source = "sentFromUserName", target = "sentFromUserName")
-    @Mapping(source = "receivers", target = "receivers", qualifiedByName = "Members")
-    @Mapping(source= "setTitle", target = "setTitle")
-    @Mapping(source = "gameSetting", target = "gameSetting", qualifiedByName = "GameSetting")
-    Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
-
-    @Mapping(source = "invitationId", target = "invitationId")
-    @Mapping(source = "gameId", target = "gameId")
-    @Mapping(source = "sentFromId", target = "sentFromId")
-    @Mapping(source = "sentFromUserName", target = "sentFromUserName")
-    @Mapping(source = "receivers", target = "receivers")
-    @Mapping(source= "setTitle", target = "setTitle")
-    @Mapping(source = "gameSetting", target = "gameSetting")
-    InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
 
 }

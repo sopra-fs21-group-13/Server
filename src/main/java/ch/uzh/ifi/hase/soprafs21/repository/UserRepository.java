@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    // Implemented:
     User findByName(String name);
 
     User findByUsername(String username);
@@ -18,12 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByPassword(String password);
 
     User findByEmail(String email);
-
-    /*
-     default List<User> findByOnlineUsers() {
-         return findOnline(UserStatus.ONLINE);
-     }
-    */
 
     List<User> findByStatus(UserStatus status);
 

@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,6 @@ public class Invitation {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id")
     private GameSetting gameSetting;
-
 
     // Setters & Getters
 

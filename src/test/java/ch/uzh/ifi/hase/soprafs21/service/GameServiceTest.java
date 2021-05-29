@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
-import ch.uzh.ifi.hase.soprafs21.constant.SetCategory;
-import ch.uzh.ifi.hase.soprafs21.constant.SetStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -22,15 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 public class GameServiceTest {
-
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private SetRepository setRepository;
-
-    @Mock
-    private SettingsRepository settingsRepository;
 
     @Mock
     private GameRepository gameRepository;
@@ -41,8 +28,6 @@ public class GameServiceTest {
     @Mock
     private InvitationRepository invitationRepository;
 
-    @Mock
-    private MessageRepository messageRepository;
 
     @InjectMocks
     private GameService gameService;
@@ -55,7 +40,6 @@ public class GameServiceTest {
 
     private User testUser;
 
-    private Message testMessage;
 
     @BeforeEach
     public void setup() {
@@ -227,32 +211,6 @@ public class GameServiceTest {
         assertEquals("400 BAD_REQUEST \"Ain't no game with gameId\"", e.getMessage());
 
     }
-
-    /*
-    @Test
-    public void addMessageToHistory_validInputs_success() {
-
-        Mockito.when(gameRepository.findByGameId(Mockito.any())).thenReturn(Optional.of(testGame));
-        Mockito.when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(testUser));
-
-        testMessage = new Message();
-        testMessage.setTimeStamp(LocalDateTime.now());
-        testMessage.setSenderId(testGame.getPlayers().get(0).getUserId());
-        testMessage.setMessage("message");
-        testMessage.setCardId(1L);
-        testMessage.setScore(1L);
-
-        Mockito.when(messageRepository.findByMessageId(Mockito.any())).thenReturn(Optional.of(testMessage));
-
-
-
-        Game MessageAddedGame = gameService.addMessageToHistory(testGame.getGameId(), testMessage);
-
-        assertEquals(MessageAddedGame.getHistory().get(0), testMessage);
-    }
-    
-     */
-
 
     @Test
     public void deleteSet_Success() {

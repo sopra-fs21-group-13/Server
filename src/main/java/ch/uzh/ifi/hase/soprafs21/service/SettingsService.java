@@ -51,10 +51,12 @@ public class SettingsService {
         return this.settingsRepository.findByUserIDAndSetID(userId, setId);
     }
 
+    // Get all setting files
     public List<Settings> getAllSettings() {
         return this.settingsRepository.findAll();
     }
 
+    // Update Setting files
     public Settings updateSettings(Settings settings){
         Settings updatedSetting;
         if (!userRepository.existsById(settings.getUserID())){
@@ -64,7 +66,7 @@ public class SettingsService {
             updatedSetting = getSettings(settings.getUserID(),settings.getSetID());
         }
         else {
-            //update Settingsfile
+            //update settings file
             updatedSetting = getSettings(settings.getUserID(),settings.getSetID());
             updatedSetting.setCardsShuffled(settings.getCardsShuffled());
             updatedSetting.setStudyStarred(settings.getStudyStarred());
@@ -75,7 +77,7 @@ public class SettingsService {
         return updatedSetting;
     }
 
-
+    // Update the card order
     public void updateCardOrder(Set set){
         // Throw Error when Set doesn't exist
         if (!setRepository.existsById(set.getSetId())) {
@@ -106,6 +108,7 @@ public class SettingsService {
         }
     }
 
+    // Update the starred Cards
     public void updateStarredCards(List<Long> newCardIds, List<Settings> oldSettings){
         // Intersection of cardIds in set and the old starred Cards
         // This will exclude all deleted cardIds in the starred list
@@ -162,11 +165,6 @@ public class SettingsService {
         settingsRepository.flush();
 
         log.debug("Created Information fo Setting File: {}", newSetting);
-    }
-
-    public void deleteSettings(Long userId, Long SetId){
-        
-
     }
 
 }

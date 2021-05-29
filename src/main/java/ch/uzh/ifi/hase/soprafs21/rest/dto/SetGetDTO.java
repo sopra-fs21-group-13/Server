@@ -20,7 +20,6 @@ public class SetGetDTO {
     private String photo;
     private Long liked;
 
-
     // Setters & Getters
 
     public Long getSetId() {

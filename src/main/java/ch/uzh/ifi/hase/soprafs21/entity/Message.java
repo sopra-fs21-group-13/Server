@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -32,8 +31,8 @@ public class Message implements Serializable {
     @Column(nullable = true)
     private Long score;
 
-
     // Setters & Getters
+
     public LocalDateTime getTimeStamp() {
         return timeStamp;
     }

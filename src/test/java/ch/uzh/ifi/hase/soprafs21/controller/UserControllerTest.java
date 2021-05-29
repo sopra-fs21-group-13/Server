@@ -45,18 +45,6 @@ public class UserControllerTest {
     @Test
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
 
-        /**
-        //given Set
-        Set set1 = new Set();
-        set1.setSetId(0L);
-        set1.setTitle("abc");
-        set1.setExplain("abc1");
-        set1.setSetCategory(SetCategory.GERMAN);
-        set1.setSetStatus(SetStatus.PUBLIC);
-
-        List<Set> listSet = Collections.singletonList(set1);
-        */
-
         // given
         User user = new User();
         user.setUserId(1L);
@@ -269,28 +257,6 @@ public class UserControllerTest {
     @Test
     public void givenUsers_whenGetUsersById_thenReturnJsonArray() throws Exception {
 
-        /**
-        //given Set
-        Set set1 = new Set();
-        set1.setSetId(0L);
-        set1.setTitle("abc");
-        set1.setExplain("abc1");
-        set1.setSetCategory(SetCategory.GERMAN);
-        set1.setSetStatus(SetStatus.PUBLIC);
-
-        Set set2 = new Set();
-        set2.setSetId(2L);
-        set2.setTitle("abc");
-        set2.setExplain("abc1");
-        set2.setSetCategory(SetCategory.GERMAN);
-        set2.setSetStatus(SetStatus.PUBLIC);
-
-        List<Set> listSet = new ArrayList<>();
-        listSet.add(set1);
-
-        System.out.println(listSet);
-        */
-
         // given
         User user = new User();
         user.setUserId(1L);
@@ -425,7 +391,6 @@ public class UserControllerTest {
         user.setCreatedSets(new ArrayList<>());
         user.setLearnSets(new ArrayList<>());
 
-        //given(userService.deleteUser(Mockito.any())).willReturn(user);
 
         // when/then -> do the request + validate the result
         MockHttpServletRequestBuilder deleteRequest = delete("/users/1").contentType(MediaType.APPLICATION_JSON);
