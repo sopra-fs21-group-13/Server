@@ -82,7 +82,7 @@ public class GameService {
         // Add Creator to the InviterList for proper updating
         newGame.getPlayers().add(newGame.getInviter());
         //set Timer
-        newGame.setTimer(100L);
+        newGame.setTimer(30L);
         //Add GameSettings to Repo
         GameSetting gameSetting = gameSettingRepository.save(newGame.getGameSettings());
         gameSettingRepository.flush();
