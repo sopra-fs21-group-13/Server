@@ -190,11 +190,16 @@ public class GameService {
         // Get User by userId
         User user = userRepository.findById(userId).get();
         // Add Message to History
+
+        /**
         if (user.equals(game.getInviter())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot Remove creator from Game");
         }else {
             game.getPlayers().remove(user);
         }
+        */
+
+        game.getPlayers().remove(user);
         // return modified game
         return game;
     }
