@@ -140,15 +140,24 @@ public class GameService {
     // Add Message to History
     public Game addMessageToHistory(Long gameId, Message message){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if (checkGame.isPresent()){
+            game = checkGame.get();
+        }
+
         // message save&flush
         message = messageRepository.save(message);
         messageRepository.flush();
 
         //Check whether senderId is in players
-        User user = userRepository.findById(message.getSenderId()).get();
+        Optional<User> checkUser = userRepository.findById(message.getSenderId());
+        User user = new User();
+        if(checkUser.isPresent()){
+            user = checkUser.get();
+        }
         if (!game.getPlayers().contains(user)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SenderId not in player list of Game");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SenderId not in player list of game");
         }
         // Add Message to History
         game.getHistory().add(message);
@@ -162,12 +171,20 @@ public class GameService {
     // Add Players to Game
     public Game addPlayerToGame(Long gameId, Long userId){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if(checkGame.isPresent()){
+            game = checkGame.get();
+        }
         // Get User by userId
-        User user = userRepository.findById(userId).get();
+        Optional<User> checkUser = userRepository.findById(userId);
+        User user = new User();
+        if (checkUser.isPresent()){
+            user = checkUser.get();
+        }
         //Check if player is already in Game
         if(game.getPlayers().contains(user)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Player is already in that Game");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Player is already in that game");
         }
         // Add Message to History
         game.getPlayers().add(user);
@@ -178,12 +195,20 @@ public class GameService {
     // Remove Player from Game
     public Game removePlayerFromGame(Long gameId, Long userId){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if(checkGame.isPresent()){
+            game = checkGame.get();
+        }
         // Get User by userId
-        User user = userRepository.findById(userId).get();
+        Optional<User> checkUser = userRepository.findById(userId);
+        User user = new User();
+        if (checkUser.isPresent()){
+            user = checkUser.get();
+        }
         // Add Message to History
         if (user.equals(game.getInviter())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot Remove creator from Game");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot remove creator from game");
         }else {
             game.getPlayers().remove(user);
         }
