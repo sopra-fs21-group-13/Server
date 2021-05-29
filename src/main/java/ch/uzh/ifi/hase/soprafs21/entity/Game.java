@@ -47,7 +47,6 @@ public class Game {
     @Column
     private Boolean countDown;
 
-
     @Column
     private Long timer;
 
