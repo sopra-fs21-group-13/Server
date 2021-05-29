@@ -22,8 +22,7 @@ public class UserGetDTO {
     private int numberOfWins;
     private List<Invitation> invitations;
 
-    //test
-
+    // Getters & Setters
 
     public Long getUserId() {
         return userId;

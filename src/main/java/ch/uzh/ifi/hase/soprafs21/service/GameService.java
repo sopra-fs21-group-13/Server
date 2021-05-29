@@ -52,7 +52,6 @@ public class GameService {
         return this.gameRepository.findAll();
     }
 
-
     // Get set by setId
     public Game getGameByGameID(Long gameId){
         Optional<Game> checkGame = gameRepository.findByGameId(gameId);
@@ -61,7 +60,6 @@ public class GameService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no game with gameId");
         }
-
     }
 
     // Create a flashcard set
@@ -70,23 +68,27 @@ public class GameService {
         if (checkGame(newGame)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Game is Empty");
         }
-
-
         newGame.setStatus(GameStatus.OPEN);
+
         // Create empty Player List
         List<User> initialPlayers = new ArrayList<>();
         newGame.setPlayers(initialPlayers);
+
         // Create empty History List
         List<Message> emptyHistory = new ArrayList<>();
         newGame.setHistory(emptyHistory);
+
         // Add Creator to the InviterList for proper updating
         newGame.getPlayers().add(newGame.getInviter());
+
         //set Timer
         newGame.setTimer(30L);
+
         //Add GameSettings to Repo
         GameSetting gameSetting = gameSettingRepository.save(newGame.getGameSettings());
         gameSettingRepository.flush();
         newGame.setGameSettings(gameSetting);
+
         // saves the given entity but data is only persisted in the database once flush() is called
         newGame = gameRepository.save(newGame);
         gameRepository.flush();
@@ -108,7 +110,6 @@ public class GameService {
         return false;
     }
 
-
     // Edit a Game
     public Game updateGame(Game game){
         Game updatedGame = getGameByGameID(game.getGameId());
@@ -116,13 +117,6 @@ public class GameService {
         if (game.getStatus() != null) {
                 updatedGame.setStatus(game.getStatus());
         }
-        /*
-        if (game.getGameSettings() != null &&
-                game.getGameSettings().getGameSettingId().equals(updatedGame.getGameSettings().getGameSettingId())) {
-                updatedGame.setGameSettings(game.getGameSettings());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "GameSettingId doesn't comply with Game instance");
-        }*/
         if (game.getPlayCards() != null) {
                 updatedGame.setPlayCards(game.getPlayCards());
         }
@@ -136,25 +130,34 @@ public class GameService {
             updatedGame.setTimer(game.getTimer());
         }
 
+        // save & flush
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();
 
         return updatedGame;
     }
 
-
     // Add Message to History
     public Game addMessageToHistory(Long gameId, Message message){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if (checkGame.isPresent()){
+            game = checkGame.get();
+        }
+
         // message save&flush
         message = messageRepository.save(message);
         messageRepository.flush();
 
         //Check whether senderId is in players
-        User user = userRepository.findById(message.getSenderId()).get();
+        Optional<User> checkUser = userRepository.findById(message.getSenderId());
+        User user = new User();
+        if(checkUser.isPresent()){
+            user = checkUser.get();
+        }
         if (!game.getPlayers().contains(user)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SenderId not in player list of Game");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SenderId not in player list of game");
         }
         // Add Message to History
         game.getHistory().add(message);
@@ -165,16 +168,23 @@ public class GameService {
         return game;
     }
 
-
     // Add Players to Game
     public Game addPlayerToGame(Long gameId, Long userId){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if(checkGame.isPresent()){
+            game = checkGame.get();
+        }
         // Get User by userId
-        User user = userRepository.findById(userId).get();
+        Optional<User> checkUser = userRepository.findById(userId);
+        User user = new User();
+        if (checkUser.isPresent()){
+            user = checkUser.get();
+        }
         //Check if player is already in Game
         if(game.getPlayers().contains(user)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Player is already in that Game");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Player is already in that game");
         }
         // Add Message to History
         game.getPlayers().add(user);
@@ -182,18 +192,25 @@ public class GameService {
         return game;
     }
 
-
     // Remove Player from Game
     public Game removePlayerFromGame(Long gameId, Long userId){
         // Get Game by gameId
-        Game game = gameRepository.findByGameId(gameId).get();
+        Optional<Game> checkGame = gameRepository.findByGameId(gameId);
+        Game game = new Game();
+        if(checkGame.isPresent()){
+            game = checkGame.get();
+        }
         // Get User by userId
-        User user = userRepository.findById(userId).get();
+        Optional<User> checkUser = userRepository.findById(userId);
+        User user = new User();
+        if (checkUser.isPresent()){
+            user = checkUser.get();
+        }
         // Add Message to History
 
         /**
         if (user.equals(game.getInviter())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot Remove creator from Game");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot remove creator from game");
         }else {
             game.getPlayers().remove(user);
         }
@@ -211,7 +228,6 @@ public class GameService {
         return invitation;
     }
 
-
     // Delete a Game and its corresponding GameSetting
     public void deleteGame(Long gameId){
         Game game = getGameByGameID(gameId);
@@ -219,7 +235,6 @@ public class GameService {
         gameSettingRepository.deleteById(game.getGameSettings().getGameSettingId());
         gameRepository.deleteById(gameId);
     }
-
 
     // Delete a invitation by its id (when game is closed)
     public void deleteInvitation(Long invitationId){

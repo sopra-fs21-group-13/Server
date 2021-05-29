@@ -32,6 +32,9 @@ public class UserController {
     private SettingsService settingsService;
      */
 
+// All Get Mappings:
+
+    // Get all users
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -47,6 +50,7 @@ public class UserController {
         return userGetDTOs;
     }
 
+    // Get all users that are online
     @GetMapping("/users/online")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -62,7 +66,20 @@ public class UserController {
         return userGetDTOs;
     }
 
+    // Get a user by userId
+    @GetMapping ("/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserGetDTO getUserByID(@PathVariable Long userId) {
 
+        User loginUser = userService.getUser(userId);
+
+        // convert internal representation of user back to API
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
+    }
+
+// All Post Mappings:
+
+    // create a user entity in the database
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -77,6 +94,7 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
     }
 
+    // Log a user with valid inputs
     @PostMapping("/users/login")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -94,6 +112,7 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
 
+    // Create user entity for google login
     @PostMapping("/users/socialLogin")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -110,16 +129,10 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
 
-    @GetMapping ("/users/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserGetDTO getUserByID(@PathVariable Long userId) {
 
-        User loginUser = userService.getUser(userId);
+// All Put Mappings:
 
-        // convert internal representation of user back to API
-        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
-    }
-
+    // Update the user entity
     @PutMapping ("/users")
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO getUserByID(@RequestBody UserPostDTO userPostDTO) {
@@ -131,6 +144,7 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
+    // Log a specific user out
     @PutMapping ("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO logoutUser(@PathVariable Long userId) {
@@ -141,12 +155,12 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
-    
+// All Delete Mappings:
+
     // Delete a specific User
     @DeleteMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteSet(@PathVariable Long userId){
-
         userService.deleteUser(userId);
     }
 

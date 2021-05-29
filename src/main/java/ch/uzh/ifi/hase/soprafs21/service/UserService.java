@@ -36,14 +36,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Get all users
     public List<User> getUsers() {
         return this.userRepository.findAll();
     }
 
+    // Get all online users
     public List<User> getOnlineUsers() {
         return this.userRepository.findByStatus(UserStatus.ONLINE);
     }
 
+    // Get user by id
     public User getUser(long id) {
         Optional<User> checkUser = userRepository.findById(id);
 
@@ -56,7 +59,7 @@ public class UserService {
         }
     }
 
-
+    // Create a user entity
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
@@ -80,6 +83,7 @@ public class UserService {
      * @see User
      */
 
+    // check for validity of input
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
         User userByName = userRepository.findByName(userToBeCreated.getName());
@@ -100,6 +104,7 @@ public class UserService {
         }
     }
 
+    // check if username and password correspond
     public User checkForLogin(User userToLogin) {
         User userByUsername = userRepository.findByUsername(userToLogin.getUsername());
         String baseErrorMessage = "The user doesn't exist. Please check the credentials and password!";
@@ -144,6 +149,7 @@ public class UserService {
         }
     }
 
+    // update user data
     public User updateUser(UserPostDTO userPostDTO) {
 
         User user = userRepository.findById(userPostDTO.getUserId()).orElseThrow(IllegalArgumentException::new);
@@ -167,6 +173,7 @@ public class UserService {
         return user;
     }
 
+    // log out a user
     public User logoutUser(Long userId){
 
         User user = userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);

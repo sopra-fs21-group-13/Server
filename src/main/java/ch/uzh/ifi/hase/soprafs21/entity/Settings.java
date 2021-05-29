@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -35,7 +34,6 @@ public class Settings {
     @Column
     @ElementCollection(targetClass=Long.class)
     private List<Long> savedOrder;
-
 
     // Getters & Setters
 

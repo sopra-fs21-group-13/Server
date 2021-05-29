@@ -16,9 +16,9 @@ import java.util.List;
 import static java.util.Objects.isNull;
 
 /**
- * User Controller
- * This class is responsible for handling all REST request that are related to the user.
- * The controller will receive the request and delegate the execution to the UserService and finally return the result.
+ * Game Controller
+ * This class is responsible for handling all REST request that are related to the game.
+ * The controller will receive the request and delegate the execution to the GameService and finally return the result.
  */
 
 

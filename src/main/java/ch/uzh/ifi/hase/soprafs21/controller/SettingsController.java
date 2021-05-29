@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Card Controller
- * This class is responsible for handling all REST request that are related to the user.
- * The controller will receive the request and delegate the execution to the UserService and finally return the result.
+ * Settings Controller
+ * This class is responsible for handling all REST request that are related to the settings.
+ * The controller will receive the request and delegate the execution to the SettingsService and finally return the result.
  */
 
 @RestController
@@ -23,6 +23,9 @@ public class SettingsController {
 
     @Autowired
     private SettingsService settingsService;
+
+
+// All Get Mappings:
 
     @GetMapping("/settings")
     @ResponseStatus(HttpStatus.OK)
@@ -51,6 +54,9 @@ public class SettingsController {
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(settings);
     }
 
+// All Post Mappings:
+
+    // create Settings entity
     @PostMapping("/settings")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -64,16 +70,4 @@ public class SettingsController {
         return DTOMapper.INSTANCE.convertEntityToSettingsGetDTO(UpdatedSettings);
     }
 }
-
-//set.setCards();
-
-
-/// Call the settings service as well  Settinngs settinsgs=findBzUSerIDaAndSetID
-//Settings settings;
-// if(settings.getStudyStarred())  // apply filter criteria to filter only the starred one card
-
-// List<Card>
-
-// if  set.getCards().stream().filter(ele->)
-// Convert from internal representation to API
 

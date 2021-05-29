@@ -13,6 +13,7 @@ public class SettingsPostDTO {
     private ArrayList<Long> markedCards;
     private ArrayList<Long> savedOrder;
 
+    // Getters & Setters
 
     public Long getSettingsId() {
         return settingsId;

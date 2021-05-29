@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "GAMESETTING")
@@ -22,7 +21,6 @@ public class GameSetting {
     @Column
     private Long numberOfPlayers;
 
-
     // Getters & Setters
 
     public Long getGameSettingId() {
@@ -40,7 +38,6 @@ public class GameSetting {
     public void setTime(Long time) {
         this.time = time;
     }
-
 
     public Long getNumberOfCards() {
         return numberOfCards;

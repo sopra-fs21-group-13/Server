@@ -4,21 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Internal User Representation
- * This class composes the internal representation of the user and defines how the user is stored in the database.
+ * Internal Card Representation
+ * This class composes the internal representation of the card and defines how the user is stored in the database.
  * Every variable will be mapped into a database field with the @Column annotation
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unqiue across the database -> composes the primary key
  */
+
 @Entity
 @Table(name = "CARD")
 public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_generator")
-    //@SequenceGenerator(name="card_generator", sequenceName = "card_seq", allocationSize=50)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
@@ -28,6 +26,8 @@ public class Card implements Serializable {
 
     @Column(nullable = false)
     private String answer;
+
+    // Getters & Setters
 
     public Long getCardId() {
         return cardId;

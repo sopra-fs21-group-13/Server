@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Internal Game Representation
- * This class composes the internal representation of the Game and defines how the game is stored in the database.
+ * This class composes the internal representation of the game and defines how the game is stored in the database.
  * Every variable will be mapped into a database field with the @Column annotation
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unqiue across the database -> composes the primary key

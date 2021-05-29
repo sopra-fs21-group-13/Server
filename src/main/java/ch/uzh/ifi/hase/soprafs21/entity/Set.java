@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Internal User Representation
- * This class composes the internal representation of the user and defines how the user is stored in the database.
+ * Internal Set Representation
+ * This class composes the internal representation of the set and defines how the user is stored in the database.
  * Every variable will be mapped into a database field with the @Column annotation
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unique across the database -> composes the primary key
@@ -25,9 +25,6 @@ public class    Set implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
-    //@SequenceGenerator(name="set_generator", sequenceName = "set_seq", allocationSize=1)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "set_generator")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long setId;
@@ -62,6 +59,8 @@ public class    Set implements Serializable {
 
     @Column
     private Long liked;
+
+    // Getters & Setters
 
     public Long getSetId() {
         return setId;

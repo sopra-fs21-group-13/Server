@@ -22,6 +22,8 @@ public class UserPostDTO {
     private String photo;
     private List<Invitation> invitations;
 
+    // Getters & Setters
+
     public long getUserId() {
         return userId;
     }
@@ -49,6 +51,7 @@ public class UserPostDTO {
     public String getPhoto() {
         return photo;
     }
+
     public void setPhoto(String photo) {
         this.photo = photo;
     }

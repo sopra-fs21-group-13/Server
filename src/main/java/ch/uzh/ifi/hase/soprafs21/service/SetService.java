@@ -48,7 +48,6 @@ public class SetService {
         return this.setRepository.findBySetStatus(SetStatus.PUBLIC);
     }
 
-
     // Get set by setId
     public Set getSetBySetId(Long setId){
         Optional<Set> checkSet = setRepository.findBySetId(setId);
@@ -57,7 +56,6 @@ public class SetService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
         }
-
     }
 
     // Create a flashcard set
@@ -65,7 +63,6 @@ public class SetService {
         if (checkSet(newSet)){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Set is empty");
         }
-
         List<User> initialMember = new ArrayList<>();
         newSet.setMembers(initialMember);
 
@@ -76,7 +73,6 @@ public class SetService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
         }
-
         if (newSet.getMembers().isEmpty()){
             newSet.setMembers(initialMember);
         }
@@ -129,7 +125,7 @@ public class SetService {
         if (set.getLiked() != null) {
                 updatedSet.setLiked(set.getLiked());
             }
-
+        // Save & Flush
         updatedSet = setRepository.save(updatedSet);
         setRepository.flush();
 

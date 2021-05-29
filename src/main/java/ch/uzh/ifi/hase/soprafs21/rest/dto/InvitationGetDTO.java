@@ -2,9 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
 
 import ch.uzh.ifi.hase.soprafs21.entity.GameSetting;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +15,6 @@ public class InvitationGetDTO {
     private List<Long> receivers;
     private String setTitle;
     private GameSetting gameSetting;
-
 
     // Getters & Setters
 

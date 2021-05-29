@@ -1,9 +1,9 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs21.entity.GameSetting;
-import ch.uzh.ifi.hase.soprafs21.entity.Message;
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Card;
+import ch.uzh.ifi.hase.soprafs21.entity.GameSetting;
+import ch.uzh.ifi.hase.soprafs21.entity.Message;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 
 import java.util.List;
@@ -20,8 +20,8 @@ public class GamePostDTO {
     private List<Message> history;
     private Long timer;
 
-
     // Getters & Setters
+
     public Long getGameId() {
         return gameId;
     }

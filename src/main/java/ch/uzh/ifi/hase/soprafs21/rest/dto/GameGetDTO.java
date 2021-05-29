@@ -21,7 +21,6 @@ public class GameGetDTO {
     private List<Message> history; // Change to Object Message with timeStamp / creator etc.
     private Long timer;
 
-
     // Getters & Setters
 
     public Long getGameId() {
