@@ -54,16 +54,16 @@ public class Game {
     @ElementCollection(targetClass = Message.class)
     private List<Message> history;
 
-    @Column(nullable = true)
+    @Column
     private Boolean player1Ready;
 
-    @Column(nullable = true)
+    @Column
     private Boolean player2Ready;
 
-    @Column(nullable = true)
+    @Column
     private Long player1Score;
 
-    @Column(nullable = true)
+    @Column
     private Long player2Score;
 
     // Getters & Setters
@@ -179,4 +179,5 @@ public class Game {
     public void setTimer(Long timer) {
         this.timer = timer;
     }
+
 }
