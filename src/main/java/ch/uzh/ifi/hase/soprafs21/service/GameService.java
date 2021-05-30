@@ -29,7 +29,6 @@ import static java.util.Objects.isNull;
 public class GameService {
 
     private final Logger log = LoggerFactory.getLogger(GameService.class);
-    private final SetRepository setRepository;
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final MessageRepository messageRepository;
@@ -37,9 +36,8 @@ public class GameService {
     private final GameSettingRepository gameSettingRepository;
 
     @Autowired
-    public GameService(@Qualifier("setRepository") SetRepository setRepository, @Qualifier("userRepository") UserRepository userRepository, @Qualifier("gameRepository") GameRepository gameRepository,@Qualifier("messageRepository") MessageRepository messageRepository,
+    public GameService(@Qualifier("userRepository") UserRepository userRepository, @Qualifier("gameRepository") GameRepository gameRepository,@Qualifier("messageRepository") MessageRepository messageRepository,
                        @Qualifier("invitationRepository") InvitationRepository invitationRepository, @Qualifier("gameSettingRepository") GameSettingRepository gameSettingRepository) {
-        this.setRepository = setRepository;
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.messageRepository = messageRepository;
@@ -102,9 +100,11 @@ public class GameService {
     public boolean checkGame(Game game){
         if (isNull(game.getInviter())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game has no Inviter");
-        } if ( isNull(game.getPlaySetId())){
+        }
+        if ( isNull(game.getPlaySetId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game has no PlaySetId");
-        } if (isNull(game.getCountDown())){
+        }
+        if (isNull(game.getCountDown())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Countdown is not set");
         }
         return false;

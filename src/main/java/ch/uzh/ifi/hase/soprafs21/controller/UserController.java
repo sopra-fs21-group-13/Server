@@ -102,11 +102,9 @@ public class UserController {
 
         // convert API user to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        //System.out.println("Login user-------"+userInput);
 
         // check if user exists
         User loginUser = userService.checkForLogin(userInput);
-        //System.out.println("Login user-------"+loginUser);
 
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
@@ -120,7 +118,6 @@ public class UserController {
 
         // convert API user to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        //System.out.println("Login user-------"+userInput);
 
         // check if user exists
         User loginUser = userService.upserd(userInput);
@@ -137,10 +134,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO getUserByID(@RequestBody UserPostDTO userPostDTO) {
 
-       //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        // update User
         User updatedUser = userService.updateUser(userPostDTO);
 
-
+        // convert to GetDTO to send to FrontEnd
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 
@@ -149,9 +146,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserGetDTO logoutUser(@PathVariable Long userId) {
 
-        //User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        // Log out the user
         User updatedUser = userService.logoutUser(userId);
 
+        // return the updated user as a GetDTO
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
     }
 

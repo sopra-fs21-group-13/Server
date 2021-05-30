@@ -43,6 +43,9 @@ public class SetService {
         this.settingsRepository = settingsRepository;
     }
 
+    String errorSetId = "No set exists with input set id.";
+    String errorUserId = "No User with input id exists.";
+
     // Get all sets available -> not useful though
     public List<Set> getPublicSets() {
         return this.setRepository.findBySetStatus(SetStatus.PUBLIC);
@@ -54,7 +57,7 @@ public class SetService {
         if (checkSet.isPresent()){
             return checkSet.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorSetId));
         }
     }
 
@@ -66,12 +69,11 @@ public class SetService {
         List<User> initialMember = new ArrayList<>();
         newSet.setMembers(initialMember);
 
-        //initialMember.add(userRepository.findById(newSet.getUser()).get());
         Optional<User> newUser = userRepository.findById(newSet.getUser());
         if (newUser.isPresent()){
             initialMember.add(newUser.get());
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorUserId));
         }
         if (newSet.getMembers().isEmpty()){
             newSet.setMembers(initialMember);
@@ -88,13 +90,17 @@ public class SetService {
     public boolean checkSet(Set set){
         if (isNull(set.getTitle())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Title");
-        } if ( isNull(set.getExplain())){
+        }
+        if ( isNull(set.getExplain())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no Explanation");
-        } if (isNull(set.getUser())){
+        }
+        if (isNull(set.getUser())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no User");
-        } if (isNull(set.getSetCategory())) {
+        }
+        if (isNull(set.getSetCategory())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetCategory");
-        } if (isNull(set.getSetStatus())) {
+        }
+        if (isNull(set.getSetStatus())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Set has no SetStatus");
         }
         return false;
@@ -135,33 +141,33 @@ public class SetService {
     // Add member to set
     public Set addMember(Long userId, Long setId){
 
-        //User user = userRepository.findById(userId).get();
+        // find user with id
         User newUser;
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()){
             newUser = user.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorUserId));
         }
 
-        //Set set = setRepository.findBySetId(setId).get();
+        // find set with id
         Set newSet;
         Optional<Set> set = setRepository.findBySetId(setId);
         if (set.isPresent()){
             newSet = set.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorSetId));
         }
 
         List<Long> memberIds = newSet.getMembers();
         List<User> members = new ArrayList<>();
         for (Long memberId:memberIds){
-            //members.add(userRepository.findById(memberId).get());
+            // Get user by id
             Optional<User> createdUser = userRepository.findById(memberId);
             if (createdUser.isPresent()){
                 members.add(createdUser.get());
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorUserId));
             }
         }
         members.add(newUser);
@@ -182,13 +188,13 @@ public class SetService {
     // Delete a Member from the set
     public Set removeMember(Long userId, Long setId){
 
-        //Set set = setRepository.findBySetId(setId).get();
+        // Get set by Id
         Set newSet;
         Optional<Set> set = setRepository.findBySetId(setId);
         if (set.isPresent()){
             newSet = set.get();
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no set with setId");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorSetId));
         }
 
         if (newSet.getUser().equals(userId)){
@@ -198,12 +204,11 @@ public class SetService {
         List<User> members = new ArrayList<>();
         for (Long memberId:memberIds){
             if (!memberId.equals(userId)){
-                //members.add(userRepository.findById(memberId).get());
                 Optional<User> createdUser = userRepository.findById(memberId);
                 if (createdUser.isPresent()){
                     members.add(createdUser.get());
                 } else {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ain't no User with UserId");
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(errorUserId));
                 }
             }
         }

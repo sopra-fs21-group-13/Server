@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.constant.GameStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.*;
+import ch.uzh.ifi.hase.soprafs21.repository.GameRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.GamePostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.InvitationPostDTO;
 import ch.uzh.ifi.hase.soprafs21.service.GameService;
@@ -19,8 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -40,6 +44,12 @@ public class GameControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private GameRepository gameRepository;
 
 
     @Test
@@ -290,6 +300,182 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$.timer", is(game.getTimer().intValue())))
                 .andExpect(jsonPath("$.history[0].messageId", is(game.getHistory().get(0).getMessageId())));
     }
+
+    /*
+    @Test
+    public void givenGame_addMessageToHistory_validInput() throws Exception {
+
+        // given
+        User user = new User();
+        user.setUserId(1L);
+        user.setUsername("testUser");
+        user.setPassword("password");
+
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        Message message = new Message();
+        message.setTimeStamp(LocalDateTime.now());
+        message.setSenderId(1L);
+        message.setMessage("message");
+        message.setCardId(1L);
+        message.setScore(10L);
+
+        ArrayList<Message> messages = new ArrayList();
+        messages.add(message);
+
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(user);
+        game.setPlaySetId(1L);
+        game.setPlayCards(Collections.singletonList(new Card()));
+        game.setPlayers(Collections.singletonList(user));
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(messages);
+
+
+        MessagePostDTO messagePostDTO = new MessagePostDTO();
+        messagePostDTO.setTimeStamp(LocalDateTime.now());
+        messagePostDTO.setSenderId(1L);
+        messagePostDTO.setMessage("message");
+        messagePostDTO.setCardId(1L);
+        messagePostDTO.setScore(10L);
+
+
+        given(gameService.addMessageToHistory(Mockito.any(),Mockito.any())).willReturn(game);
+        given(userRepository.findById(Mockito.any())).willReturn(Optional.of(user));
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/games/1/histories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(messagePostDTO));
+
+        // then
+        mockMvc.perform(putRequest).andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.history[0].messageId", is(game.getHistory().get(0).getMessageId())));
+    }
+
+     */
+
+    @Test
+    public void givenGame_addPlayerToGame_validInput() throws Exception {
+
+        // given
+
+        User user = new User();
+        user.setUserId(1L);
+        user.setUsername("testUser");
+        user.setPassword("password");
+
+        User user2 = new User();
+        user2.setUserId(2L);
+        user2.setUsername("testUser2");
+        user2.setPassword("password2");
+
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        ArrayList<User> players = new ArrayList();
+        players.add(user);
+        players.add(user2);
+
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(user);
+        game.setPlaySetId(1L);
+        game.setPlayCards(Collections.singletonList(new Card()));
+        game.setPlayers(players);
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(Collections.singletonList(new Message()));
+
+
+        given(gameRepository.findByGameId(Mockito.eq(1L))).willReturn(Optional.of(game));
+        given(userRepository.findById(Mockito.eq(2L))).willReturn(Optional.of(user2));
+        given(gameService.addPlayerToGame(Mockito.eq(1L),Mockito.eq(2L))).willReturn(game);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/games/1/2")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(putRequest).andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.players[1].userId", is(user2.getUserId().intValue())));
+    }
+
+    @Test
+    public void givenGame_removePlayerToGame_validInput() throws Exception {
+
+        // given
+
+        User user = new User();
+        user.setUserId(1L);
+        user.setUsername("testUser");
+        user.setPassword("password");
+
+        User user2 = new User();
+        user2.setUserId(2L);
+        user2.setUsername("testUser2");
+        user2.setPassword("password2");
+
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        ArrayList<User> players = new ArrayList();
+        players.add(user);
+
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(user);
+        game.setPlaySetId(1L);
+        game.setPlayCards(Collections.singletonList(new Card()));
+        game.setPlayers(players);
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(Collections.singletonList(new Message()));
+
+
+        given(gameRepository.findByGameId(Mockito.eq(1L))).willReturn(Optional.of(game));
+        given(userRepository.findById(Mockito.eq(2L))).willReturn(Optional.of(user2));
+        given(gameService.removePlayerFromGame(Mockito.eq(1L),Mockito.eq(2L))).willReturn(game);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/games/1/2/remover")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(putRequest).andExpect(status().isAccepted())
+        .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.gameId", is(1)))
+                .andExpect(jsonPath("$.gameSettings.gameSettingId", is(game.getGameSettings().getGameSettingId().intValue())))
+                .andExpect(jsonPath("$.status", is(game.getStatus().toString())))
+                .andExpect(jsonPath("$.inviter.userId", is(game.getInviter().getUserId().intValue())))
+                .andExpect(jsonPath("$.playSetId", is(game.getPlaySetId().intValue())))
+                .andExpect(jsonPath("$.playCards[0].cardId", is(game.getPlayCards().get(0).getCardId())))
+                .andExpect(jsonPath("$.countDown", is(game.getCountDown())))
+                .andExpect(jsonPath("$.timer", is(game.getTimer().intValue())))
+                .andExpect(jsonPath("$.history[0].messageId", is(game.getHistory().get(0).getMessageId())))
+                .andExpect(jsonPath("$.players", hasSize(1)));
+    }
+
+
+
 
     private String asJsonString(final Object object) {
         try {
