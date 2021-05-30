@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/sopra-fs21-group13"><img src="src/main/assets/flashy_h-green.svg" alt="Flashy" width="300"></a>
+  <a href="https://github.com/sopra-fs21-group13"><img src="src/main/assets/flashy_h-green.svg" alt="Flashy" width="500"></a>
   <br>
   Flashy-Server
   <br>
