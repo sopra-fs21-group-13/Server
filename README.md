@@ -1,7 +1,11 @@
-# Flashy - Server 
+<h1 align="center">
+  <br>
+  <a href="https://github.com/soprafs21-group13"><img src="src/main/assets/flashy_h-green.png" alt="Flashy" width="300"></a>
+  <br>
+  Flashy-Server
+  <br>
+</h1>
 
-
-## SonarQube - Details
 
 <p align="center">
   <a href="https://github.com/sopra-fs21-group-13/Server/actions">
