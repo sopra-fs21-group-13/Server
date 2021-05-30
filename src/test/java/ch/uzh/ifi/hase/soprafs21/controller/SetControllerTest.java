@@ -174,6 +174,58 @@ public class SetControllerTest {
     }
 
     @Test
+    public void givenSet_updateMembersSet_validInput() throws Exception {
+        // given
+        User testUser = new User();
+        testUser.setUserId(1L);
+        testUser.setUsername("testUser");
+        testUser.setPassword("password");
+
+        User testUser2 = new User();
+        testUser.setUserId(2L);
+        testUser.setUsername("testUser2");
+        testUser.setPassword("password2");
+
+        ArrayList<User> members = new ArrayList<>();
+        members.add(testUser);
+        members.add(testUser2);
+
+        Set newSet = new Set();
+        newSet.setSetId(1L);
+        newSet.setTitle("New Set example");
+        newSet.setExplain("New explain text");
+        newSet.setUser(new User());
+        newSet.setMembers(members);
+        newSet.setCards(new ArrayList<>());
+        newSet.setSetCategory(SetCategory.GERMAN);
+        newSet.setSetStatus(SetStatus.PUBLIC);
+        newSet.setPhoto("New Photo#1");
+        newSet.setLiked(7L);
+
+
+
+        given(setService.addMember(Mockito.eq(2L), Mockito.eq(1L))).willReturn(newSet);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/sets/2/1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(putRequest).andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.setId", is(1)))
+                .andExpect(jsonPath("$.title", is(newSet.getTitle())))
+                .andExpect(jsonPath("$.explain", is(newSet.getExplain())))
+                .andExpect(jsonPath("$.userId", is(newSet.getUser())))
+                .andExpect(jsonPath("$.memberIds[0]", is(newSet.getMembers().get(0).intValue())))
+                .andExpect(jsonPath("$.cards", is(newSet.getCards())))
+                .andExpect(jsonPath("$.setCategory", is(newSet.getSetCategory().toString())))
+                .andExpect(jsonPath("$.setStatus", is(newSet.getSetStatus().toString())))
+                .andExpect(jsonPath("$.photo", is(newSet.getPhoto())))
+                .andExpect(jsonPath("$.liked", is(newSet.getLiked().intValue())));
+    }
+
+    @Test
     public void createSet_validInput_setCreated() throws Exception {
         // given
         Set newSet = new Set();
@@ -244,6 +296,44 @@ public class SetControllerTest {
         mockMvc.perform(deleteRequest).
                 andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void givenSet_removeMember_validInput() throws Exception {
+
+        // given
+        User testUser = new User();
+        testUser.setUserId(1L);
+        testUser.setUsername("testUser");
+        testUser.setPassword("password");
+
+        User testUser2 = new User();
+        testUser.setUserId(2L);
+        testUser.setUsername("testUser2");
+        testUser.setPassword("password2");
+
+        ArrayList<User> members = new ArrayList<>();
+        members.add(testUser);
+        members.add(testUser2);
+
+        Set set = new Set();
+        set.setSetId(1L);
+        set.setTitle("Set example");
+        set.setExplain("explain text");
+        set.setUser(new User());
+        set.setMembers(members);
+        set.setCards(new ArrayList<>());
+        set.setSetCategory(SetCategory.GERMAN);
+        set.setSetStatus(SetStatus.PUBLIC);
+        set.setPhoto("Photo#1");
+        set.setLiked(7L);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder deleteRequest = delete("/sets/1/2").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(deleteRequest).
+                andExpect(status().isAccepted());
 
     }
 

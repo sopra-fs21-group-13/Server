@@ -171,8 +171,7 @@ public interface DTOMapper {
     default User jsonToUser(String userString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         // Convert Json array to user entity
-        User user = mapper.readValue(userString, User.class );
-        return user;
+        return mapper.readValue(userString, User.class );
     }
 
     @Named("Members")
@@ -199,16 +198,14 @@ public interface DTOMapper {
     default GameSetting jsonToGameSetting(String gameSettingString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         // Convert Json array to gameSetting entity
-        GameSetting gameSetting = mapper.readValue(gameSettingString, GameSetting.class );
-        return gameSetting;
+        return mapper.readValue(gameSettingString, GameSetting.class );
     }
 
     @Named("Set")
     default Set jsonToSet(String setString) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         // Convert Json array to user entity
-        Set set = mapper.readValue(setString, Set.class );
-        return set;
+        return mapper.readValue(setString, Set.class );
     }
 
 }
