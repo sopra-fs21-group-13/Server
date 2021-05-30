@@ -1,4 +1,4 @@
-# SoPra RESTful Service Template FS21
+# Flashy - Server 
 
 
 ## SonarQube - Details
@@ -10,50 +10,27 @@
   <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-13_Server">
       <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-13_Server&metric=coverage">
   </a>
-  <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-13_Server">
-        <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-13_Server&metric=alert_status">
-  </a>
 </p>
 
 
 
-## Getting started with Spring Boot
+## Introduction
 
--   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
--   Guides: http://spring.io/guides
-    -   Building a RESTful Web Service: http://spring.io/guides/gs/rest-service/
-    -   Building REST services with Spring: http://spring.io/guides/tutorials/bookmarks/
+Flashy is an application with which students (and other users) can create digital fashcard stacks. Besides the ordinary capabilities of physical fashcards, the ability to share the created stacks with other users, promoting the learning experience using social interaction and creating a good working environment.
 
-## Setup this Template with your IDE of choice
+A game component is also introduced, such that multiple users can participate competing against each other; seeing who can solve the stacks the fastest. We want to include a feature which captures the user's advancement towards manifesting their knowledge such as a reward system or experience/level type of thing.
 
-Download your IDE of choice: (e.g., [Eclipse](http://www.eclipse.org/downloads/), [IntelliJ](https://www.jetbrains.com/idea/download/)), [Visual Studio Code](https://code.visualstudio.com/) and make sure Java 15 is installed on your system (for Windows-users, please make sure your JAVA_HOME environment variable is set to the correct version of Java).
+## Technologies (short)
 
-1. File -> Open... -> SoPra Server Template
-2. Accept to import the project as a `gradle project`
+The server is written in **Java** using the **Spring Boot** framework. **JPA** is used for persistence and deployment is handled by **Heroku**. To establish a connection between the front- and backend **REST** is used for all the activities.
 
-To build right click the `build.gradle` file and choose `Run Build`
+## High-level Components
 
-### VS Code
-The following extensions will help you to run it more easily:
--   `pivotal.vscode-spring-boot`
--   `vscjava.vscode-spring-initializr`
--   `vscjava.vscode-spring-boot-dashboard`
--   `vscjava.vscode-java-pack`
--   `richardwillis.vscode-gradle`
+The strucutre is as follow: controller, service and repository classes. The client side can contact the backend via API calls which are then handled by the controller. The controller further processes the call and uses the services and the repositories to fulfill the API call. The entity will be saved to the database with the JPA-Repositories, which in combination with Hibernate enable the flow to be effortless. 
 
-**Note:** You'll need to build the project first with Gradle, just click on the `build` command in the _Gradle Tasks_ extension. Then check the _Spring Boot Dashboard_ extension if it already shows `soprafs21` and hit the play button to start the server. If it doesn't show up, restart VS Code and check again.
-
-## Building with Gradle
+## Launch and Deploy
 
 You can use the local Gradle Wrapper to build the application.
-
-Plattform-Prefix:
-
--   MAC OS X: `./gradlew`
--   Linux: `./gradlew`
--   Windows: `./gradlew.bat`
-
-More Information about [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) and [Gradle](https://gradle.org/docs/).
 
 ### Build
 
@@ -73,44 +50,29 @@ More Information about [Gradle Wrapper](https://docs.gradle.org/current/userguid
 ./gradlew test
 ```
 
-### Development Mode
+## Authors & Acknowledgment
 
-You can start the backend in development mode, this will automatically trigger a new build and reload the application
-once the content of a file has been changed and you save the file.
+- [Kiram Ben Aleya](https://github.com/SoftwareConstructionGroup)
+- [Seonbin Kim](https://github.com/seonbinnn) 
+- [Remus Nichiteanu](https://github.com/rnichi1) 
+- [Nazim Bayram](https://github.com/NazimBayram)
+- [Silvan Caduff](https://github.com/sicadu)
 
-Start two terminal windows and run:
+We would like to extend our thanks to anyone who has supported us through this challenging  project. Furthermore, we want to thank our TA [Jan Willi](https://github.com/JaanWilli) who's advice was very valuable to us. 
 
-`./gradlew build --continuous`
+## Roadmap
 
-and in the other one:
+1. Extend mulitplayer functionality (more than 2 players)
+2. Save pictures with the sets
+3. Add vanilla sets to the interface.
 
-`./gradlew bootRun`
 
-If you want to avoid running all tests with every change, use the following command instead:
+## License
 
-`./gradlew build --continuous -xtest`
+Copyright (c) 2021 Flashy.
 
-## API Endpoint Testing
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-### Postman
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
--   We highly recommend to use [Postman](https://www.getpostman.com) in order to test your API Endpoints.
-
-## Debugging
-
-If something is not working and/or you don't know what is going on. We highly recommend that you use a debugger and step
-through the process step-by-step.
-
-To configure a debugger for SpringBoot's Tomcat servlet (i.e. the process you start with `./gradlew bootRun` command),
-do the following:
-
-1. Open Tab: **Run**/Edit Configurations
-2. Add a new Remote Configuration and name it properly
-3. Start the Server in Debug mode: `./gradlew bootRun --debug-jvm`
-4. Press `Shift + F9` or the use **Run**/Debug"Name of your task"
-5. Set breakpoints in the application where you need it
-6. Step through the process one step at a time
-
-## Testing
-
-Have a look here: https://www.baeldung.com/spring-boot-testing
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
