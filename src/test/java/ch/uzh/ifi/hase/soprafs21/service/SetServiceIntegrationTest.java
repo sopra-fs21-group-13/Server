@@ -222,6 +222,103 @@ public class SetServiceIntegrationTest {
     }
 
     @Test
+    public void checkAddMember_ValidInput_success() {
+        // given
+        assertNull(userRepository.findByUsername("testName"));
+        assertTrue(setRepository.findAll().isEmpty());
+        // cardList
+        List<Card> emptyList = new ArrayList<>();
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        User testUser2 = new User();
+        testUser2.setName("testName2");
+        testUser2.setUsername("testUsername2");
+        testUser2.setPassword("password2");
+        User createdUser2 = userService.createUser(testUser2);
+
+        // set setup
+        Set testSet = new Set();
+        testSet.setTitle("title");
+        testSet.setUser(createdUser);
+        testSet.setCards(emptyList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setPhoto("photo");
+        Set createdSet = setService.createSet(testSet);
+
+        // when
+        Set updateSet = setService.addMember(createdUser2.getUserId(), createdSet.getSetId());
+
+        // then
+        assertEquals(testSet.getTitle(), updateSet.getTitle());
+        assertEquals(testSet.getUser(), updateSet.getUser());
+        assertNotNull(testSet.getSetId());
+        assertEquals(testSet.getSetCategory(), updateSet.getSetCategory());
+        assertEquals(testSet.getSetStatus(), updateSet.getSetStatus());
+        assertEquals(testSet.getExplain(), updateSet.getExplain());
+        assertEquals(testSet.getPhoto(), updateSet.getPhoto());
+
+    }
+
+    @Test
+    public void checkRemoveMember_ValidInput_success() {
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+        assertTrue(setRepository.findAll().isEmpty());
+        // cardList
+        List<Card> emptyList = new ArrayList<>();
+        // user setup
+        User testUser = new User();
+        testUser.setName("testName");
+        testUser.setUsername("testUsername");
+        testUser.setPassword("password");
+        User createdUser = userService.createUser(testUser);
+
+        User testUser2 = new User();
+        testUser2.setName("testName2");
+        testUser2.setUsername("testUsername2");
+        testUser2.setPassword("password2");
+        User createdUser2 = userService.createUser(testUser2);
+
+        ArrayList<User> members = new ArrayList<>();
+        members.add(createdUser);
+        members.add(createdUser2);
+
+        // set setup
+        Set testSet = new Set();
+        testSet.setTitle("title");
+        testSet.setUser(createdUser);
+        testSet.setCards(emptyList);
+        testSet.setSetCategory(SetCategory.BIOLOGY);
+        testSet.setSetStatus(SetStatus.PUBLIC);
+        testSet.setExplain("explain");
+        testSet.setMembers(members);
+        testSet.setPhoto("photo");
+        Set createdSet = setService.createSet(testSet);
+
+
+        // when
+        Set updateSet = setService.removeMember(createdUser2.getUserId(), createdSet.getSetId());
+
+        // then
+        assertEquals(testSet.getTitle(), updateSet.getTitle());
+        assertEquals(testSet.getUser(), updateSet.getUser());
+        assertNotNull(testSet.getSetId());
+        assertEquals(testSet.getSetCategory(), updateSet.getSetCategory());
+        assertEquals(testSet.getSetStatus(), updateSet.getSetStatus());
+        assertEquals(testSet.getExplain(), updateSet.getExplain());
+        assertEquals(testSet.getPhoto(), updateSet.getPhoto());
+
+    }
+
+
+    @Test
     public void checkDeleteSet_ValidInput_success(){
         // given
         assertNull(userRepository.findByUsername("testUsername"));
