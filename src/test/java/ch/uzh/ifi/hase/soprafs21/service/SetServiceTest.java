@@ -83,7 +83,7 @@ public class SetServiceTest {
         assertThrows(ResponseStatusException.class, () -> setService.getSetBySetId(testSet.getSetId()));
 
         Exception e = assertThrows(ResponseStatusException.class, () -> setService.getSetBySetId(testSet.getSetId()));
-        assertEquals("400 BAD_REQUEST \"Ain't no set with setId\"", e.getMessage());
+        assertEquals("400 BAD_REQUEST \"No set exists with input set id.\"", e.getMessage());
     }
 
     @Test
@@ -178,7 +178,7 @@ public class SetServiceTest {
         assertThrows(ResponseStatusException.class, () -> setService.updateSet(testSet));
 
         Exception e = assertThrows(ResponseStatusException.class, () -> setService.updateSet(testSet));
-        assertEquals("400 BAD_REQUEST \"Ain't no set with setId\"", e.getMessage());
+        assertEquals("400 BAD_REQUEST \"No set exists with input set id.\"", e.getMessage());
 
     }
 

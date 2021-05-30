@@ -133,7 +133,7 @@ public class GameControllerTest {
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.*", hasSize(14)))
                 .andExpect(jsonPath("$.gameId", is(1)))
                 .andExpect(jsonPath("$.gameSettings.gameSettingId", is(game.getGameSettings().getGameSettingId().intValue())))
                 .andExpect(jsonPath("$.status", is(game.getStatus().toString())))
@@ -188,7 +188,7 @@ public class GameControllerTest {
 
         // then
         mockMvc.perform(postRequest).andExpect(status().isCreated())
-                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.*", hasSize(14)))
                 .andExpect(jsonPath("$.gameId", is(1)))
                 .andExpect(jsonPath("$.gameSettings.gameSettingId", is(game.getGameSettings().getGameSettingId().intValue())))
                 .andExpect(jsonPath("$.status", is(game.getStatus().toString())))
@@ -289,7 +289,7 @@ public class GameControllerTest {
 
         // then
         mockMvc.perform(putRequest).andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.*", hasSize(10)))
+                .andExpect(jsonPath("$.*", hasSize(14)))
                 .andExpect(jsonPath("$.gameId", is(1)))
                 .andExpect(jsonPath("$.gameSettings.gameSettingId", is(game.getGameSettings().getGameSettingId().intValue())))
                 .andExpect(jsonPath("$.status", is(game.getStatus().toString())))
@@ -461,7 +461,7 @@ public class GameControllerTest {
 
         // then
         mockMvc.perform(putRequest).andExpect(status().isAccepted())
-        .andExpect(jsonPath("$.*", hasSize(10)))
+        .andExpect(jsonPath("$.*", hasSize(14)))
                 .andExpect(jsonPath("$.gameId", is(1)))
                 .andExpect(jsonPath("$.gameSettings.gameSettingId", is(game.getGameSettings().getGameSettingId().intValue())))
                 .andExpect(jsonPath("$.status", is(game.getStatus().toString())))
