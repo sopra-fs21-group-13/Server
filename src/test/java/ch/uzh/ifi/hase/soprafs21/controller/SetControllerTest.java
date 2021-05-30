@@ -244,6 +244,44 @@ public class SetControllerTest {
         mockMvc.perform(deleteRequest).
                 andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void givenSet_removeMember_validInput() throws Exception {
+
+        // given
+        User testUser = new User();
+        testUser.setUserId(1L);
+        testUser.setUsername("testUser");
+        testUser.setPassword("password");
+
+        User testUser2 = new User();
+        testUser.setUserId(2L);
+        testUser.setUsername("testUser2");
+        testUser.setPassword("password2");
+
+        ArrayList<User> members = new ArrayList<>();
+        members.add(testUser);
+        members.add(testUser2);
+
+        Set set = new Set();
+        set.setSetId(1L);
+        set.setTitle("Set example");
+        set.setExplain("explain text");
+        set.setUser(new User());
+        set.setMembers(members);
+        set.setCards(new ArrayList<>());
+        set.setSetCategory(SetCategory.GERMAN);
+        set.setSetStatus(SetStatus.PUBLIC);
+        set.setPhoto("Photo#1");
+        set.setLiked(7L);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder deleteRequest = delete("/sets/1/2").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(deleteRequest).
+                andExpect(status().isAccepted());
 
     }
 

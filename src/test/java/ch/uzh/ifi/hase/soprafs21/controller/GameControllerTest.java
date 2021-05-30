@@ -474,7 +474,74 @@ public class GameControllerTest {
                 .andExpect(jsonPath("$.players", hasSize(1)));
     }
 
+    @Test
+    public void givenGame_deleteGames_validInput() throws Exception {
 
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(new User());
+        game.setPlaySetId(1L);
+        game.setPlayCards(Collections.singletonList(new Card()));
+        game.setPlayers(Collections.singletonList(new User()));
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(Collections.singletonList(new Message()));
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder deleteRequest = delete("/games/1").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(deleteRequest).
+                andExpect(status().isOk());
+    }
+
+    @Test
+    public void givenInvitation_deleteInvitation_validInput() throws Exception {
+
+        // given
+        GameSetting gameSetting = new GameSetting();
+        gameSetting.setGameSettingId(1L);
+        gameSetting.setTime(100L);
+        gameSetting.setNumberOfCards(10L);
+        gameSetting.setNumberOfPlayers(2L);
+
+        Game game = new Game();
+        game.setGameId(1L);
+        game.setStatus(GameStatus.OPEN);
+        game.setGameSettings(gameSetting);
+        game.setInviter(new User());
+        game.setPlaySetId(1L);
+        game.setPlayCards(Collections.singletonList(new Card()));
+        game.setPlayers(Collections.singletonList(new User()));
+        game.setCountDown(false);
+        game.setTimer(10L);
+        game.setHistory(Collections.singletonList(new Message()));
+
+        Invitation invitation = new Invitation();
+        invitation.setInvitationId(1L);
+        invitation.setGameId(1L);
+        invitation.setSentFromId(1L);
+        invitation.setSentFromUserName("user");
+        invitation.setReceivers(Collections.singletonList(new User()));
+        invitation.setSetTitle("title");
+        invitation.setGameSetting(gameSetting);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder deleteRequest = delete("/games/invitations/1").contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(deleteRequest).
+                andExpect(status().isOk());
+    }
 
 
     private String asJsonString(final Object object) {
