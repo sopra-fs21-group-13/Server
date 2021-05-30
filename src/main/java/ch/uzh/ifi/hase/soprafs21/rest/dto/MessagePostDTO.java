@@ -10,6 +10,7 @@ public class MessagePostDTO {
     private Long cardId;
     private Long score;
 
+
     // Setters & Getters
 
     public LocalDateTime getTimeStamp() {
@@ -19,6 +20,7 @@ public class MessagePostDTO {
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
+
 
     public Long getSenderId() {
         return senderId;

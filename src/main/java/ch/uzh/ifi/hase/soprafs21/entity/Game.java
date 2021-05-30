@@ -54,6 +54,12 @@ public class Game {
     @ElementCollection(targetClass = Message.class)
     private List<Message> history;
 
+    @Column(nullable = true)
+    private Boolean player1Ready;
+
+    @Column(nullable = true)
+    private Boolean player2Ready;
+
     // Getters & Setters
 
     public Long getGameId() {
@@ -62,6 +68,22 @@ public class Game {
 
     public void setGameId(Long gameId) {
         this.gameId = gameId;
+    }
+
+    public Boolean getPlayer1Ready(){
+        return player1Ready;
+    }
+
+    public Boolean getPlayer2Ready(){
+        return player2Ready;
+    }
+
+    public void setPlayer1Ready(Boolean player1Ready){
+        this.player1Ready = player1Ready;
+    }
+
+    public void setPlayer2Ready(Boolean player2Ready){
+        this.player2Ready = player2Ready;
     }
 
     public GameStatus getStatus() {

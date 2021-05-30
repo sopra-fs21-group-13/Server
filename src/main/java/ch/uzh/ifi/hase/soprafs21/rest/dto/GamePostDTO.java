@@ -19,6 +19,8 @@ public class GamePostDTO {
     private Boolean countDown;
     private List<Message> history;
     private Long timer;
+    private Boolean player1Ready;
+    private Boolean player2Ready;
 
     // Getters & Setters
 
@@ -36,6 +38,22 @@ public class GamePostDTO {
 
     public void setStatus(GameStatus status) {
         this.status = status;
+    }
+    
+    public Boolean getPlayer1Ready(){
+        return player1Ready;
+    }
+
+    public Boolean getPlayer2Ready(){
+        return player2Ready;
+    }
+
+    public void setPlayer1Ready(Boolean player1Ready){
+        this.player1Ready = player1Ready;
+    }
+
+    public void setPlayer2Ready(Boolean player2Ready){
+        this.player2Ready = player2Ready;
     }
 
     public GameSetting getGameSettings() {

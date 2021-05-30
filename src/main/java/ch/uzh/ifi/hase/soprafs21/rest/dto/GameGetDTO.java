@@ -20,6 +20,10 @@ public class GameGetDTO {
     private Boolean countDown;
     private List<Message> history; // Change to Object Message with timeStamp / creator etc.
     private Long timer;
+    private Boolean player1Ready;
+    private Boolean player2Ready;
+
+
 
     // Getters & Setters
 
@@ -37,6 +41,23 @@ public class GameGetDTO {
 
     public void setStatus(GameStatus status) {
         this.status = status;
+    }
+
+    
+    public Boolean getPlayer1Ready(){
+        return player1Ready;
+    }
+
+    public Boolean getPlayer2Ready(){
+        return player2Ready;
+    }
+
+    public void setPlayer1Ready(Boolean player1Ready){
+        this.player1Ready = player1Ready;
+    }
+
+    public void setPlayer2Ready(Boolean player2Ready){
+        this.player2Ready = player2Ready;
     }
 
     public User getInviter() {

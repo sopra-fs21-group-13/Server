@@ -31,6 +31,7 @@ public class Message implements Serializable {
     @Column(nullable = true)
     private Long score;
 
+
     // Setters & Getters
 
     public LocalDateTime getTimeStamp() {
@@ -40,6 +41,7 @@ public class Message implements Serializable {
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
+
 
     public Long getMessageId() {
         return messageId;

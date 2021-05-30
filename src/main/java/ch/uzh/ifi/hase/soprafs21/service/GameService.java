@@ -130,6 +130,14 @@ public class GameService {
             updatedGame.setTimer(game.getTimer());
         }
 
+        if (game.getPlayer1Ready() != null) {
+            updatedGame.setPlayer1Ready(game.getPlayer1Ready());
+        }
+
+        if (game.getPlayer2Ready() != null) {
+            updatedGame.setPlayer2Ready(game.getPlayer2Ready());
+        }
+
         // save & flush
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();
