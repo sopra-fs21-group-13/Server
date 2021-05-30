@@ -114,6 +114,8 @@ public interface DTOMapper {
     @Mapping(source = "timer", target = "timer")
     @Mapping(source = "player1Ready", target = "player1Ready")
     @Mapping(source = "player2Ready", target = "player2Ready")
+    @Mapping(source = "player1Score", target = "player1Score")
+    @Mapping(source = "player2Score", target = "player2Score")
     Game convertGamePostDTOtoEntity(GamePostDTO gamePostDTO);
 
     @Mapping(source = "gameId", target = "gameId")
@@ -128,6 +130,8 @@ public interface DTOMapper {
     @Mapping(source = "timer", target = "timer")
     @Mapping(source = "player1Ready", target = "player1Ready")
     @Mapping(source = "player2Ready", target = "player2Ready")
+    @Mapping(source = "player1Score", target = "player1Score")
+    @Mapping(source = "player2Score", target = "player2Score")
     GameGetDTO convertEntityToGameGetDTO(Game game);
 
 // Message Mappings

@@ -138,6 +138,14 @@ public class GameService {
             updatedGame.setPlayer2Ready(game.getPlayer2Ready());
         }
 
+        if (game.getPlayer1Score() != null) {
+            updatedGame.setplayer1Score(game.getPlayer1Score());
+        }
+
+        if (game.getPlayer2Score() != null) {
+            updatedGame.setplayer2Score(game.getPlayer2Score());
+        }
+
         // save & flush
         updatedGame = gameRepository.save(updatedGame);
         gameRepository.flush();

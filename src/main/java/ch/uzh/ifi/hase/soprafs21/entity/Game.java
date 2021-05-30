@@ -60,6 +60,12 @@ public class Game {
     @Column(nullable = true)
     private Boolean player2Ready;
 
+    @Column(nullable = true)
+    private Long player1Score;
+
+    @Column(nullable = true)
+    private Long player2Score;
+
     // Getters & Setters
 
     public Long getGameId() {
@@ -84,6 +90,22 @@ public class Game {
 
     public void setPlayer2Ready(Boolean player2Ready){
         this.player2Ready = player2Ready;
+    }
+
+    public Long getPlayer1Score() {
+        return player1Score;
+    }
+
+    public void setplayer1Score(Long player1Score) {
+        this.player1Score = player1Score;
+    }
+
+    public Long getPlayer2Score() {
+        return player2Score;
+    }
+
+    public void setplayer2Score(Long player2Score) {
+        this.player2Score = player2Score;
     }
 
     public GameStatus getStatus() {
