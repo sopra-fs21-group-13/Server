@@ -21,6 +21,8 @@ public class GamePostDTO {
     private Long timer;
     private Boolean player1Ready;
     private Boolean player2Ready;
+    private Long player1Score;
+    private Long player2Score;
 
     // Getters & Setters
 
@@ -54,6 +56,22 @@ public class GamePostDTO {
 
     public void setPlayer2Ready(Boolean player2Ready){
         this.player2Ready = player2Ready;
+    }
+    
+    public Long getPlayer1Score() {
+        return player1Score;
+    }
+
+    public void setplayer1Score(Long player1Score) {
+        this.player1Score = player1Score;
+    }
+
+    public Long getPlayer2Score() {
+        return player2Score;
+    }
+
+    public void setplayer2Score(Long player2Score) {
+        this.player2Score = player2Score;
     }
 
     public GameSetting getGameSettings() {
